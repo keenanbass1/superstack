@@ -4,17 +4,15 @@ import inquirer from 'inquirer';
 import fs from 'fs-extra';
 import path from 'path';
 import ora from 'ora';
-import { fileURLToPath } from 'url';
-import { execSync } from 'child_process';
 
-// Get directory name
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { execSync, spawn } from 'child_process';
 
-// Paths
-const DEV_ROOT = path.resolve(process.env.DEV_ROOT || path.join(__dirname, '../../../../../'));
-const PROJECTS_DIR = path.join(DEV_ROOT, 'projects');
-const TEMPLATES_DIR = path.join(DEV_ROOT, 'superstack/templates/project-types');
+// Import paths from the paths utility
+import { getPaths } from '../utils/paths.js';
+
+// Get paths
+const { projectsDir: PROJECTS_DIR, templatesDir } = getPaths();
+const TEMPLATES_DIR = path.join(templatesDir, 'project-types');
 
 // Available project templates
 const PROJECT_TEMPLATES = {
@@ -36,6 +34,32 @@ const PROJECT_TEMPLATES = {
 };
 
 /**
+ * Run a command in a specific directory using Node's spawn
+ * This avoids npm resolution issues by using direct execution
+ */
+function runCommand(command: string, args: string[], cwd: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const proc = spawn(command, args, {
+      cwd,
+      stdio: 'inherit',
+      shell: true
+    });
+
+    proc.on('close', (code) => {
+      if (code === 0) {
+        resolve();
+      } else {
+        reject(new Error(`Command failed with exit code ${code}`));
+      }
+    });
+
+    proc.on('error', (err) => {
+      reject(err);
+    });
+  });
+}
+
+/**
  * Create a new project
  */
 async function createProject(name: string, options: { template?: string, path?: string }) {
@@ -44,34 +68,34 @@ async function createProject(name: string, options: { template?: string, path?: 
     console.error(chalk.red('Error: Project name must contain only letters, numbers, hyphens and underscores'));
     return;
   }
-  
+
   const spinner = ora('Creating new project').start();
-  
+
   try {
     // Determine project path
-    const targetPath = options.path 
+    const targetPath = options.path
       ? path.resolve(options.path, name)
       : path.join(PROJECTS_DIR, name);
-    
+
     // Check if directory already exists
     if (await fs.pathExists(targetPath)) {
       spinner.fail(`Directory already exists: ${targetPath}`);
       return;
     }
-    
+
     // Ensure parent directory exists
     await fs.ensureDir(path.dirname(targetPath));
-    
+
     // If no template is specified, prompt for one
     let template = options.template;
     if (!template) {
       spinner.stop();
-      
+
       const choices = Object.entries(PROJECT_TEMPLATES).map(([id, details]) => ({
         name: `${id} - ${details.description}`,
         value: id
       }));
-      
+
       const response = await inquirer.prompt([
         {
           type: 'list',
@@ -80,20 +104,20 @@ async function createProject(name: string, options: { template?: string, path?: 
           choices
         }
       ]);
-      
+
       template = response.template;
       spinner.start(`Creating new project using ${template} template`);
     }
-    
+
     // Validate template
     if (!template || !PROJECT_TEMPLATES[template as keyof typeof PROJECT_TEMPLATES]) {
       spinner.fail(`Unknown template: ${template}`);
       console.log(`Available templates: ${Object.keys(PROJECT_TEMPLATES).join(', ')}`);
       return;
     }
-    
+
     const templateConfig = PROJECT_TEMPLATES[template as keyof typeof PROJECT_TEMPLATES];
-    
+
     // Create the project
     if (templateConfig.generator === 'custom') {
       // Copy from template directory
@@ -101,17 +125,17 @@ async function createProject(name: string, options: { template?: string, path?: 
         spinner.fail('Template configuration is missing source property');
         return;
       }
-      
+
       const sourcePath = path.join(TEMPLATES_DIR, templateConfig.source);
-      
+
       if (!await fs.pathExists(sourcePath)) {
         spinner.fail(`Template source not found: ${sourcePath}`);
         return;
       }
-      
+
       spinner.text = 'Copying template files...';
       await fs.copy(sourcePath, targetPath);
-      
+
       // Replace placeholders in package.json if it exists
       const packageJsonPath = path.join(targetPath, 'package.json');
       if (await fs.pathExists(packageJsonPath)) {
@@ -120,42 +144,55 @@ async function createProject(name: string, options: { template?: string, path?: 
         packageJson.name = name;
         await fs.writeJson(packageJsonPath, packageJson, { spaces: 2 });
       }
-      
+
       // Initialize git repository
       spinner.text = 'Initializing git repository...';
       try {
-        process.chdir(targetPath);
-        execSync('git init', { stdio: 'ignore' });
+        execSync('git init', { cwd: targetPath, stdio: 'ignore' });
       } catch (error) {
         spinner.warn('Failed to initialize git repository');
       }
     } else {
       // Use external generator
       spinner.text = `Running ${templateConfig.generator}...`;
-      
+
       if (!('options' in templateConfig)) {
         spinner.fail('Template configuration is missing options property');
         return;
       }
-      
-      const command = `npx ${templateConfig.generator} ${name} ${templateConfig.options.join(' ')}`;
-      
-      // Change to projects directory first
-      process.chdir(path.dirname(targetPath));
-      
+
+      // Temporarily pause the spinner while the generator is running
+      spinner.stop();
+
       try {
-        execSync(command, { stdio: 'ignore' });
+        // Run the generator directly in the projects directory
+        await runCommand('npx', [
+          '--yes',
+          templateConfig.generator,
+          name,
+          ...templateConfig.options
+        ], PROJECTS_DIR);
+
+        // Restart the spinner
+        spinner.start('Project created successfully');
       } catch (error) {
         spinner.fail(`Failed to run generator: ${templateConfig.generator}`);
         console.error(error);
         return;
       }
     }
-    
+
+    // Create .superstack.json file to mark it as a Superstack project
+    await fs.writeJson(path.join(targetPath, '.superstack.json'), {
+      name,
+      template,
+      created: new Date().toISOString()
+    }, { spaces: 2 });
+
     spinner.succeed(`Project created successfully: ${chalk.green(name)}`);
-    
+
     console.log('\nNext steps:');
-    console.log(`  1. cd ${path.relative(process.cwd(), targetPath)}`);
+    console.log(`  1. cd ${targetPath}`);
     console.log('  2. dev context init');
     console.log('  3. npm install (or yarn)');
     console.log('  4. npm run dev (or yarn dev)');
@@ -173,6 +210,6 @@ export default function(program: Command) {
     .option('-t, --template <template>', 'Project template')
     .option('-p, --path <path>', 'Custom project location')
     .action(createProject);
-  
+
   return newCommand;
 }

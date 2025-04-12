@@ -1,0 +1,123 @@
+---
+title: Environment Setup Guide
+description: A template for documenting environment setup instructions for projects
+author: Superstack
+version: 1.0.0
+date: {{date}}
+---
+# {{projectName}} Environment Setup Guide
+
+## System Requirements
+
+### Hardware Requirements
+- **Processor**: {{requirements.processor}}
+- **RAM**: {{requirements.ram}}
+- **Disk Space**: {{requirements.diskSpace}}
+{{#if requirements.gpu}}
+- **GPU**: {{requirements.gpu}}
+{{/if}}
+
+### Software Prerequisites
+{{#each prerequisites}}
+- **{{name}}**: {{version}}
+  {{#if installCommand}}
+  ```bash
+  {{installCommand}}
+  ```
+  {{/if}}
+  {{#if notes}}
+  > {{notes}}
+  {{/if}}
+{{/each}}
+
+## Installation Steps
+
+### 1. Clone the Repository
+```bash
+git clone {{repositoryUrl}}
+cd {{projectDirectory}}
+```
+
+### 2. Environment Setup
+{{#if useVirtualEnv}}
+#### Create a Virtual Environment
+```bash
+{{virtualEnvCommand}}
+```
+
+#### Activate the Environment
+```bash
+{{activateCommand}}
+```
+{{/if}}
+
+### 3. Install Dependencies
+```bash
+{{dependencyInstallCommand}}
+```
+
+{{#if configFiles}}
+### 4. Configuration
+{{#each configFiles}}
+#### {{name}}
+{{description}}
+
+{{#if template}}
+Example configuration:
+```
+{{template}}
+```
+{{/if}}
+
+{{#if setupCommand}}
+Setup command:
+```bash
+{{setupCommand}}
+```
+{{/if}}
+{{/each}}
+{{/if}}
+
+{{#if databaseSetup}}
+### 5. Database Setup
+{{databaseSetup}}
+```bash
+{{databaseSetupCommand}}
+```
+{{/if}}
+
+### {{#if databaseSetup}}6{{else}}5{{/if}}. Environment Variables
+Create a `.env` file in the project root with the following variables:
+
+```
+{{envVariables}}
+```
+
+## Running the Project
+
+### Development Mode
+```bash
+{{devCommand}}
+```
+
+### Production Mode
+```bash
+{{prodCommand}}
+```
+
+{{#if tests}}
+## Running Tests
+```bash
+{{testCommand}}
+```
+{{/if}}
+
+## Troubleshooting
+
+{{#each troubleshooting}}
+### {{issue}}
+{{solution}}
+{{/each}}
+
+---
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

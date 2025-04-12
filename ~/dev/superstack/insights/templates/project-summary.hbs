@@ -1,0 +1,59 @@
+---
+title: Project Summary
+description: A comprehensive summary of the project
+author: Superstack
+version: 1.0.0
+date: {{date}}
+---
+# {{projectName}} Summary
+
+{{#if description}}
+## Description
+{{description}}
+{{/if}}
+
+## Overview
+{{overview}}
+
+## Key Features
+{{#each features}}
+- {{this}}
+{{/each}}
+
+## Tech Stack
+{{#each techStack}}
+- **{{@key}}**: {{this}}
+{{/each}}
+
+## Project Structure
+```
+{{projectStructure}}
+```
+
+## Getting Started
+{{gettingStarted}}
+
+{{#if installation}}
+### Installation
+```bash
+{{installation}}
+```
+{{/if}}
+
+{{#if usage}}
+### Usage
+```bash
+{{usage}}
+```
+{{/if}}
+
+## Next Steps
+{{#each nextSteps}}
+- [ ] {{this}}
+{{/each}}
+
+## Notes
+{{notes}}
+
+---
+Generated on {{date 'YYYY-MM-DD HH:mm'}} with Superstack Insights 

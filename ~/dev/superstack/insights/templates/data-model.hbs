@@ -1,0 +1,268 @@
+# Data Model: {{dataModelName}}
+
+## Document Information
+
+**Version**: {{version}}  
+**Last Updated**: {{date 'YYYY-MM-DD'}}  
+**Status**: {{status}}  
+**Authors**: {{authors}}  
+
+## Overview
+
+{{#if overview}}
+{{overview}}
+{{else}}
+*Provide a brief description of this data model and its purpose in the system.*
+{{/if}}
+
+## Entity Relationship Diagram
+
+{{#if erdDiagram}}
+{{erdDiagram}}
+{{else}}
+```
+┌─────────────┐     ┌─────────────┐
+│             │     │             │
+│    User     │     │   Project   │
+│             │     │             │
+└──────┬──────┘     └──────┬──────┘
+       │                   │
+       │ 1:N               │ 1:N
+       ▼                   ▼
+┌─────────────┐     ┌─────────────┐
+│             │     │             │
+│   Profile   │◄───►│    Task     │
+│             │     │             │
+└─────────────┘     └─────────────┘
+```
+*[Replace with an ERD showing the relationships between your key entities]*
+{{/if}}
+
+## Entities
+
+{{#if entities}}
+{{#each entities}}
+### {{name}}
+
+{{description}}
+
+**Primary Key**: {{primaryKey}}
+
+{{#if relationships}}
+**Relationships**:
+{{#each relationships}}
+- **{{relatedEntity}}**: {{relationshipType}} - {{description}}
+{{/each}}
+{{/if}}
+
+#### Attributes
+
+| Name | Type | Description | Constraints | Default |
+|------|------|-------------|-------------|---------|
+{{#each attributes}}
+| {{name}} | {{type}} | {{description}} | {{constraints}} | {{default}} |
+{{/each}}
+
+{{#if indexes}}
+#### Indexes
+
+| Name | Fields | Type | Description |
+|------|--------|------|-------------|
+{{#each indexes}}
+| {{name}} | {{fields}} | {{type}} | {{description}} |
+{{/each}}
+{{/if}}
+
+{{#if validationRules}}
+#### Validation Rules
+
+{{#each validationRules}}
+- {{rule}}
+{{/each}}
+{{/if}}
+
+---
+
+{{/each}}
+{{else}}
+### [Entity Name]
+
+*Description of what this entity represents in the system.*
+
+**Primary Key**: [Field name or composition]
+
+**Relationships**:
+- **[Related Entity]**: [One-to-Many/Many-to-One/etc.] - [Description of relationship]
+
+#### Attributes
+
+| Name | Type | Description | Constraints | Default |
+|------|------|-------------|-------------|---------|
+| id | UUID | Unique identifier | NOT NULL | generated |
+| name | String | Name of the entity | NOT NULL, MAX 100 | - |
+| description | Text | Detailed description | - | NULL |
+| createdAt | DateTime | Creation timestamp | NOT NULL | NOW() |
+| updatedAt | DateTime | Last update timestamp | NOT NULL | NOW() |
+
+#### Indexes
+
+| Name | Fields | Type | Description |
+|------|--------|------|-------------|
+| idx_entity_name | name | BTREE | Improves search by name |
+
+#### Validation Rules
+
+- Name must consist of alphanumeric characters and spaces only
+- Description cannot exceed 1000 characters
+
+---
+{{/if}}
+
+## Data Types
+
+{{#if dataTypes}}
+{{#each dataTypes}}
+### {{name}}
+
+{{description}}
+
+{{#if values}}
+**Possible Values**:
+{{#each values}}
+- `{{value}}`: {{description}}
+{{/each}}
+{{/if}}
+
+---
+
+{{/each}}
+{{else}}
+### [Custom Type Name]
+
+*Description of this custom data type and its purpose.*
+
+**Possible Values**:
+- `VALUE_1`: Description of this value
+- `VALUE_2`: Description of this value
+
+---
+{{/if}}
+
+## Migrations and Versioning
+
+{{#if migrations}}
+{{migrations}}
+{{else}}
+*Document your migration strategy and version history here. Include:*
+
+- How schema changes are applied
+- Version control for the data model
+- Backward compatibility considerations
+- Data migration procedures
+{{/if}}
+
+## Data Access Patterns
+
+{{#if accessPatterns}}
+{{#each accessPatterns}}
+### {{name}}
+
+**Description**: {{description}}
+
+**Query Pattern**:
+```
+{{queryPattern}}
+```
+
+**Expected Performance**: {{performance}}
+
+---
+
+{{/each}}
+{{else}}
+### [Access Pattern Name]
+
+**Description**: Common data access scenario and its purpose
+
+**Query Pattern**:
+```
+[Example query or access code]
+```
+
+**Expected Performance**: [Performance characteristics, e.g., O(1), sub-second, etc.]
+
+---
+{{/if}}
+
+## Data Validation and Integrity
+
+{{#if dataIntegrity}}
+{{dataIntegrity}}
+{{else}}
+*Describe how data integrity is maintained across the system:*
+
+- **Validation**: [Business rules and validation approach]
+- **Constraints**: [Database-level constraints]
+- **Referential Integrity**: [How foreign key relationships are enforced]
+- **Transaction Boundaries**: [How ACID properties are ensured]
+{{/if}}
+
+## Data Governance
+
+{{#if dataGovernance}}
+{{dataGovernance}}
+{{else}}
+*Document data governance considerations:*
+
+- **Ownership**: [Who owns and is responsible for each data entity]
+- **Retention Policy**: [How long data is kept and when it's deleted/archived]
+- **Privacy Considerations**: [PII handling, privacy regulations compliance]
+- **Audit Requirements**: [What data changes need to be tracked and how]
+{{/if}}
+
+## Data Security
+
+{{#if dataSecurity}}
+{{dataSecurity}}
+{{else}}
+*Outline security measures protecting this data:*
+
+- **Encryption**: [At-rest and in-transit encryption]
+- **Access Control**: [Who can access what data and how it's enforced]
+- **Masking/Anonymization**: [Strategies for protecting sensitive fields]
+- **Security Classifications**: [Different levels of data sensitivity]
+{{/if}}
+
+## Storage Considerations
+
+{{#if storageConsiderations}}
+{{storageConsiderations}}
+{{else}}
+*Document storage-related considerations:*
+
+- **Expected Volume**: [Data growth projections]
+- **Storage Format**: [How data is physically stored]
+- **Partitioning Strategy**: [How data is distributed]
+- **Archiving Strategy**: [When and how data is archived]
+{{/if}}
+
+## Related Models
+
+{{#if relatedModels}}
+{{#each relatedModels}}
+- [{{name}}]({{link}}) - {{relationship}}
+{{/each}}
+{{else}}
+- [Related Model Name](link) - [How it relates to this data model]
+{{/if}}
+
+## Notes and Open Issues
+
+{{#if notes}}
+{{notes}}
+{{else}}
+*Any additional information, implementation notes, or open questions.*
+{{/if}}
+
+---
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

@@ -1,0 +1,226 @@
+# Architecture Decision Record: {{title}}
+
+## Document Information
+**ADR ID**: {{adrId}}  
+**Status**: {{status}} *(Proposed/Accepted/Rejected/Deprecated/Superseded)*  
+**Author**: {{author}}  
+**Date**: {{date 'YYYY-MM-DD'}}  
+**Supersedes**: {{supersedes}}  
+**Superseded by**: {{supersededBy}}  
+
+## Context
+
+{{#if context}}
+{{context}}
+{{else}}
+*Describe the issue or problem statement that this decision addresses. Include relevant constraints (technical, business, regulatory, etc.) and any external factors influencing the decision. What brought us to this point?*
+
+*Example: Our application currently handles user authentication directly, storing credentials in our database. As we scale, we need a more robust approach to user identity and access management that supports additional authentication methods, improves security, and reduces development overhead.*
+{{/if}}
+
+## Decision
+
+{{#if decision}}
+{{decision}}
+{{else}}
+**We will: *[concise statement of the decision]***
+
+*Provide a clear statement of the decision made. Be specific about what was chosen and what was explicitly not chosen. This should be a relatively brief but precise description.*
+
+*Example: We will implement OAuth 2.0/OpenID Connect for authentication and authorization using Auth0 as our identity provider. We will migrate our existing users to this system over a period of 3 months while maintaining backward compatibility.*
+{{/if}}
+
+## Technical Details
+
+{{#if technicalDetails}}
+{{technicalDetails}}
+{{else}}
+*Provide more detailed technical information about the decision. This may include:*
+
+### Implementation Approach
+*Explain the key technical aspects of how this will be implemented.*
+
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│    Client   │────▶│  Auth0 IDP  │◀───▶│  Our API    │
+└─────────────┘     └─────────────┘     └─────────────┘
+```
+
+### Key Components
+*List the major components involved and their roles:*
+
+- Component A: *Responsibilities*
+- Component B: *Responsibilities*
+- Component C: *Responsibilities*
+
+### Integration Points
+*Describe major integration points:*
+
+1. Client to Auth Service
+2. Auth Service to API Gateway
+3. API Gateway to Microservices
+
+### Security Considerations
+*Address security aspects:*
+
+- Data encryption approach
+- Token handling mechanism
+- Access control implementation
+{{/if}}
+
+## Consequences
+
+{{#if consequences}}
+{{consequences}}
+{{else}}
+*Describe the resulting context after applying the decision. Include both positive and negative consequences. Consider impacts on:*
+
+### Positive
+- *List positive consequences of this decision*
+- *Example: Increased security through industry-standard protocols*
+- *Example: Reduced development time for authentication features*
+- *Example: Support for multi-factor authentication and social logins*
+
+### Negative
+- *List negative consequences or trade-offs of this decision*
+- *Example: Increased dependency on a third-party service*
+- *Example: Additional network latency during authentication flows*
+- *Example: Learning curve for developers unfamiliar with OAuth 2.0*
+
+### Neutral/Notes
+- *Other notable consequences that are neither clearly positive nor negative*
+- *Example: Need for updated documentation and training*
+- *Example: Regular review of Auth0's pricing and feature changes*
+{{/if}}
+
+## Alternatives Considered
+
+{{#if alternatives}}
+{{alternatives}}
+{{else}}
+*List the alternatives that were considered and why they were not chosen. This demonstrates due diligence and helps future readers understand the decision context.*
+
+### Alternative 1: *[Description]*
+**Pros**:
+- *List advantages of this alternative*
+
+**Cons**:
+- *List disadvantages of this alternative*
+
+**Why Rejected**: *Concise explanation of why this option wasn't chosen*
+
+### Alternative 2: *[Description]*
+**Pros**:
+- *List advantages of this alternative*
+
+**Cons**:
+- *List disadvantages of this alternative*
+
+**Why Rejected**: *Concise explanation of why this option wasn't chosen*
+{{/if}}
+
+## Validation
+
+{{#if validation}}
+{{validation}}
+{{else}}
+*How will we know this decision is successful? Define measurable outcomes that can be used to validate the decision.*
+
+### Success Metrics
+- *Metric 1*: *Description and target value*
+- *Metric 2*: *Description and target value*
+- *Metric 3*: *Description and target value*
+
+### Validation Approach
+*Describe the approach for validating this decision:*
+
+- *Timeline for evaluation*
+- *Testing methodology*
+- *User feedback collection*
+{{/if}}
+
+## Compliance
+
+{{#if compliance}}
+{{compliance}}
+{{else}}
+*Does this decision address or affect compliance with regulations, standards, or organizational policies?*
+
+- *Regulation/Standard/Policy 1*: *Impact and compliance approach*
+- *Regulation/Standard/Policy 2*: *Impact and compliance approach*
+{{/if}}
+
+## Implementation Plan
+
+{{#if implementationPlan}}
+{{implementationPlan}}
+{{else}}
+*A high-level implementation plan for putting this decision into practice:*
+
+### Phase 1: *[Description]* (Timeline: *X weeks*)
+- *Task 1*
+- *Task 2*
+- *Task 3*
+
+### Phase 2: *[Description]* (Timeline: *Y weeks*)
+- *Task 1*
+- *Task 2*
+- *Task 3*
+
+### Required Resources
+- *Engineering time: X person-weeks*
+- *Additional infrastructure: Y*
+- *External dependencies: Z*
+{{/if}}
+
+## Related Decisions
+
+{{#if relatedDecisions}}
+{{relatedDecisions}}
+{{else}}
+*List related architecture decisions that influenced this one or that will be influenced by this one:*
+
+- [ADR-001: Microservice Architecture](link-to-adr)
+- [ADR-002: API Gateway Implementation](link-to-adr)
+{{/if}}
+
+## Notes
+
+{{#if notes}}
+{{notes}}
+{{else}}
+*Additional information that doesn't fit into the sections above but is relevant to understanding the decision. This might include:*
+
+- *References to relevant discussions or meetings*
+- *Links to background research or articles*
+- *Historical context*
+- *Future considerations*
+{{/if}}
+
+## References
+
+{{#if references}}
+{{references}}
+{{else}}
+- [Reference 1](http://example.com)
+- [Reference 2](http://example.com)
+- [Internal Documentation](http://internal-link)
+{{/if}}
+
+## Approval
+
+{{#if approval}}
+{{approval}}
+{{else}}
+| Role | Name | Date | Comments |
+|------|------|------|----------|
+| *Engineering Lead* | | | |
+| *Architecture Committee* | | | |
+| *Security Team* | | | |
+| *Product Management* | | | |
+{{/if}}
+
+---
+*This ADR follows the Superstack ADR template. All architectural decisions should be documented using this format to ensure consistency and traceability.*
+
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

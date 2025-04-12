@@ -1,0 +1,284 @@
+# Sequence Diagram: {{workflowName}}
+
+## Document Information
+
+**Version**: {{version}}  
+**Last Updated**: {{date 'YYYY-MM-DD'}}  
+**Status**: {{status}}  
+**Authors**: {{authors}}  
+**Related Components**: {{relatedComponents}}
+
+## Overview
+
+{{#if overview}}
+{{overview}}
+{{else}}
+*Provide a brief description of this workflow/interaction and its purpose in the system.*
+{{/if}}
+
+## Preconditions
+
+{{#if preconditions}}
+{{#each preconditions}}
+- {{this}}
+{{/each}}
+{{else}}
+- [List preconditions that must be satisfied before this workflow begins]
+{{/if}}
+
+## Postconditions
+
+{{#if postconditions}}
+{{#each postconditions}}
+- {{this}}
+{{/each}}
+{{else}}
+- [List conditions that will be true after this workflow completes successfully]
+{{/if}}
+
+## Actors
+
+{{#if actors}}
+{{#each actors}}
+- **{{name}}**: {{description}}
+{{/each}}
+{{else}}
+- **[Actor Name]**: [Description of the actor's role]
+{{/if}}
+
+## Basic Flow
+
+{{#if basicFlow.description}}
+{{basicFlow.description}}
+{{else}}
+*Describe the normal, successful path of this workflow.*
+{{/if}}
+
+{{#if basicFlow.diagram}}
+{{basicFlow.diagram}}
+{{else}}
+```
+┌─────────┐          ┌─────────┐          ┌─────────┐          ┌─────────┐
+│         │          │         │          │         │          │         │
+│ Client  │          │  API    │          │ Service │          │ Database│
+│         │          │ Gateway │          │         │          │         │
+└────┬────┘          └────┬────┘          └────┬────┘          └────┬────┘
+     │                    │                    │                    │
+     │ Request            │                    │                    │
+     │───────────────────>│                    │                    │
+     │                    │                    │                    │
+     │                    │ Forward Request    │                    │
+     │                    │───────────────────>│                    │
+     │                    │                    │                    │
+     │                    │                    │ Query              │
+     │                    │                    │───────────────────>│
+     │                    │                    │                    │
+     │                    │                    │ Response           │
+     │                    │                    │<───────────────────│
+     │                    │                    │                    │
+     │                    │ Response           │                    │
+     │                    │<───────────────────│                    │
+     │                    │                    │                    │
+     │ Response           │                    │                    │
+     │<───────────────────│                    │                    │
+     │                    │                    │                    │
+```
+*[Replace with a sequence diagram showing the flow of interactions between components]*
+{{/if}}
+
+{{#if basicFlow.steps}}
+### Steps
+
+{{#each basicFlow.steps}}
+**{{stepNumber}}.** {{description}}
+   {{#if details}}
+   - {{details}}
+   {{/if}}
+   {{#if data}}
+   - **Data**: ```{{data}}```
+   {{/if}}
+
+{{/each}}
+{{else}}
+### Steps
+
+**1.** [Actor/Component] sends [message/request] to [Actor/Component]
+   - [Additional details about the interaction]
+   - **Data**: ```[Sample of the data sent, if applicable]```
+
+**2.** [Actor/Component] validates the request
+   - [Validation logic or checks performed]
+
+**3.** [Actor/Component] processes the request
+   - [Processing details]
+
+**4.** [Actor/Component] sends response to [Actor/Component]
+   - **Data**: ```[Sample of the response data]```
+
+**5.** [Actor/Component] displays/stores the result
+   - [Details about how the result is handled]
+{{/if}}
+
+## Alternative Flows
+
+{{#if alternativeFlows}}
+{{#each alternativeFlows}}
+### {{name}}
+
+{{description}}
+
+{{#if diagram}}
+{{diagram}}
+{{/if}}
+
+{{#if steps}}
+#### Steps
+
+{{#each steps}}
+**{{stepNumber}}.** {{description}}
+   {{#if details}}
+   - {{details}}
+   {{/if}}
+   {{#if data}}
+   - **Data**: ```{{data}}```
+   {{/if}}
+
+{{/each}}
+{{/if}}
+
+---
+{{/each}}
+{{else}}
+### [Alternative Flow Name]
+
+*Description of when this alternative flow occurs and what it does differently from the main flow.*
+
+```
+[Optional sequence diagram for this alternative flow]
+```
+
+#### Steps
+
+**1.** [First step of the alternative flow]
+   - [Additional details]
+
+**2.** [Next step]
+   - [Additional details]
+
+---
+{{/if}}
+
+## Error Scenarios
+
+{{#if errorScenarios}}
+{{#each errorScenarios}}
+### {{name}}
+
+{{description}}
+
+{{#if diagram}}
+{{diagram}}
+{{/if}}
+
+**Error Code**: {{errorCode}}
+
+**Resolution**: {{resolution}}
+
+{{#if steps}}
+#### Steps
+
+{{#each steps}}
+**{{stepNumber}}.** {{description}}
+   {{#if details}}
+   - {{details}}
+   {{/if}}
+   {{#if data}}
+   - **Data**: ```{{data}}```
+   {{/if}}
+
+{{/each}}
+{{/if}}
+
+---
+{{/each}}
+{{else}}
+### [Error Scenario Name]
+
+*Description of this error scenario, what causes it, and its impact.*
+
+```
+[Optional sequence diagram showing the error flow]
+```
+
+**Error Code**: [Error code or identifier]
+
+**Resolution**: [How the system recovers or how users can resolve this error]
+
+#### Steps
+
+**1.** [Step where the error occurs]
+   - [Details about what goes wrong]
+   - **Data**: ```[Sample error response]```
+
+**2.** [Error handling step]
+   - [How the error is handled]
+
+---
+{{/if}}
+
+## Performance Considerations
+
+{{#if performanceConsiderations}}
+{{#each performanceConsiderations}}
+- **{{aspect}}**: {{description}}
+{{/each}}
+{{else}}
+- **Expected Response Time**: [Target response time for this workflow]
+- **Throughput**: [Expected transactions per second]
+- **Resource Usage**: [CPU, memory, network, or other resource considerations]
+- **Bottlenecks**: [Potential bottlenecks and mitigation strategies]
+{{/if}}
+
+## Security Considerations
+
+{{#if securityConsiderations}}
+{{#each securityConsiderations}}
+- **{{aspect}}**: {{description}}
+{{/each}}
+{{else}}
+- **Authentication**: [Authentication requirements]
+- **Authorization**: [Authorization checks needed]
+- **Data Protection**: [How sensitive data is protected]
+- **Audit**: [Auditing requirements for this workflow]
+{{/if}}
+
+## Dependencies
+
+{{#if dependencies}}
+{{#each dependencies}}
+- **{{name}}**: {{description}}
+{{/each}}
+{{else}}
+- **[Dependency Name]**: [Description of how this workflow depends on other components, services, or external systems]
+{{/if}}
+
+## Related Workflows
+
+{{#if relatedWorkflows}}
+{{#each relatedWorkflows}}
+- [{{name}}]({{link}}) - {{relationship}}
+{{/each}}
+{{else}}
+- [Related Workflow Name](link) - [How it relates to this workflow]
+{{/if}}
+
+## Notes
+
+{{#if notes}}
+{{notes}}
+{{else}}
+*Any additional information, implementation details, or context that doesn't fit elsewhere.*
+{{/if}}
+
+---
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

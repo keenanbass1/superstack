@@ -1,0 +1,425 @@
+---
+title: {{apiName}} API Documentation
+version: {{version}}
+description: Technical documentation for the {{apiName}} API
+baseUrl: {{baseUrl}}
+date: {{date}}
+---
+
+# {{apiName}} API Documentation
+
+## Overview
+
+{{overview}}
+
+**Base URL**: `{{baseUrl}}`
+
+**API Version**: {{version}}
+
+## Authentication
+
+{{#if authentication}}
+{{authentication}}
+{{else}}
+*Document the authentication methods supported by the API.*
+{{/if}}
+
+{{#if authExamples}}
+### Authentication Examples
+
+{{#each authExamples}}
+#### {{name}}
+
+```{{language}}
+{{code}}
+```
+{{/each}}
+{{/if}}
+
+## Rate Limiting
+
+{{#if rateLimiting}}
+{{rateLimiting}}
+{{else}}
+*Document any rate limiting policies for the API.*
+{{/if}}
+
+## Common HTTP Status Codes
+
+{{#if statusCodes}}
+| Code | Description |
+|------|-------------|
+{{#each statusCodes}}
+| {{code}} | {{description}} |
+{{/each}}
+{{else}}
+*Document the common HTTP status codes returned by the API endpoints.*
+{{/if}}
+
+## Common Error Responses
+
+{{#if errorResponses}}
+{{#each errorResponses}}
+### {{name}}
+
+**Status**: {{status}}
+
+**Description**: {{description}}
+
+**Response Body**:
+```json
+{{responseBody}}
+```
+
+{{/each}}
+{{else}}
+*Document the standard error response format for the API.*
+{{/if}}
+
+## Endpoints
+
+{{#if endpoints}}
+{{#each endpoints}}
+### {{name}}
+
+**URL**: `{{method}} {{path}}`
+
+**Description**: {{description}}
+
+{{#if authentication}}
+**Authentication Required**: {{authentication}}
+{{/if}}
+
+{{#if pathParameters}}
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+{{#each pathParameters}}
+| {{name}} | {{type}} | {{required}} | {{description}} |
+{{/each}}
+{{/if}}
+
+{{#if queryParameters}}
+#### Query Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+{{#each queryParameters}}
+| {{name}} | {{type}} | {{required}} | {{default}} | {{description}} |
+{{/each}}
+{{/if}}
+
+{{#if requestHeaders}}
+#### Request Headers
+
+| Header | Required | Description |
+|--------|----------|-------------|
+{{#each requestHeaders}}
+| {{name}} | {{required}} | {{description}} |
+{{/each}}
+{{/if}}
+
+{{#if requestBody}}
+#### Request Body
+
+{{#if requestBody.contentType}}
+**Content Type**: `{{requestBody.contentType}}`
+{{/if}}
+
+{{#if requestBody.schema}}
+**Schema**:
+
+```json
+{{requestBody.schema}}
+```
+{{/if}}
+
+{{#if requestBody.example}}
+**Example**:
+
+```json
+{{requestBody.example}}
+```
+{{/if}}
+{{/if}}
+
+#### Response
+
+{{#if successResponse}}
+**Success Response**:
+
+**Status**: {{successResponse.status}}
+
+{{#if successResponse.contentType}}
+**Content Type**: `{{successResponse.contentType}}`
+{{/if}}
+
+{{#if successResponse.schema}}
+**Schema**:
+
+```json
+{{successResponse.schema}}
+```
+{{/if}}
+
+{{#if successResponse.example}}
+**Example**:
+
+```json
+{{successResponse.example}}
+```
+{{/if}}
+{{/if}}
+
+{{#if errorResponses}}
+**Error Responses**:
+
+{{#each errorResponses}}
+##### {{status}} {{name}}
+
+{{description}}
+
+```json
+{{example}}
+```
+
+{{/each}}
+{{/if}}
+
+{{#if examples}}
+#### Examples
+
+{{#each examples}}
+##### {{name}}
+
+{{#if description}}
+{{description}}
+{{/if}}
+
+{{#if request}}
+**Request**:
+
+```{{requestLanguage}}
+{{request}}
+```
+{{/if}}
+
+{{#if response}}
+**Response**:
+
+```{{responseLanguage}}
+{{response}}
+```
+{{/if}}
+
+{{/each}}
+{{/if}}
+
+{{#if notes}}
+#### Notes
+
+{{notes}}
+{{/if}}
+
+{{/each}}
+{{else}}
+*Document the API endpoints with their parameters, request/response formats, and examples.*
+{{/if}}
+
+## Data Models
+
+{{#if models}}
+{{#each models}}
+### {{name}}
+
+{{description}}
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+{{#each fields}}
+| {{name}} | {{type}} | {{required}} | {{description}} |
+{{/each}}
+
+{{#if example}}
+**Example**:
+
+```json
+{{example}}
+```
+{{/if}}
+
+{{/each}}
+{{else}}
+*Document the data models used in the API.*
+{{/if}}
+
+## Pagination
+
+{{#if pagination}}
+{{pagination}}
+{{else}}
+*Document how pagination works in the API, if applicable.*
+{{/if}}
+
+## Filtering
+
+{{#if filtering}}
+{{filtering}}
+{{else}}
+*Document the filtering capabilities of the API, if applicable.*
+{{/if}}
+
+## Sorting
+
+{{#if sorting}}
+{{sorting}}
+{{else}}
+*Document the sorting capabilities of the API, if applicable.*
+{{/if}}
+
+## Versioning
+
+{{#if versioning}}
+{{versioning}}
+{{else}}
+*Document the API versioning strategy.*
+{{/if}}
+
+## Webhooks
+
+{{#if webhooks}}
+{{#each webhooks}}
+### {{name}}
+
+**Event**: `{{event}}`
+
+**Description**: {{description}}
+
+**Payload**:
+
+```json
+{{payload}}
+```
+
+{{/each}}
+{{else}}
+*Document webhooks provided by the API, if applicable.*
+{{/if}}
+
+## SDK and Client Libraries
+
+{{#if sdks}}
+{{#each sdks}}
+### {{name}}
+
+**Language**: {{language}}
+
+**Repository**: [{{repository.name}}]({{repository.url}})
+
+**Installation**:
+
+```{{language}}
+{{installation}}
+```
+
+**Usage Example**:
+
+```{{language}}
+{{example}}
+```
+
+{{/each}}
+{{else}}
+*Document SDK and client libraries for the API, if available.*
+{{/if}}
+
+## Implementation Examples
+
+{{#if implementationExamples}}
+{{#each implementationExamples}}
+### {{name}}
+
+{{description}}
+
+```{{language}}
+{{code}}
+```
+
+{{/each}}
+{{else}}
+*Provide examples of how to use the API in different scenarios.*
+{{/if}}
+
+## FAQ
+
+{{#if faq}}
+{{#each faq}}
+### {{question}}
+
+{{answer}}
+
+{{/each}}
+{{else}}
+*Document frequently asked questions about the API.*
+{{/if}}
+
+## Best Practices
+
+{{#if bestPractices}}
+{{bestPractices}}
+{{else}}
+*Document best practices for using the API.*
+{{/if}}
+
+## Known Limitations
+
+{{#if limitations}}
+{{#each limitations}}
+- {{this}}
+{{/each}}
+{{else}}
+*Document any known limitations or constraints of the API.*
+{{/if}}
+
+## Deprecation Policy
+
+{{#if deprecationPolicy}}
+{{deprecationPolicy}}
+{{else}}
+*Document the API's deprecation policy and how deprecated features are handled.*
+{{/if}}
+
+## Change Log
+
+{{#if changelog}}
+{{#each changelog}}
+### {{version}} ({{date}})
+
+{{#each changes}}
+- {{this}}
+{{/each}}
+
+{{/each}}
+{{else}}
+*Document changes to the API across versions.*
+{{/if}}
+
+## Support
+
+{{#if supportInfo}}
+{{supportInfo}}
+{{else}}
+*Document how to get support for the API.*
+{{/if}}
+
+## Legal
+
+{{#if legal}}
+{{legal}}
+{{else}}
+*Document terms of service, privacy policy, and any legal information related to the API.*
+{{/if}}
+
+---
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

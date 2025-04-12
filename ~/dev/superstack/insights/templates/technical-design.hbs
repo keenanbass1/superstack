@@ -1,0 +1,443 @@
+---
+title: {{featureName}} Technical Design Document
+version: {{version}}
+author: {{author}}
+created: {{date}}
+status: {{status}}
+---
+
+# {{featureName}} Technical Design Document
+
+## Overview
+
+{{#if overview}}
+{{overview}}
+{{else}}
+*Brief description of what this technical design covers and its scope.*
+{{/if}}
+
+## Related Documents
+
+{{#if relatedDocuments}}
+{{#each relatedDocuments}}
+- [{{name}}]({{link}})
+{{/each}}
+{{else}}
+*Links to PRDs, feature specifications, architecture documents, or other related materials.*
+{{/if}}
+
+## Goals and Non-Goals
+
+### Goals
+
+{{#if goals}}
+{{#each goals}}
+- {{this}}
+{{/each}}
+{{else}}
+*What this design aims to accomplish.*
+{{/if}}
+
+### Non-Goals
+
+{{#if nonGoals}}
+{{#each nonGoals}}
+- {{this}}
+{{/each}}
+{{else}}
+*What this design explicitly does not aim to address.*
+{{/if}}
+
+## Context and Background
+
+{{#if context}}
+{{context}}
+{{else}}
+*Relevant background information and context for understanding the design decisions.*
+{{/if}}
+
+## Current Implementation
+
+{{#if currentImplementation}}
+{{currentImplementation}}
+{{else}}
+*Description of the current system and implementation (if applicable).*
+{{/if}}
+
+## Proposed Solution
+
+{{#if proposedSolution}}
+{{proposedSolution}}
+{{else}}
+*High-level description of the proposed solution.*
+{{/if}}
+
+### System Architecture
+
+{{#if systemArchitecture}}
+{{systemArchitecture}}
+{{else}}
+*Diagram and description of how the solution fits into the broader system architecture.*
+
+```
+[Insert architecture diagram here]
+```
+{{/if}}
+
+### Detailed Design
+
+{{#if detailedDesign}}
+{{detailedDesign}}
+{{else}}
+*Detailed description of the implementation, including component breakdowns, interactions, and workflows.*
+{{/if}}
+
+#### Component Breakdown
+
+{{#if components}}
+{{#each components}}
+##### {{name}}
+
+**Purpose:** {{purpose}}
+
+**Implementation Details:**
+{{details}}
+
+**Interfaces:**
+```
+{{interfaces}}
+```
+
+{{/each}}
+{{else}}
+*Break down the solution into logical components and describe each in detail.*
+{{/if}}
+
+#### Data Models
+
+{{#if dataModels}}
+{{#each dataModels}}
+##### {{name}}
+
+**Schema:**
+```
+{{schema}}
+```
+
+**Validation Rules:**
+{{#each validationRules}}
+- {{this}}
+{{/each}}
+
+**Example:**
+```
+{{example}}
+```
+
+{{/each}}
+{{else}}
+*Describe any new or modified data models, including schemas, validation rules, and examples.*
+{{/if}}
+
+#### API Design
+
+{{#if apis}}
+{{#each apis}}
+##### {{name}}
+
+**Endpoint:** `{{method}} {{path}}`
+
+**Description:** {{description}}
+
+**Request Parameters:**
+{{#if requestParams}}
+{{#each requestParams}}
+- `{{name}}` ({{type}}): {{description}}
+{{/each}}
+{{else}}
+*None*
+{{/if}}
+
+**Request Body:**
+```
+{{requestBody}}
+```
+
+**Response:**
+```
+{{response}}
+```
+
+**Error Cases:**
+{{#each errorCases}}
+- {{code}}: {{description}}
+{{/each}}
+
+{{/each}}
+{{else}}
+*Document any new or modified APIs, including endpoints, request/response formats, and error handling.*
+{{/if}}
+
+#### Database Changes
+
+{{#if databaseChanges}}
+{{databaseChanges}}
+{{else}}
+*Describe any necessary database schema changes, migrations, or new tables/collections.*
+{{/if}}
+
+#### Algorithms and Logic
+
+{{#if algorithms}}
+{{#each algorithms}}
+##### {{name}}
+
+**Purpose:** {{purpose}}
+
+**Inputs:** {{inputs}}
+
+**Outputs:** {{outputs}}
+
+**Steps:**
+{{#each steps}}
+1. {{this}}
+{{/each}}
+
+**Pseudocode:**
+```
+{{pseudocode}}
+```
+
+{{/each}}
+{{else}}
+*Document any complex algorithms or business logic with pseudocode or flowcharts.*
+{{/if}}
+
+### User Interface Design
+
+{{#if uiDesign}}
+{{uiDesign}}
+{{else}}
+*If applicable, describe UI components, interaction flows, and mockups.*
+
+```
+[Insert UI mockups or wireframes here]
+```
+{{/if}}
+
+## Technical Considerations
+
+### Performance
+
+{{#if performance}}
+{{performance}}
+{{else}}
+*Analyze performance implications and optimization strategies.*
+{{/if}}
+
+### Scalability
+
+{{#if scalability}}
+{{scalability}}
+{{else}}
+*How will this solution scale as load increases?*
+{{/if}}
+
+### Security
+
+{{#if security}}
+{{security}}
+{{else}}
+*Identify security considerations and mitigations.*
+{{/if}}
+
+### Privacy
+
+{{#if privacy}}
+{{privacy}}
+{{else}}
+*Address any privacy implications and compliance requirements.*
+{{/if}}
+
+### Accessibility
+
+{{#if accessibility}}
+{{accessibility}}
+{{else}}
+*Ensure the solution meets accessibility standards and requirements.*
+{{/if}}
+
+### Internationalization/Localization
+
+{{#if i18n}}
+{{i18n}}
+{{else}}
+*Consider internationalization and localization needs.*
+{{/if}}
+
+### Resilience
+
+{{#if resilience}}
+{{resilience}}
+{{else}}
+*How will the system handle failures and recover gracefully?*
+{{/if}}
+
+## Dependencies
+
+{{#if dependencies}}
+{{#each dependencies}}
+### {{name}}
+
+**Type:** {{type}}
+
+**Status:** {{status}}
+
+**Owner:** {{owner}}
+
+**Timeline:** {{timeline}}
+
+**Impact if Delayed:** {{impact}}
+
+{{/each}}
+{{else}}
+*List dependencies on other teams, systems, or components.*
+{{/if}}
+
+## Implementation Plan
+
+{{#if implementationPlan}}
+{{implementationPlan}}
+{{else}}
+*Break down the implementation into phases or milestones.*
+{{/if}}
+
+### Timeline
+
+{{#if timeline}}
+{{#each timeline}}
+- **{{phase}}**: {{timeframe}} - {{description}}
+{{/each}}
+{{else}}
+*Estimated timeline for implementation phases.*
+{{/if}}
+
+### Testing Strategy
+
+{{#if testingStrategy}}
+{{testingStrategy}}
+{{else}}
+*Approach to testing, including unit, integration, and end-to-end tests.*
+{{/if}}
+
+#### Test Cases
+
+{{#if testCases}}
+{{#each testCases}}
+##### {{name}}
+
+**Description:** {{description}}
+
+**Preconditions:** {{preconditions}}
+
+**Steps:**
+{{#each steps}}
+1. {{this}}
+{{/each}}
+
+**Expected Result:** {{expectedResult}}
+
+{{/each}}
+{{else}}
+*Outline key test cases and scenarios.*
+{{/if}}
+
+### Rollout and Deployment
+
+{{#if rollout}}
+{{rollout}}
+{{else}}
+*Strategy for deploying changes, including feature flags, phased rollout, etc.*
+{{/if}}
+
+### Monitoring and Observability
+
+{{#if monitoring}}
+{{monitoring}}
+{{else}}
+*How will the changes be monitored and observed in production?*
+{{/if}}
+
+#### Metrics and Alerts
+
+{{#if metrics}}
+{{#each metrics}}
+- **{{name}}**: {{description}} (threshold: {{threshold}})
+{{/each}}
+{{else}}
+*Key metrics to track and alert thresholds.*
+{{/if}}
+
+### Rollback Plan
+
+{{#if rollbackPlan}}
+{{rollbackPlan}}
+{{else}}
+*How to roll back the changes if issues are detected.*
+{{/if}}
+
+## Alternatives Considered
+
+{{#if alternatives}}
+{{#each alternatives}}
+### Alternative {{@index}}: {{name}}
+
+**Description:** {{description}}
+
+**Pros:**
+{{#each pros}}
+- {{this}}
+{{/each}}
+
+**Cons:**
+{{#each cons}}
+- {{this}}
+{{/each}}
+
+**Reason Rejected:** {{reasonRejected}}
+
+{{/each}}
+{{else}}
+*Other solutions that were considered and why they were not selected.*
+{{/if}}
+
+## Open Questions
+
+{{#if openQuestions}}
+{{#each openQuestions}}
+- {{this}}
+{{/each}}
+{{else}}
+*List any unresolved questions or decisions that need to be made.*
+{{/if}}
+
+## References
+
+{{#if references}}
+{{#each references}}
+- [{{name}}]({{url}})
+{{/each}}
+{{else}}
+*Links to relevant documentation, standards, or resources.*
+{{/if}}
+
+## Appendix
+
+{{#if appendix}}
+{{appendix}}
+{{else}}
+*Additional supporting information or diagrams.*
+{{/if}}
+
+---
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

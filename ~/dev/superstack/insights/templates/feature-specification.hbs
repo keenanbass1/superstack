@@ -1,0 +1,307 @@
+---
+title: {{featureName}} Feature Specification
+version: {{version}}
+priority: {{priority}}
+status: {{status}}
+author: {{author}}
+created: {{date}}
+---
+
+# {{featureName}} Feature Specification
+
+## Overview
+
+{{overview}}
+
+## Business Context
+
+{{#if businessContext}}
+{{businessContext}}
+{{else}}
+*Describe the business problem this feature solves and its strategic importance.*
+{{/if}}
+
+## User Stories
+
+{{#if userStories}}
+{{#each userStories}}
+### User Story {{@index}}
+
+**As a** {{role}},  
+**I want to** {{action}},  
+**So that** {{benefit}}.
+
+{{#if acceptance}}
+**Acceptance Criteria:**
+{{#each acceptance}}
+- {{this}}
+{{/each}}
+{{/if}}
+
+{{/each}}
+{{else}}
+*List the user stories that describe the feature from the end user's perspective.*
+
+**Example:**
+**As a** premium subscriber,  
+**I want to** download content for offline viewing,  
+**So that** I can access it without an internet connection.
+
+**Acceptance Criteria:**
+- User can select content for offline download
+- Downloaded content is accessible when offline
+- Progress syncs when user reconnects
+{{/if}}
+
+## Requirements
+
+### Functional Requirements
+
+{{#if functionalRequirements}}
+{{#each functionalRequirements}}
+#### {{name}}
+
+{{description}}
+
+**Constraints:**
+{{#each constraints}}
+- {{this}}
+{{/each}}
+
+{{/each}}
+{{else}}
+*List the detailed functional requirements for this feature.*
+{{/if}}
+
+### Non-Functional Requirements
+
+{{#if nonFunctionalRequirements}}
+{{#each nonFunctionalRequirements}}
+#### {{name}}
+
+{{description}}
+
+**Metrics:**
+{{#each metrics}}
+- {{this}}
+{{/each}}
+
+{{/each}}
+{{else}}
+*Specify performance, security, usability, and other non-functional requirements.*
+
+**Examples:**
+- **Performance**: The feature must respond within 300ms for 95% of requests
+- **Security**: All data must be encrypted at rest and in transit
+- **Accessibility**: Must meet WCAG 2.1 AA compliance
+{{/if}}
+
+## Technical Design
+
+### Architecture
+
+{{#if architecture}}
+{{architecture}}
+{{else}}
+*Describe the high-level architecture for implementing this feature.*
+
+**Consider including:**
+- System components involved
+- Data flow diagrams
+- API endpoints
+- Database changes
+{{/if}}
+
+### Implementation Details
+
+{{#if implementationDetails}}
+{{implementationDetails}}
+{{else}}
+*Provide technical details about the implementation approach.*
+
+**Consider including:**
+- Algorithms
+- Data structures
+- Libraries/frameworks
+- Patterns/approaches
+{{/if}}
+
+### API Changes
+
+{{#if apiChanges}}
+{{#each apiChanges}}
+#### {{method}} {{endpoint}}
+
+**Description:** {{description}}
+
+**Request Parameters:**
+{{#if requestParams}}
+{{#each requestParams}}
+- `{{name}}` ({{type}}): {{description}} {{#if required}}(Required){{else}}(Optional){{/if}}
+{{/each}}
+{{else}}
+*None*
+{{/if}}
+
+**Request Body:**
+```json
+{{requestBody}}
+```
+
+**Response:**
+```json
+{{response}}
+```
+
+**Status Codes:**
+{{#each statusCodes}}
+- {{code}}: {{description}}
+{{/each}}
+
+{{/each}}
+{{else}}
+*Document any API changes required for this feature.*
+{{/if}}
+
+### Database Changes
+
+{{#if databaseChanges}}
+{{#each databaseChanges}}
+#### {{name}}
+
+**Type:** {{type}}
+
+**Description:** {{description}}
+
+{{#if schema}}
+**Schema:**
+```
+{{schema}}
+```
+{{/if}}
+
+{{#if migrations}}
+**Migration Strategy:**
+{{migrations}}
+{{/if}}
+
+{{/each}}
+{{else}}
+*Document any database schema changes, migrations, or new data models required.*
+{{/if}}
+
+### Frontend Changes
+
+{{#if frontendChanges}}
+{{frontendChanges}}
+{{else}}
+*Describe UI/UX changes, new components, state management, or other frontend considerations.*
+{{/if}}
+
+## Dependencies
+
+{{#if dependencies}}
+{{#each dependencies}}
+### {{name}}
+
+**Type:** {{type}}
+**Description:** {{description}}
+**Status:** {{status}}
+
+{{/each}}
+{{else}}
+*List dependencies on other features, systems, teams, or external services.*
+{{/if}}
+
+## Security Considerations
+
+{{#if securityConsiderations}}
+{{securityConsiderations}}
+{{else}}
+*Document security considerations, potential vulnerabilities, and mitigation strategies.*
+{{/if}}
+
+## Privacy Considerations
+
+{{#if privacyConsiderations}}
+{{privacyConsiderations}}
+{{else}}
+*Document any privacy implications and how user data will be handled.*
+{{/if}}
+
+## Testing Strategy
+
+{{#if testingStrategy}}
+{{testingStrategy}}
+{{else}}
+*Describe the testing approach for this feature.*
+
+**Consider including:**
+- Unit test coverage requirements
+- Integration testing approach
+- Performance testing methodology
+- QA test cases
+{{/if}}
+
+## Rollout Plan
+
+{{#if rolloutPlan}}
+{{rolloutPlan}}
+{{else}}
+*Describe the rollout strategy for this feature.*
+
+**Consider including:**
+- Phased rollout strategy
+- Feature flags
+- Monitoring plan
+- Rollback procedure
+{{/if}}
+
+## Analytics and Monitoring
+
+{{#if analyticsMonitoring}}
+{{analyticsMonitoring}}
+{{else}}
+*Specify metrics to track, logs to capture, and monitoring requirements.*
+
+**Consider including:**
+- Key metrics to measure success
+- Logging requirements
+- Alerting thresholds
+- Dashboard requirements
+{{/if}}
+
+## Documentation Requirements
+
+{{#if documentationRequirements}}
+{{documentationRequirements}}
+{{else}}
+*List documentation that needs to be created or updated.*
+
+**Consider including:**
+- User documentation
+- API documentation
+- Internal documentation
+- Training materials
+{{/if}}
+
+## Open Questions
+
+{{#if openQuestions}}
+{{#each openQuestions}}
+1. {{this}}
+{{/each}}
+{{else}}
+*List any unresolved questions or areas requiring further discussion.*
+{{/if}}
+
+## Appendix
+
+{{#if appendix}}
+{{appendix}}
+{{else}}
+*Additional information, references, or supporting materials.*
+{{/if}}
+
+---
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

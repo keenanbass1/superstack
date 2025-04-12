@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Directly execute the compiled JS without experimental loaders
+DEV_ROOT=/home/keena/dev
+PROJECTS_DIR=/home/keena/dev/projects
+export DEV_ROOT PROJECTS_DIR
+
+# Get the directory where this script is located
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Execute the compiled index.js file directly
+# Use NODE_NO_WARNINGS=1 to suppress any remaining deprecation warnings
+NODE_NO_WARNINGS=1 node "${DIR}/../dist/index.js" "$@"

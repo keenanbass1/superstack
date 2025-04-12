@@ -1,0 +1,58 @@
+# Sprint Planning Document
+
+## Sprint Overview
+**Sprint Number:** [Sprint Number]
+**Start Date:** [Start Date]
+**End Date:** [End Date]
+**Duration:** [Duration] days
+**Sprint Goal:** [Concise statement of the sprint objective]
+
+## Team Members
+- [Name] - [Role] - Capacity: [Hours]h
+- [Name] - [Role] - Capacity: [Hours]h
+- [Name] - [Role] - Capacity: [Hours]h
+
+## Sprint Backlog
+| ID | User Story | Description | Priority | Story Points | Assigned To | Notes |
+|---|---|---|---|---|---|---|
+| [ID] | [User Story] | [Description] | [Priority] | [Points] | [Team Member] | [Notes] |
+| [ID] | [User Story] | [Description] | [Priority] | [Points] | [Team Member] | [Notes] |
+
+## Technical Debt & Bug Fixes
+| ID | Description | Priority | Est. Effort | Assigned To |
+|---|---|---|---|---|
+| [ID] | [Description] | [Priority] | [Effort] | [Team Member] |
+| [ID] | [Description] | [Priority] | [Effort] | [Team Member] |
+
+## Sprint Risks & Mitigations
+| Risk | Impact | Probability | Mitigation Plan |
+|---|---|---|---|
+| [Description] | [Impact] | [Probability] | [Mitigation Plan] |
+| [Description] | [Impact] | [Probability] | [Mitigation Plan] |
+
+## Capacity Allocation
+- Feature Development: [Percentage]%
+- Bug Fixes: [Percentage]%
+- Technical Debt: [Percentage]%
+- Learning/Innovation: [Percentage]%
+- Meetings/Ceremonies: [Percentage]%
+
+## Dependencies & Blockers
+- **[Dependency Name]**: [Description] - Status: [Status]
+- **[Dependency Name]**: [Description] - Status: [Status]
+
+## Sprint Demo Plan
+- Date: [Demo Date]
+- Time: [Demo Time]
+- Audience: [Demo Audience]
+- Demo Outline:
+  - [Feature/Story] - [Presenter]
+  - [Feature/Story] - [Presenter]
+
+## Success Metrics
+- **[Metric Name]**: [Description] - Target: [Target]
+- **[Metric Name]**: [Description] - Target: [Target]
+
+## Notes & Action Items
+- [Note/Action Item]
+- [Note/Action Item]

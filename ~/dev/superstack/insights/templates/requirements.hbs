@@ -1,0 +1,252 @@
+# Project Requirements: {{projectName}}
+
+## Project Overview
+
+{{#if overview}}
+{{overview}}
+{{else}}
+*Provide a brief summary of the project, its purpose, and its target audience.*
+{{/if}}
+
+## Stakeholders
+
+{{#if stakeholders}}
+{{#each stakeholders}}
+- **{{role}}**: {{name}} - {{responsibility}}
+{{/each}}
+{{else}}
+*List all stakeholders and their roles in the project.*
+{{/if}}
+
+## Glossary
+
+{{#if glossary}}
+{{#each glossary}}
+- **{{term}}**: {{definition}}
+{{/each}}
+{{else}}
+*Define important terms and concepts used throughout the requirements.*
+{{/if}}
+
+## Functional Requirements
+
+{{#if functionalRequirements}}
+{{#each functionalRequirements}}
+### {{id}}: {{name}}
+
+**Priority**: {{priority}}
+
+**Description**: {{description}}
+
+**Acceptance Criteria**:
+{{#each acceptanceCriteria}}
+- {{this}}
+{{/each}}
+
+**Dependencies**: {{dependencies}}
+
+---
+{{/each}}
+{{else}}
+*List all the features and capabilities the system must provide.*
+
+### FR-001: [Requirement Name]
+
+**Priority**: [Critical/High/Medium/Low]
+
+**Description**: [Detailed description of what the system should do]
+
+**Acceptance Criteria**:
+- [Specific, measurable criteria that must be met]
+- [Another criterion]
+
+**Dependencies**: [Any dependencies on other requirements or systems]
+
+---
+{{/if}}
+
+## Non-Functional Requirements
+
+{{#if nonFunctionalRequirements}}
+{{#each nonFunctionalRequirements}}
+### {{id}}: {{name}}
+
+**Category**: {{category}}
+
+**Description**: {{description}}
+
+**Measurement**: {{measurement}}
+
+---
+{{/each}}
+{{else}}
+*Specify quality attributes, constraints, and other non-functional aspects of the system.*
+
+### NFR-001: [Requirement Name]
+
+**Category**: [Performance/Security/Usability/Reliability/etc.]
+
+**Description**: [Detailed description of the quality attribute or constraint]
+
+**Measurement**: [How this requirement will be measured or verified]
+
+---
+{{/if}}
+
+## Technical Constraints
+
+{{#if technicalConstraints}}
+{{#each technicalConstraints}}
+- **{{category}}**: {{description}}
+{{/each}}
+{{else}}
+- **Platform**: [Specific platforms the system must support]
+- **Languages/Frameworks**: [Required programming languages or frameworks]
+- **APIs/Integrations**: [External systems the solution must integrate with]
+- **Browser Support**: [Browser versions that must be supported]
+- **Deployment**: [Deployment requirements or restrictions]
+{{/if}}
+
+## Data Requirements
+
+{{#if dataRequirements}}
+{{#each dataRequirements}}
+### {{name}}
+
+**Description**: {{description}}
+
+**Data Points**:
+{{#each dataPoints}}
+- {{this}}
+{{/each}}
+
+**Volume/Scale**: {{volume}}
+
+**Security Classification**: {{securityClassification}}
+
+---
+{{/each}}
+{{else}}
+*Describe the data the system will manage, including structure, volume, and security considerations.*
+
+### [Data Entity Name]
+
+**Description**: [What this data represents]
+
+**Data Points**:
+- [Field/attribute]
+- [Another field/attribute]
+
+**Volume/Scale**: [Expected data volume]
+
+**Security Classification**: [Public/Internal/Confidential/Restricted]
+
+---
+{{/if}}
+
+## User Interface Requirements
+
+{{#if uiRequirements}}
+{{#if uiRequirements.general}}
+### General UI Requirements
+
+{{uiRequirements.general}}
+{{/if}}
+
+{{#if uiRequirements.screens}}
+### Screen Requirements
+
+{{#each uiRequirements.screens}}
+#### {{name}}
+
+**Purpose**: {{purpose}}
+
+**Elements**:
+{{#each elements}}
+- {{this}}
+{{/each}}
+
+**User Interactions**:
+{{#each interactions}}
+- {{this}}
+{{/each}}
+
+**Mockups**: {{mockups}}
+
+---
+{{/each}}
+{{/if}}
+{{else}}
+*Describe UI requirements including layouts, navigation, and responsive design considerations.*
+
+### General UI Requirements
+
+[General guidelines for the user interface]
+
+### Screen Requirements
+
+#### [Screen Name]
+
+**Purpose**: [What this screen is for]
+
+**Elements**:
+- [UI element and its purpose]
+- [Another UI element]
+
+**User Interactions**:
+- [Description of user interaction]
+- [Another interaction]
+
+**Mockups**: [References to mockups or wireframes]
+
+---
+{{/if}}
+
+## Assumptions and Dependencies
+
+{{#if assumptions}}
+### Assumptions
+
+{{#each assumptions}}
+- {{this}}
+{{/each}}
+{{else}}
+### Assumptions
+
+- [List any assumptions made when developing these requirements]
+{{/if}}
+
+{{#if dependencies}}
+### Dependencies
+
+{{#each dependencies}}
+- **{{name}}**: {{description}}
+{{/each}}
+{{else}}
+### Dependencies
+
+- **[Dependency Name]**: [Description of the dependency]
+{{/if}}
+
+## Future Requirements
+
+{{#if futureRequirements}}
+{{#each futureRequirements}}
+- **{{name}}**: {{description}} - **Planned**: {{timeline}}
+{{/each}}
+{{else}}
+*List requirements that are likely to be included in future versions but are out of scope for the current project.*
+{{/if}}
+
+## Approval
+
+{{#if approval}}
+{{#each approval}}
+- **{{role}}**: {{name}} - {{date}}
+{{/each}}
+{{else}}
+- **[Role]**: [Name] - [Date]
+{{/if}}
+
+---
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

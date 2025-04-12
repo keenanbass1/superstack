@@ -1,0 +1,512 @@
+# Technical Specification: {{projectName}}
+
+## Document Information
+
+**Version**: {{version}}  
+**Last Updated**: {{date 'YYYY-MM-DD'}}  
+**Status**: {{status}}  
+**Authors**: {{authors}}
+
+## Introduction
+
+{{#if introduction}}
+{{introduction}}
+{{else}}
+*Provide a brief introduction to this technical specification document, its purpose, and its intended audience.*
+{{/if}}
+
+## System Overview
+
+{{#if systemOverview}}
+{{systemOverview}}
+{{else}}
+*Describe the system at a high level, including its purpose, key features, and how it fits into the larger ecosystem.*
+{{/if}}
+
+## Architecture
+
+{{#if architecture.description}}
+{{architecture.description}}
+{{else}}
+*Describe the overall architectural approach, patterns, and key design decisions.*
+{{/if}}
+
+### Component Diagram
+
+{{#if architecture.componentDiagram}}
+{{architecture.componentDiagram}}
+{{else}}
+*[Include a component diagram showing the major parts of the system and their relationships]*
+{{/if}}
+
+### Data Flow
+
+{{#if architecture.dataFlow}}
+{{architecture.dataFlow}}
+{{else}}
+*[Describe how data flows through the system with appropriate diagrams]*
+{{/if}}
+
+## System Components
+
+{{#if components}}
+{{#each components}}
+### {{name}}
+
+**Purpose**: {{purpose}}
+
+**Responsibilities**:
+{{#each responsibilities}}
+- {{this}}
+{{/each}}
+
+**Interfaces**:
+{{#each interfaces}}
+- **{{name}}**: {{description}}
+{{/each}}
+
+**Dependencies**:
+{{#each dependencies}}
+- {{this}}
+{{/each}}
+
+**Implementation Details**: {{implementationDetails}}
+
+---
+{{/each}}
+{{else}}
+*Describe each major component of the system in detail.*
+
+### [Component Name]
+
+**Purpose**: [What this component does]
+
+**Responsibilities**:
+- [Primary responsibility]
+- [Secondary responsibility]
+
+**Interfaces**:
+- **[Interface Name]**: [Description of the interface]
+
+**Dependencies**:
+- [External or internal dependencies]
+
+**Implementation Details**: [Key implementation considerations]
+
+---
+{{/if}}
+
+## Data Model
+
+{{#if dataModel.description}}
+{{dataModel.description}}
+{{else}}
+*Describe the data structures and relationships within the system.*
+{{/if}}
+
+{{#if dataModel.entities}}
+{{#each dataModel.entities}}
+### {{name}}
+
+**Description**: {{description}}
+
+**Properties**:
+| Name | Type | Description | Constraints |
+|------|------|-------------|-------------|
+{{#each properties}}
+| {{name}} | {{type}} | {{description}} | {{constraints}} |
+{{/each}}
+
+**Relationships**:
+{{#each relationships}}
+- **{{to}}**: {{type}} - {{description}}
+{{/each}}
+
+---
+{{/each}}
+{{else}}
+### [Entity Name]
+
+**Description**: [What this entity represents]
+
+**Properties**:
+| Name | Type | Description | Constraints |
+|------|------|-------------|-------------|
+| [property] | [type] | [description] | [constraints] |
+
+**Relationships**:
+- **[Related Entity]**: [Type of relationship] - [Description]
+
+---
+{{/if}}
+
+## API Specification
+
+{{#if api}}
+{{#each api}}
+### {{name}}
+
+**Description**: {{description}}
+
+**Endpoint**: `{{endpoint}}`
+
+**Method**: {{method}}
+
+**Request Parameters**:
+{{#if requestParams}}
+{{#each requestParams}}
+- `{{name}}` ({{type}}): {{description}} {{#if required}}*Required*{{/if}}
+{{/each}}
+{{else}}
+*[None or describe the parameters]*
+{{/if}}
+
+**Request Body**:
+```json
+{{requestBody}}
+```
+
+**Response**:
+```json
+{{response}}
+```
+
+**Status Codes**:
+{{#each statusCodes}}
+- `{{code}}`: {{description}}
+{{/each}}
+
+**Authentication**: {{authentication}}
+
+**Rate Limiting**: {{rateLimiting}}
+
+---
+{{/each}}
+{{else}}
+*Document all APIs provided or consumed by the system.*
+
+### [API Name]
+
+**Description**: [Purpose of this API]
+
+**Endpoint**: `[URL pattern]`
+
+**Method**: [HTTP method]
+
+**Request Parameters**:
+- `[param]` ([type]): [description] [Required/Optional]
+
+**Request Body**:
+```json
+{
+  "property": "value"
+}
+```
+
+**Response**:
+```json
+{
+  "property": "value"
+}
+```
+
+**Status Codes**:
+- `200`: Success
+- `400`: Bad Request
+- `401`: Unauthorized
+- `404`: Not Found
+- `500`: Server Error
+
+**Authentication**: [Authentication requirements]
+
+**Rate Limiting**: [Rate limiting constraints]
+
+---
+{{/if}}
+
+## Security Considerations
+
+{{#if security}}
+{{#each security}}
+### {{category}}
+
+{{description}}
+
+**Mitigations**:
+{{#each mitigations}}
+- {{this}}
+{{/each}}
+
+---
+{{/each}}
+{{else}}
+*Detail the security requirements, threats, and mitigations for the system.*
+
+### [Security Concern]
+
+[Description of the security concern]
+
+**Mitigations**:
+- [How this concern is addressed]
+
+---
+{{/if}}
+
+## Performance Considerations
+
+{{#if performance}}
+{{#each performance}}
+### {{category}}
+
+**Requirements**: {{requirements}}
+
+**Design Considerations**: {{designConsiderations}}
+
+**Benchmarks/Targets**: {{benchmarks}}
+
+---
+{{/each}}
+{{else}}
+*Describe performance requirements, considerations, and optimizations.*
+
+### [Performance Category]
+
+**Requirements**: [Specific performance requirements]
+
+**Design Considerations**: [How the design addresses these requirements]
+
+**Benchmarks/Targets**: [Measurable performance targets]
+
+---
+{{/if}}
+
+## Testing Strategy
+
+{{#if testing.overview}}
+{{testing.overview}}
+{{else}}
+*Describe the overall approach to testing this system.*
+{{/if}}
+
+{{#if testing.types}}
+{{#each testing.types}}
+### {{name}}
+
+**Purpose**: {{purpose}}
+
+**Approach**: {{approach}}
+
+**Tools**: {{tools}}
+
+**Coverage Requirements**: {{coverage}}
+
+---
+{{/each}}
+{{else}}
+### Unit Testing
+
+**Purpose**: [What unit tests will verify]
+
+**Approach**: [How unit tests will be implemented]
+
+**Tools**: [Tools and frameworks to be used]
+
+**Coverage Requirements**: [Expected code coverage]
+
+---
+
+### Integration Testing
+
+**Purpose**: [What integration tests will verify]
+
+**Approach**: [How integration tests will be implemented]
+
+**Tools**: [Tools and frameworks to be used]
+
+**Coverage Requirements**: [Expected coverage of integration points]
+
+---
+
+### End-to-End Testing
+
+**Purpose**: [What E2E tests will verify]
+
+**Approach**: [How E2E tests will be implemented]
+
+**Tools**: [Tools and frameworks to be used]
+
+**Coverage Requirements**: [Expected coverage of user flows]
+
+---
+{{/if}}
+
+## Deployment Architecture
+
+{{#if deployment.description}}
+{{deployment.description}}
+{{else}}
+*Describe how the system will be deployed, including environments, infrastructure, and deployment processes.*
+{{/if}}
+
+{{#if deployment.diagram}}
+{{deployment.diagram}}
+{{else}}
+*[Include a deployment diagram showing the system's infrastructure]*
+{{/if}}
+
+{{#if deployment.environments}}
+{{#each deployment.environments}}
+### {{name}} Environment
+
+**Purpose**: {{purpose}}
+
+**Infrastructure**: {{infrastructure}}
+
+**Configuration**: {{configuration}}
+
+**Access Control**: {{accessControl}}
+
+---
+{{/each}}
+{{else}}
+### [Environment Name]
+
+**Purpose**: [Purpose of this environment]
+
+**Infrastructure**: [Description of the infrastructure]
+
+**Configuration**: [Configuration specifics]
+
+**Access Control**: [Who has access and how it's controlled]
+
+---
+{{/if}}
+
+## Monitoring and Observability
+
+{{#if monitoring}}
+{{#each monitoring}}
+### {{category}}
+
+**Key Metrics**: 
+{{#each metrics}}
+- {{this}}
+{{/each}}
+
+**Alerting**: {{alerting}}
+
+**Dashboards**: {{dashboards}}
+
+---
+{{/each}}
+{{else}}
+*Describe how the system will be monitored and observed in production.*
+
+### [Monitoring Category]
+
+**Key Metrics**: 
+- [Metric to be collected]
+
+**Alerting**: [Alerting strategy and thresholds]
+
+**Dashboards**: [Dashboard design and information]
+
+---
+{{/if}}
+
+## Development Guidelines
+
+{{#if development}}
+{{#each development}}
+### {{category}}
+
+{{description}}
+
+---
+{{/each}}
+{{else}}
+*Provide guidelines for developers working on this system.*
+
+### Coding Standards
+
+[Coding standards and practices to be followed]
+
+---
+
+### Version Control
+
+[Branch strategy, commit message format, PR process]
+
+---
+
+### Documentation
+
+[Documentation requirements and processes]
+
+---
+{{/if}}
+
+## Open Issues
+
+{{#if openIssues}}
+{{#each openIssues}}
+### {{title}}
+
+**Description**: {{description}}
+
+**Impact**: {{impact}}
+
+**Proposed Resolution**: {{resolution}}
+
+---
+{{/each}}
+{{else}}
+*List any unresolved technical issues or decisions.*
+
+### [Issue Title]
+
+**Description**: [Description of the open issue]
+
+**Impact**: [Impact of this issue on the project]
+
+**Proposed Resolution**: [Potential ways to address this issue]
+
+---
+{{/if}}
+
+## Glossary
+
+{{#if glossary}}
+{{#each glossary}}
+- **{{term}}**: {{definition}}
+{{/each}}
+{{else}}
+- **[Term]**: [Definition]
+{{/if}}
+
+## References
+
+{{#if references}}
+{{#each references}}
+- [{{title}}]({{url}}) - {{description}}
+{{/each}}
+{{else}}
+- [Reference Title](URL) - Brief description
+{{/if}}
+
+## Appendices
+
+{{#if appendices}}
+{{#each appendices}}
+### {{title}}
+
+{{content}}
+
+---
+{{/each}}
+{{else}}
+*Include any additional information that may be helpful.*
+{{/if}}
+
+---
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

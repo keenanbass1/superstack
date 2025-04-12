@@ -1,0 +1,748 @@
+---
+title: {{projectName}} Architecture Documentation
+description: Technical architecture documentation for the {{projectName}} system
+author: {{author}}
+version: {{version}}
+date: {{date}}
+---
+
+# {{projectName}} Architecture Documentation
+
+## Executive Summary
+
+{{executiveSummary}}
+
+## System Overview
+
+{{systemOverview}}
+
+### Purpose and Goals
+
+{{#if goals}}
+{{#each goals}}
+- {{this}}
+{{/each}}
+{{else}}
+*Describe the main purpose and goals of the system.*
+{{/if}}
+
+### Business Context
+
+{{businessContext}}
+
+### Key Stakeholders
+
+{{#if stakeholders}}
+| Role | Responsibilities | Contact |
+|------|-----------------|---------|
+{{#each stakeholders}}
+| {{role}} | {{responsibilities}} | {{contact}} |
+{{/each}}
+{{else}}
+*List key stakeholders and their responsibilities.*
+{{/if}}
+
+## Architecture Principles
+
+{{#if principles}}
+{{#each principles}}
+### {{name}}
+
+{{description}}
+
+**Rationale:** {{rationale}}
+
+**Implications:** {{implications}}
+
+{{/each}}
+{{else}}
+*Document the guiding principles that shaped the architecture decisions.*
+{{/if}}
+
+## System Context
+
+### Context Diagram
+
+{{#if contextDiagram}}
+```mermaid
+{{contextDiagram}}
+```
+{{else}}
+*Insert a system context diagram that shows how your system fits into the broader ecosystem.*
+{{/if}}
+
+### External Interfaces
+
+{{#if externalInterfaces}}
+{{#each externalInterfaces}}
+#### {{name}}
+
+**Type:** {{type}}
+
+**Description:** {{description}}
+
+**Protocol:** {{protocol}}
+
+**Data Format:** {{dataFormat}}
+
+{{/each}}
+{{else}}
+*Document the external systems your application interfaces with.*
+{{/if}}
+
+## Functional Architecture
+
+### Capabilities
+
+{{#if capabilities}}
+{{#each capabilities}}
+#### {{name}}
+
+{{description}}
+
+**Key Features:**
+{{#each features}}
+- {{this}}
+{{/each}}
+
+{{/each}}
+{{else}}
+*List the major functional capabilities of the system.*
+{{/if}}
+
+### Component Diagram
+
+{{#if componentDiagram}}
+```mermaid
+{{componentDiagram}}
+```
+{{else}}
+*Insert a component diagram showing the high-level components and their relationships.*
+{{/if}}
+
+## Technical Architecture
+
+### Technology Stack
+
+{{#if techStack}}
+| Layer | Technology | Version | Purpose |
+|-------|------------|---------|---------|
+{{#each techStack}}
+| {{layer}} | {{technology}} | {{version}} | {{purpose}} |
+{{/each}}
+{{else}}
+*Document the technology stack used in your application.*
+{{/if}}
+
+### Component Details
+
+{{#if components}}
+{{#each components}}
+#### {{name}}
+
+**Purpose:** {{purpose}}
+
+**Responsibilities:**
+{{#each responsibilities}}
+- {{this}}
+{{/each}}
+
+**Interfaces:**
+{{#each interfaces}}
+- {{name}}: {{description}}
+{{/each}}
+
+**Dependencies:**
+{{#each dependencies}}
+- {{this}}
+{{/each}}
+
+**Technologies:** {{technologies}}
+
+{{#if codeRepositories}}
+**Code Repositories:** {{codeRepositories}}
+{{/if}}
+
+{{/each}}
+{{else}}
+*Provide detailed information about each component in the system.*
+{{/if}}
+
+### Data Architecture
+
+#### Data Model
+
+{{#if dataModelDiagram}}
+```mermaid
+{{dataModelDiagram}}
+```
+{{else}}
+*Insert a high-level data model or entity relationship diagram.*
+{{/if}}
+
+#### Data Stores
+
+{{#if dataStores}}
+{{#each dataStores}}
+##### {{name}}
+
+**Type:** {{type}}
+
+**Purpose:** {{purpose}}
+
+**Data Stored:** {{dataStored}}
+
+**Scaling Strategy:** {{scalingStrategy}}
+
+**Backup Strategy:** {{backupStrategy}}
+
+{{/each}}
+{{else}}
+*Document the different data stores used in the system.*
+{{/if}}
+
+#### Data Flow
+
+{{#if dataFlowDiagram}}
+```mermaid
+{{dataFlowDiagram}}
+```
+{{else}}
+*Insert a data flow diagram showing how data moves through the system.*
+{{/if}}
+
+### API Architecture
+
+{{#if apis}}
+{{#each apis}}
+#### {{name}}
+
+**Type:** {{type}}
+
+**Purpose:** {{purpose}}
+
+**Endpoints:**
+{{#each endpoints}}
+- `{{method}} {{path}}`: {{description}}
+{{/each}}
+
+**Authentication:** {{authentication}}
+
+**Documentation:** {{documentation}}
+
+{{/each}}
+{{else}}
+*Document the APIs exposed by the system.*
+{{/if}}
+
+## Infrastructure Architecture
+
+### Deployment Diagram
+
+{{#if deploymentDiagram}}
+```mermaid
+{{deploymentDiagram}}
+```
+{{else}}
+*Insert a deployment diagram showing the physical infrastructure.*
+{{/if}}
+
+### Environments
+
+{{#if environments}}
+{{#each environments}}
+#### {{name}}
+
+**Purpose:** {{purpose}}
+
+**Infrastructure:**
+{{#each infrastructure}}
+- {{this}}
+{{/each}}
+
+**Access Control:** {{accessControl}}
+
+**Monitoring:** {{monitoring}}
+
+{{/each}}
+{{else}}
+*Document the different environments (development, testing, staging, production).*
+{{/if}}
+
+### Infrastructure as Code
+
+{{#if infrastructureAsCode}}
+**Repository:** {{infrastructureAsCode.repository}}
+
+**Key Tools:** {{infrastructureAsCode.tools}}
+
+**Key Files:**
+{{#each infrastructureAsCode.keyFiles}}
+- `{{file}}`: {{description}}
+{{/each}}
+
+{{else}}
+*Document how infrastructure is defined and provisioned.*
+{{/if}}
+
+### Continuous Integration/Deployment
+
+{{#if cicd}}
+**CI/CD Platform:** {{cicd.platform}}
+
+**Pipeline Steps:**
+{{#each cicd.pipelineSteps}}
+1. {{this}}
+{{/each}}
+
+**Key Files:**
+{{#each cicd.keyFiles}}
+- `{{file}}`: {{description}}
+{{/each}}
+
+{{else}}
+*Document the CI/CD process and tools.*
+{{/if}}
+
+## Security Architecture
+
+### Security Principles
+
+{{#if securityPrinciples}}
+{{#each securityPrinciples}}
+- {{this}}
+{{/each}}
+{{else}}
+*Document the security principles guiding the system design.*
+{{/if}}
+
+### Authentication and Authorization
+
+{{authenticationDescription}}
+
+{{#if authMechanisms}}
+{{#each authMechanisms}}
+#### {{name}}
+
+**Type:** {{type}}
+
+**Used For:** {{usedFor}}
+
+**Implementation:** {{implementation}}
+
+{{/each}}
+{{else}}
+*Document the authentication and authorization mechanisms used in the system.*
+{{/if}}
+
+### Data Security
+
+{{dataSecurityDescription}}
+
+{{#if dataSecurity}}
+| Data Category | Classification | Protection Measures | Retention Policy |
+|---------------|----------------|---------------------|------------------|
+{{#each dataSecurity}}
+| {{category}} | {{classification}} | {{protectionMeasures}} | {{retentionPolicy}} |
+{{/each}}
+{{else}}
+*Document how data is classified, protected, and managed.*
+{{/if}}
+
+### Network Security
+
+{{networkSecurityDescription}}
+
+{{#if networkSecurity}}
+{{networkSecurity}}
+{{else}}
+*Document network security measures, including firewall rules, VPCs, subnets, and security groups.*
+{{/if}}
+
+### Security Monitoring and Response
+
+{{#if securityMonitoring}}
+{{securityMonitoring}}
+{{else}}
+*Document security monitoring, logging, and incident response procedures.*
+{{/if}}
+
+### Compliance
+
+{{#if compliance}}
+{{#each compliance}}
+#### {{standard}}
+
+**Requirements:**
+{{#each requirements}}
+- {{this}}
+{{/each}}
+
+**Implementation:** {{implementation}}
+
+{{/each}}
+{{else}}
+*Document compliance requirements and how they are addressed.*
+{{/if}}
+
+## Performance Architecture
+
+### Performance Requirements
+
+{{#if performanceRequirements}}
+{{#each performanceRequirements}}
+- {{this}}
+{{/each}}
+{{else}}
+*Document key performance requirements and SLAs.*
+{{/if}}
+
+### Scaling Strategy
+
+{{#if scalingStrategy}}
+{{scalingStrategy}}
+{{else}}
+*Document how the system scales to handle increased load.*
+{{/if}}
+
+### Caching Strategy
+
+{{#if cachingStrategy}}
+{{#each cachingStrategy}}
+#### {{layer}}
+
+**Cache Type:** {{type}}
+
+**Cache Contents:** {{contents}}
+
+**Invalidation Strategy:** {{invalidation}}
+
+**TTL:** {{ttl}}
+
+{{/each}}
+{{else}}
+*Document the caching strategy at different layers of the application.*
+{{/if}}
+
+### Performance Optimization
+
+{{#if performanceOptimization}}
+{{performanceOptimization}}
+{{else}}
+*Document performance optimization techniques used in the system.*
+{{/if}}
+
+## Reliability Architecture
+
+### Availability Strategy
+
+{{#if availabilityStrategy}}
+{{availabilityStrategy}}
+{{else}}
+*Document how the system ensures high availability.*
+{{/if}}
+
+### Fault Tolerance
+
+{{#if faultTolerance}}
+{{faultTolerance}}
+{{else}}
+*Document how the system handles failures.*
+{{/if}}
+
+### Disaster Recovery
+
+{{#if disasterRecovery}}
+{{disasterRecovery}}
+{{else}}
+*Document the disaster recovery strategy and procedures.*
+{{/if}}
+
+### Backup Strategy
+
+{{#if backupStrategy}}
+{{backupStrategy}}
+{{else}}
+*Document the backup strategy for different data stores.*
+{{/if}}
+
+## Monitoring and Observability
+
+### Monitoring Tools
+
+{{#if monitoringTools}}
+{{#each monitoringTools}}
+#### {{name}}
+
+**Purpose:** {{purpose}}
+
+**Key Metrics:**
+{{#each metrics}}
+- {{this}}
+{{/each}}
+
+**Alerting:** {{alerting}}
+
+{{/each}}
+{{else}}
+*Document the monitoring tools used and what they monitor.*
+{{/if}}
+
+### Logging Strategy
+
+{{#if loggingStrategy}}
+{{loggingStrategy}}
+{{else}}
+*Document how logs are generated, collected, and analyzed.*
+{{/if}}
+
+### Alerting Strategy
+
+{{#if alertingStrategy}}
+{{alertingStrategy}}
+{{else}}
+*Document how alerts are defined, routed, and responded to.*
+{{/if}}
+
+### Dashboards
+
+{{#if dashboards}}
+{{#each dashboards}}
+#### {{name}}
+
+**Purpose:** {{purpose}}
+
+**URL:** {{url}}
+
+**Key Metrics:**
+{{#each metrics}}
+- {{this}}
+{{/each}}
+
+{{/each}}
+{{else}}
+*Document the dashboards used for monitoring the system.*
+{{/if}}
+
+## Development Architecture
+
+### Development Environment
+
+{{#if developmentEnvironment}}
+{{developmentEnvironment}}
+{{else}}
+*Document the development environment setup.*
+{{/if}}
+
+### Source Control
+
+{{#if sourceControl}}
+**Repository:** {{sourceControl.repository}}
+
+**Branching Strategy:** {{sourceControl.branchingStrategy}}
+
+**Code Review Process:** {{sourceControl.codeReviewProcess}}
+
+{{else}}
+*Document the source control tools and processes.*
+{{/if}}
+
+### Testing Strategy
+
+{{#if testingStrategy}}
+{{#each testingStrategy}}
+#### {{type}}
+
+**Tools:** {{tools}}
+
+**Coverage Targets:** {{coverageTargets}}
+
+**Key Files/Directories:**
+{{#each keyFiles}}
+- `{{this}}`
+{{/each}}
+
+{{/each}}
+{{else}}
+*Document the testing strategy at different levels (unit, integration, system).*
+{{/if}}
+
+### Code Quality
+
+{{#if codeQuality}}
+**Static Analysis Tools:** {{codeQuality.staticAnalysisTools}}
+
+**Code Style Guides:** {{codeQuality.codeStyleGuides}}
+
+**Key Files:**
+{{#each codeQuality.keyFiles}}
+- `{{file}}`: {{description}}
+{{/each}}
+
+{{else}}
+*Document code quality tools and processes.*
+{{/if}}
+
+## Operational Architecture
+
+### Deployment Process
+
+{{#if deploymentProcess}}
+{{deploymentProcess}}
+{{else}}
+*Document how the application is deployed to different environments.*
+{{/if}}
+
+### Release Management
+
+{{#if releaseManagement}}
+{{releaseManagement}}
+{{else}}
+*Document the release management process.*
+{{/if}}
+
+### Configuration Management
+
+{{#if configurationManagement}}
+{{configurationManagement}}
+{{else}}
+*Document how configuration is managed across environments.*
+{{/if}}
+
+### Secrets Management
+
+{{#if secretsManagement}}
+{{secretsManagement}}
+{{else}}
+*Document how secrets are managed and accessed.*
+{{/if}}
+
+### Incident Management
+
+{{#if incidentManagement}}
+{{incidentManagement}}
+{{else}}
+*Document the incident management process.*
+{{/if}}
+
+### Runbooks
+
+{{#if runbooks}}
+{{#each runbooks}}
+#### {{name}}
+
+**Purpose:** {{purpose}}
+
+**URL:** {{url}}
+
+{{/each}}
+{{else}}
+*Document operational runbooks for common tasks and incidents.*
+{{/if}}
+
+## Cross-Cutting Concerns
+
+### Internationalization
+
+{{#if internationalization}}
+{{internationalization}}
+{{else}}
+*Document how internationalization is handled.*
+{{/if}}
+
+### Accessibility
+
+{{#if accessibility}}
+{{accessibility}}
+{{else}}
+*Document accessibility standards and implementation.*
+{{/if}}
+
+### Audit and Compliance
+
+{{#if auditCompliance}}
+{{auditCompliance}}
+{{else}}
+*Document audit trails and compliance features.*
+{{/if}}
+
+### Privacy
+
+{{#if privacy}}
+{{privacy}}
+{{else}}
+*Document privacy features and data protection measures.*
+{{/if}}
+
+## Decision Records
+
+{{#if decisions}}
+{{#each decisions}}
+### {{title}}
+
+**Date:** {{date}}
+
+**Status:** {{status}}
+
+**Context:** {{context}}
+
+**Decision:** {{decision}}
+
+**Consequences:** {{consequences}}
+
+{{/each}}
+{{else}}
+*Document key architectural decisions and their rationale.*
+{{/if}}
+
+## Roadmap
+
+{{#if roadmap}}
+{{#each roadmap}}
+### {{timeframe}}
+
+{{#each items}}
+- {{this}}
+{{/each}}
+
+{{/each}}
+{{else}}
+*Document the architectural roadmap and future plans.*
+{{/if}}
+
+## References
+
+{{#if references}}
+{{#each references}}
+- [{{title}}]({{url}})
+{{/each}}
+{{else}}
+*List references to related documentation and resources.*
+{{/if}}
+
+## Glossary
+
+{{#if glossary}}
+{{#each glossary}}
+**{{term}}:** {{definition}}
+
+{{/each}}
+{{else}}
+*Define key terms used in the architecture documentation.*
+{{/if}}
+
+## Appendices
+
+{{#if appendices}}
+{{#each appendices}}
+### {{title}}
+
+{{content}}
+
+{{/each}}
+{{else}}
+*Include additional information that supports the main documentation.*
+{{/if}}
+
+---
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

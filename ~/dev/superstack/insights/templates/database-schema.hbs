@@ -1,0 +1,333 @@
+---
+title: Database Schema Documentation
+description: Complete documentation of the {{databaseName}} database schema
+author: Superstack
+version: 1.0.0
+date: {{date}}
+---
+
+# {{databaseName}} Database Schema Documentation
+
+## Overview
+
+{{dbDescription}}
+
+**Database Type:** {{dbType}} {{#if dbVersion}}(Version: {{dbVersion}}){{/if}}
+
+## Entity Relationship Diagram
+
+{{#if erdDiagram}}
+```mermaid
+erDiagram
+{{erdDiagram}}
+```
+{{else}}
+*Insert your Entity Relationship Diagram here. You can use tools like [dbdiagram.io](https://dbdiagram.io), [ERDPlus](https://erdplus.com), or [Mermaid](https://mermaid.js.org).*
+{{/if}}
+
+## Database Tables
+
+{{#each tables}}
+### {{name}}
+
+{{description}}
+
+{{#if physicalName}}
+**Physical Table Name:** `{{physicalName}}`
+{{/if}}
+
+#### Columns
+
+| Column Name | Data Type | Size | Nullable | Primary Key | Default | Description |
+|-------------|-----------|------|----------|-------------|---------|-------------|
+{{#each columns}}
+| {{name}} | {{type}} | {{size}} | {{#if nullable}}Yes{{else}}No{{/if}} | {{#if primaryKey}}Yes{{else}}No{{/if}} | {{default}} | {{description}} |
+{{/each}}
+
+{{#if indexes}}
+#### Indexes
+
+| Name | Type | Columns | Description |
+|------|------|---------|-------------|
+{{#each indexes}}
+| {{name}} | {{type}} | {{columns}} | {{description}} |
+{{/each}}
+{{/if}}
+
+{{#if constraints}}
+#### Constraints
+
+| Name | Type | Definition | Description |
+|------|------|------------|-------------|
+{{#each constraints}}
+| {{name}} | {{type}} | {{definition}} | {{description}} |
+{{/each}}
+{{/if}}
+
+{{#if foreignKeys}}
+#### Foreign Keys
+
+| Column | References | On Delete | On Update | Description |
+|--------|------------|-----------|-----------|-------------|
+{{#each foreignKeys}}
+| {{column}} | {{references}} | {{onDelete}} | {{onUpdate}} | {{description}} |
+{{/each}}
+{{/if}}
+
+{{#if sampleData}}
+#### Sample Data
+
+```
+{{sampleData}}
+```
+{{/if}}
+
+{{/each}}
+
+## Relationships
+
+{{#if relationships}}
+{{#each relationships}}
+### {{name}}
+
+**Type:** {{type}} ({{fromTable}} {{relationshipType}} {{toTable}})
+
+{{description}}
+
+**Mapping:**
+- {{fromTable}}.{{fromColumn}} → {{toTable}}.{{toColumn}}
+
+{{#if cardinality}}
+**Cardinality:** {{cardinality}}
+{{/if}}
+
+{{/each}}
+{{else}}
+*Document your database relationships here. Include information about one-to-one, one-to-many, and many-to-many relationships.*
+{{/if}}
+
+## Views
+
+{{#if views}}
+{{#each views}}
+### {{name}}
+
+{{description}}
+
+**SQL Definition:**
+```sql
+{{definition}}
+```
+
+#### Columns
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+{{#each columns}}
+| {{name}} | {{type}} | {{description}} |
+{{/each}}
+
+{{/each}}
+{{else}}
+*Document any database views here. Include the view name, description, and SQL definition.*
+{{/if}}
+
+## Stored Procedures
+
+{{#if procedures}}
+{{#each procedures}}
+### {{name}}
+
+{{description}}
+
+**Parameters:**
+
+| Name | Data Type | Direction | Default | Description |
+|------|-----------|-----------|---------|-------------|
+{{#each parameters}}
+| {{name}} | {{type}} | {{direction}} | {{default}} | {{description}} |
+{{/each}}
+
+**SQL Definition:**
+```sql
+{{definition}}
+```
+
+{{#if examples}}
+**Example Usage:**
+```sql
+{{examples}}
+```
+{{/if}}
+
+{{/each}}
+{{else}}
+*Document any stored procedures here. Include the procedure name, parameters, and SQL definition.*
+{{/if}}
+
+## Triggers
+
+{{#if triggers}}
+{{#each triggers}}
+### {{name}}
+
+{{description}}
+
+**Table:** {{table}}
+
+**Timing:** {{timing}} ({{event}})
+
+**SQL Definition:**
+```sql
+{{definition}}
+```
+
+{{/each}}
+{{else}}
+*Document any database triggers here. Include the trigger name, associated table, and SQL definition.*
+{{/if}}
+
+## Sequences
+
+{{#if sequences}}
+{{#each sequences}}
+### {{name}}
+
+{{description}}
+
+**Start Value:** {{startValue}}
+**Increment:** {{increment}}
+**Min Value:** {{minValue}}
+**Max Value:** {{maxValue}}
+**Cache Size:** {{cacheSize}}
+**Cycle:** {{#if cycle}}Yes{{else}}No{{/if}}
+
+{{/each}}
+{{else}}
+*Document any database sequences here. Include the sequence name, parameters, and description.*
+{{/if}}
+
+## Data Types
+
+{{#if customTypes}}
+{{#each customTypes}}
+### {{name}}
+
+{{description}}
+
+**Base Type:** {{baseType}}
+{{#if constraints}}
+**Constraints:** {{constraints}}
+{{/if}}
+
+{{/each}}
+{{else}}
+*Document any custom data types used in your database.*
+{{/if}}
+
+## Database Migration
+
+{{#if migrations}}
+{{#each migrations}}
+### Migration {{version}} ({{date}})
+
+**Description:** {{description}}
+
+**Changes:**
+{{#each changes}}
+- {{this}}
+{{/each}}
+
+{{#if upScript}}
+**Up Script:**
+```sql
+{{upScript}}
+```
+{{/if}}
+
+{{#if downScript}}
+**Down Script:**
+```sql
+{{downScript}}
+```
+{{/if}}
+
+{{/each}}
+{{else}}
+*Document your database migration strategy and migration scripts here.*
+{{/if}}
+
+## Partitioning
+
+{{#if partitioning}}
+{{partitioning}}
+{{else}}
+*Document any table partitioning strategies used in your database.*
+{{/if}}
+
+## Security and Access Control
+
+{{#if security}}
+{{security}}
+{{else}}
+*Document database users, roles, and permissions here.*
+{{/if}}
+
+## Performance Considerations
+
+{{#if performance}}
+{{performance}}
+{{else}}
+*Document performance considerations, such as indexing strategies, query optimization techniques, and caching mechanisms.*
+{{/if}}
+
+## Backup and Recovery
+
+{{#if backupRecovery}}
+{{backupRecovery}}
+{{else}}
+*Document backup and recovery procedures for your database.*
+{{/if}}
+
+## Connection Information
+
+{{#if connectionInfo}}
+{{connectionInfo}}
+{{else}}
+*Document connection information for different environments (development, testing, production).*
+
+### Development
+
+- **Host:** {{devHost}}
+- **Port:** {{devPort}}
+- **Database:** {{devDatabase}}
+- **Username:** {{devUsername}}
+- **Connection String:** {{devConnectionString}}
+
+### Production
+
+- **Host:** {{prodHost}}
+- **Port:** {{prodPort}}
+- **Database:** {{prodDatabase}}
+- **Username:** {{prodUsername}}
+- **Connection String:** {{prodConnectionString}}
+{{/if}}
+
+## ORM Mapping
+
+{{#if ormMapping}}
+{{ormMapping}}
+{{else}}
+*Document any ORM mappings used in your application, such as Sequelize, TypeORM, Prisma, or Hibernate models.*
+{{/if}}
+
+## Additional Notes
+
+{{#if additionalNotes}}
+{{additionalNotes}}
+{{else}}
+*Add any additional notes or considerations about your database schema.*
+{{/if}}
+
+---
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

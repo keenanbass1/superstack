@@ -1,0 +1,269 @@
+# Project Kickoff: {{projectName}}
+
+## Project Information
+**Date**: {{date 'YYYY-MM-DD'}}  
+**Project**: {{projectName}}  
+**Expected Duration**: {{duration}}  
+**Project Manager**: {{projectManager}}  
+**Participants**: {{participants}}  
+
+## Project Vision & Objectives
+
+{{#if vision}}
+{{vision}}
+{{else}}
+*Provide a clear, concise statement that defines what the project aims to achieve at a high level. This should be inspirational and aligned with business goals.*
+
+**Primary Objectives:**
+- *Objective 1*
+- *Objective 2*
+- *Objective 3*
+{{/if}}
+
+## Project Scope
+
+{{#if scope}}
+{{scope}}
+{{else}}
+### In Scope
+*List features, deliverables, or work that will be included in this project:*
+- *Item 1*
+- *Item 2*
+- *Item 3*
+
+### Out of Scope
+*List features, deliverables, or work that will NOT be included in this project:*
+- *Item 1*
+- *Item 2*
+- *Item 3*
+{{/if}}
+
+## Success Criteria
+
+{{#if successCriteria}}
+{{successCriteria}}
+{{else}}
+*Define specific, measurable criteria that will determine whether the project is successful:*
+
+- **Business Criteria:**
+  - *Example: Increase conversion rate by X%*
+  
+- **Technical Criteria:**
+  - *Example: System uptime of 99.9%*
+  
+- **User Criteria:**
+  - *Example: User satisfaction score of at least 4.5/5*
+{{/if}}
+
+## Stakeholders
+
+{{#if stakeholders}}
+{{#each stakeholders}}
+### {{name}} ({{role}})
+**Department**: {{department}}
+**Contact**: {{contact}}
+**Expectations**: {{expectations}}
+**Communication Preference**: {{communicationPreference}}
+{{/each}}
+{{else}}
+*List key individuals or groups who have an interest in or influence over the project:*
+
+### [Stakeholder Name] ([Role])
+**Department**: *Department*
+**Contact**: *Email/Phone*
+**Expectations**: *What they expect from this project*
+**Communication Preference**: *How often and via what channel*
+
+### [Stakeholder Name] ([Role])
+**Department**: *Department*
+**Contact**: *Email/Phone*
+**Expectations**: *What they expect from this project*
+**Communication Preference**: *How often and via what channel*
+{{/if}}
+
+## Team Structure
+
+{{#if team}}
+{{#each team}}
+### {{role}}
+**Name**: {{name}}
+**Responsibilities**: {{responsibilities}}
+**Allocation**: {{allocation}}
+{{/each}}
+{{else}}
+*Define the core project team members and their roles:*
+
+### Project Manager
+**Name**: *Name*
+**Responsibilities**: *Key responsibilities*
+**Allocation**: *Full-time/Part-time/Percentage*
+
+### Technical Lead
+**Name**: *Name*
+**Responsibilities**: *Key responsibilities*
+**Allocation**: *Full-time/Part-time/Percentage*
+
+### Developer(s)
+**Name**: *Name(s)*
+**Responsibilities**: *Key responsibilities*
+**Allocation**: *Full-time/Part-time/Percentage*
+
+### Designer(s)
+**Name**: *Name(s)*
+**Responsibilities**: *Key responsibilities*
+**Allocation**: *Full-time/Part-time/Percentage*
+
+### QA Engineer(s)
+**Name**: *Name(s)*
+**Responsibilities**: *Key responsibilities*
+**Allocation**: *Full-time/Part-time/Percentage*
+{{/if}}
+
+## Timeline & Milestones
+
+{{#if timeline}}
+{{timeline}}
+{{else}}
+*Outline the high-level project schedule and key milestones:*
+
+- **Project Start**: *Date*
+- **Discovery Phase Complete**: *Date*
+- **Design Complete**: *Date*
+- **Development Milestones**:
+  - *Milestone 1*: *Date*
+  - *Milestone 2*: *Date*
+- **Testing Complete**: *Date*
+- **Launch**: *Date*
+- **Post-Launch Review**: *Date*
+{{/if}}
+
+## Technical Approach
+
+{{#if technicalApproach}}
+{{technicalApproach}}
+{{else}}
+### Architecture Overview
+*High-level description of the system architecture*
+
+### Technology Stack
+- **Frontend**: *Technologies/frameworks*
+- **Backend**: *Technologies/frameworks*
+- **Database**: *Database system*
+- **Infrastructure**: *Hosting/cloud services*
+- **DevOps**: *CI/CD, monitoring*
+
+### Development Methodology
+*Describe the development approach (Agile, Scrum, Kanban, etc.)*
+
+### Technical Constraints
+*List any technical limitations or constraints that need to be considered*
+{{/if}}
+
+## Risks & Mitigation
+
+{{#if risks}}
+{{#each risks}}
+### {{title}}
+**Description**: {{description}}
+**Impact**: {{impact}}
+**Probability**: {{probability}}
+**Mitigation Strategy**: {{mitigation}}
+{{/each}}
+{{else}}
+*Identify potential risks and strategies to address them:*
+
+### [Risk Title]
+**Description**: *Description of the risk*
+**Impact**: *High/Medium/Low*
+**Probability**: *High/Medium/Low*
+**Mitigation Strategy**: *How the risk will be mitigated*
+
+### [Risk Title]
+**Description**: *Description of the risk*
+**Impact**: *High/Medium/Low*
+**Probability**: *High/Medium/Low*
+**Mitigation Strategy**: *How the risk will be mitigated*
+{{/if}}
+
+## Dependencies
+
+{{#if dependencies}}
+{{#each dependencies}}
+### {{title}}
+**Description**: {{description}}
+**Owner**: {{owner}}
+**Due Date**: {{dueDate}}
+**Status**: {{status}}
+{{/each}}
+{{else}}
+*List external factors or other projects that this project depends on:*
+
+### [Dependency Name]
+**Description**: *Description of the dependency*
+**Owner**: *Who manages this dependency*
+**Due Date**: *When this dependency needs to be resolved*
+**Status**: *Current status*
+
+### [Dependency Name]
+**Description**: *Description of the dependency*
+**Owner**: *Who manages this dependency*
+**Due Date**: *When this dependency needs to be resolved*
+**Status**: *Current status*
+{{/if}}
+
+## Communication Plan
+
+{{#if communicationPlan}}
+{{communicationPlan}}
+{{else}}
+### Regular Meetings
+- **Daily Standups**: *Time, location, participants*
+- **Sprint Planning**: *Frequency, time, location, participants*
+- **Sprint Review**: *Frequency, time, location, participants*
+- **Sprint Retrospective**: *Frequency, time, location, participants*
+- **Stakeholder Updates**: *Frequency, time, location, participants*
+
+### Communication Channels
+- **Urgent Issues**: *How to communicate*
+- **General Questions**: *How to communicate*
+- **Document Sharing**: *Platform/location*
+- **Code Repository**: *Location*
+- **Task Tracking**: *Platform*
+{{/if}}
+
+## Resource Requirements
+
+{{#if resources}}
+{{resources}}
+{{else}}
+### Personnel
+*List required team members and their time commitments*
+
+### Tools & Licenses
+*Software, tools, or subscriptions needed*
+
+### Infrastructure
+*Servers, environments, or other infrastructure needed*
+
+### Budget
+*Financial resources allocated to the project*
+{{/if}}
+
+## Approval & Sign-off
+
+{{#if approvals}}
+{{approvals}}
+{{else}}
+*Signatures or acknowledgments from key stakeholders:*
+
+**Project Manager**: _________________________ Date: _________
+
+**Technical Lead**: _________________________ Date: _________
+
+**Business Owner**: _________________________ Date: _________
+{{/if}}
+
+---
+*This kickoff document is a living artifact and may be updated as the project progresses.*
+
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

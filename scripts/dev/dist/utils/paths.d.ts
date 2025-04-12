@@ -12,6 +12,10 @@ interface SystemPaths {
     currentDir: string;
 }
 /**
+ * Setup environment variables for the CLI
+ */
+export declare function setupEnvironment(): void;
+/**
  * Get system paths
  */
 export declare function getPaths(): SystemPaths;

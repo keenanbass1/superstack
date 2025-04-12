@@ -1,0 +1,221 @@
+# Deployment Guide: {{projectName}}
+
+## Document Information
+**Version**: {{version}}  
+**Last Updated**: {{date 'YYYY-MM-DD'}}  
+**Environment**: {{environment}}  
+**Authors**: {{authors}}  
+
+## Overview
+
+{{#if overview}}
+{{overview}}
+{{else}}
+*Provide a brief overview of this deployment, including its purpose, the environment it applies to, and any special considerations.*
+{{/if}}
+
+## Prerequisites
+
+{{#if prerequisites}}
+{{#each prerequisites}}
+- **{{name}}**: {{description}}
+{{/each}}
+{{else}}
+- **Development Environment**: Required development tools and versions
+- **Access Permissions**: Required accounts and permission levels
+- **Dependencies**: External services or systems that must be available
+- **Configuration**: Required environment variables or configuration files
+{{/if}}
+
+## Deployment Architecture
+
+{{#if architecture}}
+{{architecture}}
+{{else}}
+*Describe the deployment architecture, including:*
+
+```
+[DIAGRAM: Insert architecture diagram here]
+```
+
+- **Infrastructure Components**: Servers, databases, storage, networking
+- **Service Dependencies**: External API connections, third-party services
+- **Security Components**: Firewalls, VPNs, access controls
+{{/if}}
+
+## Deployment Steps
+
+{{#if deploymentSteps}}
+{{#each deploymentSteps}}
+### {{stepNumber}}. {{name}}
+
+{{description}}
+
+```bash
+{{command}}
+```
+
+**Expected Output**:
+```
+{{expectedOutput}}
+```
+
+**Verification**: {{verification}}
+
+{{/each}}
+{{else}}
+### 1. Prepare the Deployment Package
+
+*Describe how to prepare the code for deployment, including:*
+
+```bash
+# Example commands for building the application
+npm run build
+```
+
+### 2. Configure Environment Variables
+
+*List the required environment variables and how to set them:*
+
+```bash
+# Example environment variable setup
+export API_KEY=your_api_key
+export DATABASE_URL=your_database_connection_string
+```
+
+### 3. Deploy the Application
+
+*Provide the specific commands to deploy the application:*
+
+```bash
+# Example deployment command
+npm run deploy
+```
+
+**Verification**: *How to verify this step was successful*
+
+### 4. Run Database Migrations
+
+*If applicable, describe how to run database migrations:*
+
+```bash
+# Example migration command
+npm run migrate
+```
+
+### 5. Verify Deployment
+
+*Describe how to verify the deployment was successful:*
+
+```bash
+# Example verification command
+curl https://your-api-endpoint.com/health
+```
+{{/if}}
+
+## Rollback Procedure
+
+{{#if rollbackProcedure}}
+{{rollbackProcedure}}
+{{else}}
+*Provide detailed steps for rolling back the deployment if issues occur:*
+
+```bash
+# Example rollback commands
+git checkout previous-tag
+npm run deploy
+```
+
+**Verification**: *How to verify the rollback was successful*
+{{/if}}
+
+## Monitoring and Logging
+
+{{#if monitoring}}
+{{monitoring}}
+{{else}}
+*Describe how to monitor the deployed application:*
+
+- **Logs Location**: Where logs are stored and how to access them
+- **Metrics**: Key metrics to monitor and their expected values
+- **Alerts**: How alerts are configured and who receives them
+{{/if}}
+
+## Troubleshooting
+
+{{#if troubleshooting}}
+{{#each troubleshooting}}
+### {{issue}}
+
+**Symptoms**: {{symptoms}}
+
+**Possible Causes**:
+{{#each causes}}
+- {{this}}
+{{/each}}
+
+**Resolution Steps**:
+{{#each resolutionSteps}}
+1. {{this}}
+{{/each}}
+
+{{/each}}
+{{else}}
+### Common Issues
+
+**Symptoms**: *Describe what the issue looks like*
+
+**Possible Causes**:
+- *List possible causes*
+
+**Resolution Steps**:
+1. *Step-by-step instructions to resolve*
+{{/if}}
+
+## Security Considerations
+
+{{#if security}}
+{{security}}
+{{else}}
+*Document security-related aspects of the deployment:*
+
+- **Secrets Management**: How secrets are managed and accessed
+- **Access Controls**: Required permissions and how they're enforced
+- **Network Security**: Firewall rules, VPN requirements, etc.
+- **Compliance**: Any compliance requirements this deployment addresses
+{{/if}}
+
+## Post-Deployment Tasks
+
+{{#if postDeploymentTasks}}
+{{#each postDeploymentTasks}}
+### {{name}}
+
+{{description}}
+
+**Deadline**: {{deadline}}
+**Responsible**: {{responsible}}
+
+{{/each}}
+{{else}}
+*List any tasks that need to be performed after deployment:*
+
+- **User Notification**: Who to notify and what information to provide
+- **Documentation Update**: What documentation needs to be updated
+- **Monitoring Setup**: Any additional monitoring that needs to be configured
+{{/if}}
+
+## References
+
+{{#if references}}
+{{#each references}}
+- [{{name}}]({{url}})
+{{/each}}
+{{else}}
+- [Project Repository](#)
+- [Architecture Documentation](#)
+- [Service Level Agreement (SLA)](#)
+{{/if}}
+
+---
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

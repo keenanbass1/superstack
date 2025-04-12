@@ -1,0 +1,64 @@
+---
+title: AI Project Template
+description: A comprehensive template for AI project documentation
+author: Superstack
+version: 1.0.0
+date: {{date}}
+---
+# {{projectName}} AI Project
+
+## Project Overview
+{{overview}}
+
+## Problem Statement
+{{problem}}
+
+## Approach
+{{approach}}
+
+## Data Sources
+{{#each dataSources}}
+- **{{@key}}**: {{this}}
+{{/each}}
+
+## Model Architecture
+{{modelArchitecture}}
+
+{{#if modelDiagram}}
+### Architecture Diagram
+```
+{{modelDiagram}}
+```
+{{/if}}
+
+## Training Process
+{{training}}
+
+## Evaluation Metrics
+{{#each metrics}}
+- **{{@key}}**: {{this}}
+{{/each}}
+
+## Results
+{{results}}
+
+## Deployment Strategy
+{{deployment}}
+
+## API Reference
+{{#if api}}
+```
+{{api}}
+```
+{{/if}}
+
+## Limitations and Future Work
+{{limitations}}
+
+## References
+{{#each references}}
+- {{this}}
+{{/each}}
+
+---
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

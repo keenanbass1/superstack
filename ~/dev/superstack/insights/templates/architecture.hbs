@@ -1,0 +1,503 @@
+# System Architecture Document: {{projectName}}
+
+## Document Information
+
+**Version**: {{version}}  
+**Last Updated**: {{date 'YYYY-MM-DD'}}  
+**Status**: {{status}}  
+**Authors**: {{authors}}
+
+## Introduction
+
+{{#if introduction}}
+{{introduction}}
+{{else}}
+*Provide a brief introduction to the system architecture, its purpose, and scope.*
+{{/if}}
+
+## Architecture Overview
+
+{{#if overview}}
+{{overview}}
+{{else}}
+*Describe the high-level architecture of the system, including the architectural style (microservices, monolithic, event-driven, etc.) and the key principles guiding the design decisions.*
+{{/if}}
+
+## System Context Diagram
+
+{{#if contextDiagram}}
+{{contextDiagram}}
+{{else}}
+```
+                   ┌───────────────────┐
+                   │                   │
+                   │  External System  │
+                   │                   │
+                   └─────────┬─────────┘
+                             │
+                             │
+                  ┌──────────▼──────────┐
+┌───────────────┐ │                     │ ┌───────────────┐
+│               │ │                     │ │               │
+│     User      ├─►    YOUR SYSTEM     ◄─┤  Third-party  │
+│               │ │                     │ │    Service    │
+└───────────────┘ │                     │ └───────────────┘
+                  └──────────┬──────────┘
+                             │
+                             │
+                  ┌──────────▼──────────┐
+                  │                     │
+                  │     Data Store      │
+                  │                     │
+                  └─────────────────────┘
+```
+*[Replace with a context diagram showing the system and its interactions with external actors and systems]*
+{{/if}}
+
+## Container Diagram
+
+{{#if containerDiagram}}
+{{containerDiagram}}
+{{else}}
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                            YOUR SYSTEM                              │
+│                                                                     │
+│  ┌─────────────┐     ┌─────────────┐      ┌─────────────┐          │
+│  │             │     │             │      │             │          │
+│  │  Frontend   ├────►│    API      ├─────►│  Business   │          │
+│  │  Application│     │  Gateway    │      │   Logic     │          │
+│  │             │     │             │      │             │          │
+│  └─────────────┘     └──────┬──────┘      └──────┬──────┘          │
+│                             │                    │                  │
+│                      ┌──────▼──────┐     ┌──────▼──────┐           │
+│                      │             │     │             │           │
+│                      │  Service A  │     │  Service B  │           │
+│                      │             │     │             │           │
+│                      └──────┬──────┘     └──────┬──────┘           │
+│                             │                   │                   │
+│                      ┌──────▼───────────────────▼──────┐           │
+│                      │                                 │           │
+│                      │          Database              │           │
+│                      │                                 │           │
+│                      └─────────────────────────────────┘           │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+```
+*[Replace with a container diagram showing the high-level technical components of the system]*
+{{/if}}
+
+## Component Diagrams
+
+{{#if components}}
+{{#each components}}
+### {{name}} Components
+
+{{description}}
+
+{{diagram}}
+
+---
+{{/each}}
+{{else}}
+### [Component Name] Components
+
+*Provide a detailed view of the internal components and their interactions within this container/service.*
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│                       COMPONENT NAME                           │
+│                                                                │
+│   ┌──────────────┐      ┌──────────────┐     ┌──────────────┐ │
+│   │              │      │              │     │              │ │
+│   │  Controller  ├─────►│   Service    ├────►│  Repository  │ │
+│   │              │      │              │     │              │ │
+│   └──────────────┘      └──────────────┘     └──────┬───────┘ │
+│                                                     │         │
+│                                             ┌───────▼───────┐ │
+│                                             │               │ │
+│                                             │   Database    │ │
+│                                             │               │ │
+│                                             └───────────────┘ │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
+```
+
+---
+{{/if}}
+
+## Data Architecture
+
+{{#if dataArchitecture.description}}
+{{dataArchitecture.description}}
+{{else}}
+*Describe the data architecture of the system, including databases, data flows, and data management strategies.*
+{{/if}}
+
+{{#if dataArchitecture.models}}
+{{#each dataArchitecture.models}}
+### {{name}}
+
+**Type**: {{type}}
+
+**Purpose**: {{purpose}}
+
+{{#if schema}}
+**Schema**:
+```
+{{schema}}
+```
+{{/if}}
+
+**Relationships**:
+{{#each relationships}}
+- {{this}}
+{{/each}}
+
+---
+{{/each}}
+{{else}}
+### [Data Store Name]
+
+**Type**: [Database type, e.g., SQL, NoSQL, Cache]
+
+**Purpose**: [Purpose of this data store]
+
+**Schema**:
+```
+[Include schema representation if applicable]
+```
+
+**Relationships**:
+- [Describe relationships with other data stores]
+
+---
+{{/if}}
+
+## Integration Architecture
+
+{{#if integrations}}
+{{#each integrations}}
+### {{name}}
+
+**Type**: {{type}}
+
+**Purpose**: {{purpose}}
+
+**Integration Method**: {{method}}
+
+{{#if diagram}}
+{{diagram}}
+{{/if}}
+
+**Data Exchange**:
+{{#each dataExchange}}
+- {{this}}
+{{/each}}
+
+---
+{{/each}}
+{{else}}
+### [Integration Name]
+
+**Type**: [API, Message Queue, File Transfer, etc.]
+
+**Purpose**: [Purpose of this integration]
+
+**Integration Method**: [REST, GraphQL, AMQP, etc.]
+
+```
+[Integration diagram if applicable]
+```
+
+**Data Exchange**:
+- [Describe what data is exchanged and in what format]
+
+---
+{{/if}}
+
+## Deployment Architecture
+
+{{#if deployment.description}}
+{{deployment.description}}
+{{else}}
+*Describe how the system will be deployed, including infrastructure, environments, and deployment processes.*
+{{/if}}
+
+{{#if deployment.diagram}}
+{{deployment.diagram}}
+{{else}}
+```
+┌───────────────────────────────────────────────────────────────┐
+│                       Cloud Provider                          │
+│                                                               │
+│  ┌────────────────┐  ┌─────────────────┐  ┌────────────────┐  │
+│  │                │  │                 │  │                │  │
+│  │  Load Balancer ├──┤  Auto-scaling   ├──┤   Database     │  │
+│  │                │  │  Service        │  │   Cluster      │  │
+│  └────────────────┘  └─────────────────┘  └────────────────┘  │
+│                                                                │
+│  ┌────────────────┐  ┌─────────────────┐  ┌────────────────┐  │
+│  │                │  │                 │  │                │  │
+│  │  CDN           │  │  Storage        │  │  Monitoring    │  │
+│  │                │  │                 │  │                │  │
+│  └────────────────┘  └─────────────────┘  └────────────────┘  │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
+```
+*[Replace with a deployment diagram showing the infrastructure components]*
+{{/if}}
+
+## Technology Stack
+
+{{#if techStack}}
+{{#each techStack}}
+### {{category}}
+
+{{#each technologies}}
+- **{{name}}**: {{description}}
+{{/each}}
+
+---
+{{/each}}
+{{else}}
+### Frontend
+
+- **[Technology]**: [Description and purpose]
+
+### Backend
+
+- **[Technology]**: [Description and purpose]
+
+### Data Storage
+
+- **[Technology]**: [Description and purpose]
+
+### Infrastructure
+
+- **[Technology]**: [Description and purpose]
+
+### DevOps
+
+- **[Technology]**: [Description and purpose]
+
+---
+{{/if}}
+
+## Security Architecture
+
+{{#if security.description}}
+{{security.description}}
+{{else}}
+*Describe the security architecture of the system, including authentication, authorization, data protection, and network security.*
+{{/if}}
+
+{{#if security.diagram}}
+{{security.diagram}}
+{{else}}
+```
+┌─────────────────┐      ┌──────────────┐      ┌──────────────┐
+│                 │      │              │      │              │
+│  WAF / CDN      ├─────►│  API Gateway ├─────►│  Auth Server │
+│                 │      │              │      │              │
+└─────────────────┘      └──────┬───────┘      └──────────────┘
+                                │
+                                │
+                       ┌────────▼─────────┐
+                       │                  │
+                       │  Service with    │
+                       │  Access Control  │
+                       │                  │
+                       └──────────────────┘
+```
+*[Replace with a security architecture diagram]*
+{{/if}}
+
+{{#if security.measures}}
+{{#each security.measures}}
+### {{category}}
+
+{{#each items}}
+- **{{name}}**: {{description}}
+{{/each}}
+
+---
+{{/each}}
+{{else}}
+### Authentication & Authorization
+
+- **[Mechanism]**: [Description]
+
+### Data Protection
+
+- **[Mechanism]**: [Description]
+
+### Network Security
+
+- **[Mechanism]**: [Description]
+
+---
+{{/if}}
+
+## Scalability & Performance
+
+{{#if scalability.description}}
+{{scalability.description}}
+{{else}}
+*Describe the approaches to ensure the system's scalability and performance, including horizontal/vertical scaling, caching strategies, and performance optimizations.*
+{{/if}}
+
+{{#if scalability.strategies}}
+{{#each scalability.strategies}}
+### {{name}}
+
+{{description}}
+
+**Implementation**:
+{{#each implementation}}
+- {{this}}
+{{/each}}
+
+---
+{{/each}}
+{{else}}
+### [Scalability Strategy]
+
+[Description of the strategy]
+
+**Implementation**:
+- [How this strategy is implemented]
+
+---
+{{/if}}
+
+## Resilience & Fault Tolerance
+
+{{#if resilience.description}}
+{{resilience.description}}
+{{else}}
+*Describe how the system handles failures and ensures high availability.*
+{{/if}}
+
+{{#if resilience.patterns}}
+{{#each resilience.patterns}}
+### {{name}}
+
+{{description}}
+
+**Implementation**:
+{{#each implementation}}
+- {{this}}
+{{/each}}
+
+---
+{{/each}}
+{{else}}
+### [Resilience Pattern]
+
+[Description of the pattern]
+
+**Implementation**:
+- [How this pattern is implemented]
+
+---
+{{/if}}
+
+## Cross-Cutting Concerns
+
+{{#if crossCutting}}
+{{#each crossCutting}}
+### {{name}}
+
+{{description}}
+
+**Approach**:
+{{#each approach}}
+- {{this}}
+{{/each}}
+
+---
+{{/each}}
+{{else}}
+### Logging & Monitoring
+
+[Description of logging and monitoring approach]
+
+**Approach**:
+- [How logging and monitoring are implemented]
+
+### Configuration Management
+
+[Description of configuration management approach]
+
+**Approach**:
+- [How configuration management is implemented]
+
+### Error Handling
+
+[Description of error handling approach]
+
+**Approach**:
+- [How error handling is implemented]
+
+---
+{{/if}}
+
+## Evolution & Migration
+
+{{#if evolution.description}}
+{{evolution.description}}
+{{else}}
+*Describe the planned evolution of the architecture and any migration strategies.*
+{{/if}}
+
+{{#if evolution.roadmap}}
+{{#each evolution.roadmap}}
+### {{phase}}
+
+**Timeline**: {{timeline}}
+
+**Changes**:
+{{#each changes}}
+- {{this}}
+{{/each}}
+
+---
+{{/each}}
+{{else}}
+### [Phase Name]
+
+**Timeline**: [Expected timeline]
+
+**Changes**:
+- [Architectural changes planned]
+
+---
+{{/if}}
+
+## References
+
+{{#if references}}
+{{#each references}}
+- [{{title}}]({{url}}) - {{description}}
+{{/each}}
+{{else}}
+- [Reference Title](URL) - Brief description
+{{/if}}
+
+## Appendices
+
+{{#if appendices}}
+{{#each appendices}}
+### {{title}}
+
+{{content}}
+
+---
+{{/each}}
+{{else}}
+*Include any additional information that may be helpful.*
+{{/if}}
+
+---
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

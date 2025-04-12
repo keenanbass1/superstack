@@ -1,0 +1,72 @@
+---
+title: Code Overview Template
+description: A template for generating context about codebase structure and components
+author: Superstack
+version: 1.0.0
+date: {{date}}
+---
+# {{projectName}} Codebase Overview
+
+## Project Structure
+```
+{{projectStructure}}
+```
+
+## Tech Stack
+{{#each techStack}}
+- **{{@key}}**: {{this}}
+{{/each}}
+
+## Key Components
+{{#each components}}
+### {{name}}
+{{description}}
+
+**Location**: `{{location}}`
+
+**Dependencies**:
+{{#each dependencies}}
+- {{this}}
+{{/each}}
+
+**Purpose**: {{purpose}}
+
+{{#if code}}
+**Sample Code**:
+```{{language}}
+{{code}}
+```
+{{/if}}
+{{/each}}
+
+## APIs and Services
+{{#each apis}}
+### {{name}}
+- **Endpoint**: `{{endpoint}}`
+- **Method**: {{method}}
+- **Purpose**: {{purpose}}
+- **Request Format**: {{requestFormat}}
+- **Response Format**: {{responseFormat}}
+{{/each}}
+
+## Data Models
+{{#each dataModels}}
+### {{name}}
+```
+{{schema}}
+```
+{{/each}}
+
+## Configuration
+{{configuration}}
+
+## Build and Deployment
+{{buildAndDeployment}}
+
+## Known Issues and Technical Debt
+{{#each issues}}
+- **{{title}}**: {{description}}
+{{/each}}
+
+---
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

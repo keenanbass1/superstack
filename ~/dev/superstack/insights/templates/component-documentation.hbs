@@ -1,0 +1,285 @@
+---
+title: {{componentName}} Component
+description: Documentation for the {{componentName}} component
+version: {{version}}
+framework: {{framework}}
+date: {{date}}
+---
+
+# {{componentName}} Component
+
+## Overview
+
+{{overview}}
+
+## Installation
+
+{{#if installation}}
+{{installation}}
+{{else}}
+```bash
+npm install {{packageName}}
+```
+{{/if}}
+
+## Import
+
+```jsx
+import { {{componentName}} } from "{{packageName}}";
+```
+
+## Usage
+
+{{#if basicUsage}}
+```jsx
+{{basicUsage}}
+```
+{{else}}
+```jsx
+<{{componentName}} />
+```
+{{/if}}
+
+## Props
+
+{{#if props}}
+| Prop | Type | Default | Required | Description |
+|------|------|---------|----------|-------------|
+{{#each props}}
+| `{{name}}` | {{type}} | {{default}} | {{required}} | {{description}} |
+{{/each}}
+{{else}}
+*Document the props accepted by the component.*
+{{/if}}
+
+## Examples
+
+{{#if examples}}
+{{#each examples}}
+### {{name}}
+
+{{#if description}}
+{{description}}
+{{/if}}
+
+```jsx
+{{code}}
+```
+
+{{#if image}}
+![{{name}}]({{image}})
+{{/if}}
+
+{{/each}}
+{{else}}
+*Add examples demonstrating various use cases of the component.*
+{{/if}}
+
+## Variants
+
+{{#if variants}}
+{{#each variants}}
+### {{name}}
+
+{{description}}
+
+```jsx
+{{code}}
+```
+
+{{#if image}}
+![{{name}}]({{image}})
+{{/if}}
+
+{{/each}}
+{{else}}
+*Document any variants or different styles the component supports.*
+{{/if}}
+
+## Responsive Behavior
+
+{{#if responsiveBehavior}}
+{{responsiveBehavior}}
+{{else}}
+*Document how the component behaves across different screen sizes.*
+{{/if}}
+
+## Accessibility
+
+{{#if accessibility}}
+{{accessibility}}
+{{else}}
+*Document accessibility features and considerations for this component.*
+
+- Keyboard navigation
+- Screen reader support
+- ARIA attributes
+- Color contrast requirements
+{{/if}}
+
+## Events
+
+{{#if events}}
+| Event | Type | Description |
+|-------|------|-------------|
+{{#each events}}
+| `{{name}}` | {{type}} | {{description}} |
+{{/each}}
+{{else}}
+*Document the events emitted or handled by the component.*
+{{/if}}
+
+## Methods
+
+{{#if methods}}
+| Method | Parameters | Return Type | Description |
+|--------|------------|-------------|-------------|
+{{#each methods}}
+| `{{name}}` | {{parameters}} | {{returnType}} | {{description}} |
+{{/each}}
+{{else}}
+*Document any public methods exposed by the component.*
+{{/if}}
+
+## Slots / Children
+
+{{#if slots}}
+{{#each slots}}
+### {{name}}
+
+{{description}}
+
+{{#if props}}
+**Props passed to slot:**
+
+{{#each props}}
+- `{{name}}`: {{description}}
+{{/each}}
+{{/if}}
+
+**Example:**
+```jsx
+{{example}}
+```
+
+{{/each}}
+{{else}}
+*Document any slots or children composition patterns supported by the component.*
+{{/if}}
+
+## Styling
+
+{{#if styling}}
+{{styling}}
+{{else}}
+*Document how to style and customize the component.*
+
+- Theme support
+- CSS variables
+- Custom classes
+- Overriding default styles
+{{/if}}
+
+## Composition
+
+{{#if composition}}
+{{composition}}
+{{else}}
+*Document how this component composes with other components.*
+{{/if}}
+
+## Best Practices
+
+{{#if bestPractices}}
+{{bestPractices}}
+{{else}}
+*Document recommended usage patterns and best practices.*
+{{/if}}
+
+## Anti-patterns
+
+{{#if antiPatterns}}
+{{antiPatterns}}
+{{else}}
+*Document anti-patterns and what to avoid when using this component.*
+{{/if}}
+
+## Performance Considerations
+
+{{#if performance}}
+{{performance}}
+{{else}}
+*Document any performance considerations for this component.*
+{{/if}}
+
+## Browser Compatibility
+
+{{#if browserCompatibility}}
+{{browserCompatibility}}
+{{else}}
+*Document any browser compatibility issues or considerations.*
+{{/if}}
+
+## Known Issues
+
+{{#if knownIssues}}
+{{#each knownIssues}}
+- {{this}}
+{{/each}}
+{{else}}
+*Document any known issues or limitations.*
+{{/if}}
+
+## Testing
+
+{{#if testing}}
+{{testing}}
+{{else}}
+*Document testing guidelines and examples for this component.*
+{{/if}}
+
+## Related Components
+
+{{#if relatedComponents}}
+{{#each relatedComponents}}
+- [{{name}}]({{link}}) - {{description}}
+{{/each}}
+{{else}}
+*Document related or alternative components.*
+{{/if}}
+
+## Design Guidelines
+
+{{#if designGuidelines}}
+{{designGuidelines}}
+{{else}}
+*Document design guidelines for using this component.*
+{{/if}}
+
+## Changelog
+
+{{#if changelog}}
+{{#each changelog}}
+### {{version}} ({{date}})
+
+{{#each changes}}
+- {{this}}
+{{/each}}
+
+{{/each}}
+{{else}}
+*Document changes to the component across versions.*
+{{/if}}
+
+## References
+
+{{#if references}}
+{{#each references}}
+- [{{name}}]({{link}})
+{{/each}}
+{{else}}
+*Include any relevant references or documentation.*
+{{/if}}
+
+---
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

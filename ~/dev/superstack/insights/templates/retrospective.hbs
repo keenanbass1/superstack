@@ -1,0 +1,180 @@
+# Sprint Retrospective: {{sprintName}}
+
+## Sprint Information
+**Sprint**: {{sprintName}} ({{sprintNumber}})  
+**Duration**: {{startDate}} to {{endDate}} ({{duration}} days)  
+**Team**: {{team}}  
+**Facilitator**: {{facilitator}}  
+**Participants**: {{participants}}
+
+## Sprint Summary
+
+{{#if summary}}
+{{summary}}
+{{else}}
+### Sprint Goal
+*[Original sprint goal]*
+
+### Sprint Metrics
+**Planned Story Points**: *X*  
+**Completed Story Points**: *Y*  
+**Completion Rate**: *Z%*  
+**Bugs Discovered**: *A*  
+**Bugs Fixed**: *B*  
+
+### Key Accomplishments
+- *Major feature 1 was completed*
+- *Successfully integrated with external system*
+- *Reduced technical debt in module X*
+{{/if}}
+
+## What Went Well
+
+{{#if wentWell}}
+{{wentWell}}
+{{else}}
+*List the aspects of the sprint that were successful and should be continued:*
+
+- *Pair programming improved code quality*
+- *Daily standups were focused and efficient*
+- *Team was proactive in addressing blockers*
+- *Good collaboration with the design team*
+- *Testing was thorough and caught several edge cases*
+{{/if}}
+
+## What Could Be Improved
+
+{{#if improvements}}
+{{improvements}}
+{{else}}
+*List the aspects of the sprint that didn't go well and need improvement:*
+
+- *Requirements changed mid-sprint causing rework*
+- *Too many meetings interrupted development time*
+- *Integration environment was unstable*
+- *Story estimations were too optimistic*
+- *Communication gaps with the product owner*
+{{/if}}
+
+## Insights & Observations
+
+{{#if insights}}
+{{insights}}
+{{else}}
+*Deeper analysis and observations about team dynamics, processes, or technical aspects:*
+
+- *Team seems to struggle with complex user stories; consider breaking them down further*
+- *Our velocity has been consistent for 3 sprints; we're finding our rhythm*
+- *Technical debt from earlier sprints is slowing us down*
+- *The new branching strategy has reduced merge conflicts*
+- *Automated testing has significantly improved our confidence in releases*
+{{/if}}
+
+## Action Items
+
+{{#if actionItems}}
+{{actionItems}}
+{{else}}
+*Specific, actionable improvements to implement in the next sprint:*
+
+| Action | Description | Owner | Due Date | Priority | Status |
+|--------|-------------|-------|----------|----------|--------|
+| *Break down complex stories* | *Implement a refinement session focused on breaking down stories into smaller tasks* | *Scrum Master* | *YYYY-MM-DD* | *High* | *Not Started* |
+| *Reduce meeting time* | *Review current meetings and eliminate or shorten any that aren't providing value* | *Team Lead* | *YYYY-MM-DD* | *Medium* | *Not Started* |
+| *Improve test environment* | *Work with DevOps to stabilize the integration environment* | *DevOps Contact* | *YYYY-MM-DD* | *High* | *Not Started* |
+| *Training on estimation* | *Schedule a workshop on story point estimation techniques* | *Agile Coach* | *YYYY-MM-DD* | *Medium* | *Not Started* |
+| *Daily product owner sync* | *Implement a 15-minute daily sync with the product owner* | *Product Owner* | *YYYY-MM-DD* | *Medium* | *Not Started* |
+{{/if}}
+
+## Team Radar/Health Check
+
+{{#if teamHealth}}
+{{teamHealth}}
+{{else}}
+*Rate each aspect on a scale of 1-5 (1=Poor, 5=Excellent):*
+
+| Aspect | Rating | Trend | Notes |
+|--------|--------|-------|-------|
+| Collaboration | *X/5* | *↑/↓/→* | *Notes on collaboration* |
+| Communication | *X/5* | *↑/↓/→* | *Notes on communication* |
+| Technical Practices | *X/5* | *↑/↓/→* | *Notes on technical practices* |
+| Process Effectiveness | *X/5* | *↑/↓/→* | *Notes on process* |
+| Morale | *X/5* | *↑/↓/→* | *Notes on team morale* |
+| Productivity | *X/5* | *↑/↓/→* | *Notes on productivity* |
+| Quality | *X/5* | *↑/↓/→* | *Notes on quality* |
+| Predictability | *X/5* | *↑/↓/→* | *Notes on predictability* |
+{{/if}}
+
+## Kudos & Recognition
+
+{{#if kudos}}
+{{kudos}}
+{{else}}
+*Recognition for team members who made notable contributions:*
+
+- *[Team Member Name]* - *Stayed late to help debug a critical issue*
+- *[Team Member Name]* - *Mentored junior developers on the new framework*
+- *[Team Member Name]* - *Proactively improved documentation*
+- *[Team Member Name]* - *Found and fixed a significant performance bottleneck*
+{{/if}}
+
+## Discussion Notes
+
+{{#if discussionNotes}}
+{{discussionNotes}}
+{{else}}
+*Key points and insights from the retrospective discussion:*
+
+- *The team discussed the impact of changing requirements and agreed on a change management process*
+- *Concerns were raised about the upcoming holiday season and its impact on the next sprint*
+- *There was consensus that code reviews are taking too long*
+- *Team suggested rotating the role of Scrum Master to give everyone experience*
+- *Discussion about implementing a "no-meeting Wednesday" to provide focused development time*
+{{/if}}
+
+## Looking Ahead
+
+{{#if lookingAhead}}
+{{lookingAhead}}
+{{else}}
+*Thoughts and considerations for the upcoming sprint(s):*
+
+- *Next sprint will focus on completing the user profile feature*
+- *We need to plan for upcoming system integration work*
+- *Team capacity will be reduced due to planned vacations*
+- *We should plan time for upgrading dependencies*
+- *The release is scheduled two sprints from now; we should start preparing*
+{{/if}}
+
+## Retrospective Effectiveness
+
+{{#if retroEffectiveness}}
+{{retroEffectiveness}}
+{{else}}
+**Participation Level**: *High/Medium/Low*  
+**Psychological Safety**: *High/Medium/Low*  
+**Outcome Satisfaction**: *High/Medium/Low*  
+**Action Item Clarity**: *High/Medium/Low*  
+
+**Feedback on the Retrospective Process**:
+*How can we improve our retrospective process for next time?*
+
+- *Feedback point 1*
+- *Feedback point 2*
+- *Feedback point 3*
+{{/if}}
+
+## Closing Thoughts
+
+{{#if closingThoughts}}
+{{closingThoughts}}
+{{else}}
+*Final reflections and summary from the facilitator:*
+
+*Overall, this was a productive sprint despite the challenges we faced. The team demonstrated resilience and adaptability in responding to changing requirements. Our velocity remains consistent, and we're seeing improvements in code quality metrics. The action items we've identified should address our main pain points and help us perform even better in the next sprint. Everyone's participation in this retrospective shows a strong commitment to continuous improvement.*
+{{/if}}
+
+---
+*This retrospective document was collaboratively created by the team to capture learnings and drive continuous improvement.*
+
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

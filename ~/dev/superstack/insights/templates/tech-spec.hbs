@@ -1,0 +1,398 @@
+# Technical Specification: {{featureName}}
+
+## Document Information
+**Document ID**: {{docId}}  
+**Version**: {{version}}  
+**Status**: {{status}} *(Draft/In Review/Approved/Implemented)*  
+**Author**: {{author}}  
+**Last Updated**: {{date 'YYYY-MM-DD'}}  
+**Reviewers**: {{reviewers}}  
+
+## Overview
+
+{{#if overview}}
+{{overview}}
+{{else}}
+### Purpose
+*A clear, concise explanation of what this technical specification addresses and why it's needed.*
+
+### Scope
+*The boundaries of this specification - what is included and what is explicitly excluded.*
+
+### Related Documents
+- [Architecture Decision Record](link-to-adr)
+- [Product Requirements Document](link-to-prd)
+- [API Documentation](link-to-api-docs)
+{{/if}}
+
+## Problem Statement
+
+{{#if problemStatement}}
+{{problemStatement}}
+{{else}}
+### Current Limitations
+*Describe the current system limitations or issues that this specification addresses.*
+
+### Business Impact
+*Explain how these limitations affect business operations, user experience, or system performance.*
+
+### Technical Challenges
+*Outline the core technical challenges that need to be solved.*
+{{/if}}
+
+## Proposed Solution
+
+{{#if proposedSolution}}
+{{proposedSolution}}
+{{else}}
+### High-Level Approach
+*A high-level description of the proposed solution, focusing on the overall strategy rather than implementation details.*
+
+### Architecture Overview
+*Architectural changes or additions required by this solution. Consider including a diagram.*
+
+```
+┌───────────────┐     ┌───────────────┐     ┌───────────────┐
+│               │     │               │     │               │
+│  Component A  │────▶│  Component B  │────▶│  Component C  │
+│               │     │               │     │               │
+└───────────────┘     └───────────────┘     └───────────────┘
+                             │
+                             ▼
+                      ┌───────────────┐
+                      │               │
+                      │  Component D  │
+                      │               │
+                      └───────────────┘
+```
+
+### Key Components
+*List and describe the major components involved in the solution.*
+
+| Component | Description | Responsibility |
+|-----------|-------------|----------------|
+| *Name* | *Brief description* | *Primary responsibilities* |
+| *Name* | *Brief description* | *Primary responsibilities* |
+| *Name* | *Brief description* | *Primary responsibilities* |
+
+### Data Models
+*Define new or modified data models, including entity relationships.*
+
+```typescript
+interface User {
+  id: string;
+  username: string;
+  email: string;
+  role: UserRole;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+enum UserRole {
+  ADMIN = 'admin',
+  USER = 'user',
+  GUEST = 'guest'
+}
+```
+
+### API Endpoints
+*Define new or modified API endpoints.*
+
+#### Endpoint 1: `GET /api/resource`
+**Purpose**: *Retrieve a resource*  
+**Auth Required**: *Yes/No*  
+**Request Parameters**:
+- `param1` (string, required): Description
+- `param2` (number, optional): Description
+
+**Response**:
+```json
+{
+  "id": "string",
+  "name": "string",
+  "createdAt": "2023-01-01T00:00:00Z"
+}
+```
+**Status Codes**:
+- 200: Success
+- 404: Resource not found
+- 500: Server error
+
+#### Endpoint 2: `POST /api/resource`
+**Purpose**: *Create a new resource*  
+**Auth Required**: *Yes/No*  
+**Request Body**:
+```json
+{
+  "name": "string (required)",
+  "description": "string (optional)"
+}
+```
+**Response**:
+```json
+{
+  "id": "string",
+  "name": "string",
+  "description": "string",
+  "createdAt": "2023-01-01T00:00:00Z"
+}
+```
+**Status Codes**:
+- 201: Created
+- 400: Bad request
+- 401: Unauthorized
+- 500: Server error
+{{/if}}
+
+## Technical Design Details
+
+{{#if technicalDetails}}
+{{technicalDetails}}
+{{else}}
+### Algorithms
+*Describe any significant algorithms used in the solution.*
+
+### Database Changes
+*Detail any database schema changes, migrations, or new tables.*
+
+```sql
+CREATE TABLE users (
+  id UUID PRIMARY KEY,
+  username VARCHAR(50) NOT NULL UNIQUE,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(20) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_users_email ON users(email);
+```
+
+### State Management
+*Explain how state is managed across the system.*
+
+### Security Considerations
+*Address authentication, authorization, data protection, and other security aspects.*
+
+### Error Handling
+*Detail how errors will be caught, logged, and presented to users.*
+
+### Caching Strategy
+*If applicable, describe caching mechanisms and invalidation strategies.*
+
+### Logging
+*Specify what events should be logged and at what level.*
+
+| Event | Log Level | Details to Include |
+|-------|-----------|-------------------|
+| *User Login* | *INFO* | *User ID, timestamp, success/failure* |
+| *API Request* | *DEBUG* | *Endpoint, parameters, response code* |
+| *Error* | *ERROR* | *Stack trace, user context, request details* |
+{{/if}}
+
+## Performance Considerations
+
+{{#if performanceConsiderations}}
+{{performanceConsiderations}}
+{{else}}
+### Scalability
+*How will the solution scale as load increases?*
+
+### Resource Utilization
+*Expected CPU, memory, disk, and network utilization.*
+
+### Latency
+*Expected response times and latency constraints.*
+
+### Throughput
+*Maximum expected transactions or operations per second.*
+
+### Load Testing Plan
+*How will performance be validated?*
+
+### Monitoring & Alerting
+*What metrics should be monitored and when should alerts be triggered?*
+{{/if}}
+
+## Testing Strategy
+
+{{#if testingStrategy}}
+{{testingStrategy}}
+{{else}}
+### Unit Tests
+*Key components and functions that need unit test coverage.*
+
+### Integration Tests
+*Interactions between components that need to be tested.*
+
+### End-to-End Tests
+*User journeys that need to be validated end-to-end.*
+
+### Performance Tests
+*Load and stress tests to validate performance requirements.*
+
+### Security Tests
+*Vulnerability and penetration tests to consider.*
+
+### Test Data
+*Requirements for test data and test environment setup.*
+{{/if}}
+
+## Implementation Plan
+
+{{#if implementationPlan}}
+{{implementationPlan}}
+{{else}}
+### Phase 1: [Description]
+**Tasks**:
+- Task 1
+- Task 2
+- Task 3
+
+**Estimated Effort**: X person-days
+**Dependencies**: None
+
+### Phase 2: [Description]
+**Tasks**:
+- Task 1
+- Task 2
+- Task 3
+
+**Estimated Effort**: X person-days
+**Dependencies**: Phase 1
+
+### Phase 3: [Description]
+**Tasks**:
+- Task 1
+- Task 2
+- Task 3
+
+**Estimated Effort**: X person-days
+**Dependencies**: Phase 2
+{{/if}}
+
+## Deployment Strategy
+
+{{#if deploymentStrategy}}
+{{deploymentStrategy}}
+{{else}}
+### Pre-Deployment Checklist
+- [ ] Item 1
+- [ ] Item 2
+- [ ] Item 3
+
+### Deployment Steps
+1. Step 1
+2. Step 2
+3. Step 3
+
+### Rollback Plan
+*How to revert changes if issues are detected.*
+
+### Post-Deployment Verification
+*How to confirm successful deployment.*
+
+### Feature Flagging
+*If applicable, how feature flags will be used.*
+{{/if}}
+
+## Alternative Solutions Considered
+
+{{#if alternativeSolutions}}
+{{alternativeSolutions}}
+{{else}}
+### Alternative 1: [Description]
+**Pros**:
+- Pro 1
+- Pro 2
+
+**Cons**:
+- Con 1
+- Con 2
+
+**Reason for Rejection**: *Explain why this alternative was not chosen.*
+
+### Alternative 2: [Description]
+**Pros**:
+- Pro 1
+- Pro 2
+
+**Cons**:
+- Con 1
+- Con 2
+
+**Reason for Rejection**: *Explain why this alternative was not chosen.*
+{{/if}}
+
+## Open Questions
+
+{{#if openQuestions}}
+{{openQuestions}}
+{{else}}
+### Question 1
+**Description**: *What is the question?*
+**Impact**: *What impact does this have on the design?*
+**Resolution Plan**: *How and when will this question be answered?*
+
+### Question 2
+**Description**: *What is the question?*
+**Impact**: *What impact does this have on the design?*
+**Resolution Plan**: *How and when will this question be answered?*
+{{/if}}
+
+## References
+
+{{#if references}}
+{{references}}
+{{else}}
+- [Reference 1](http://link-to-reference)
+- [Reference 2](http://link-to-reference)
+- [Internal Documentation](http://link-to-docs)
+{{/if}}
+
+## Appendix
+
+{{#if appendix}}
+{{appendix}}
+{{else}}
+### Glossary
+*Define any technical terms, acronyms, or jargon used in this document.*
+
+| Term | Definition |
+|------|------------|
+| *Term 1* | *Definition* |
+| *Term 2* | *Definition* |
+
+### Additional Diagrams
+*Any supplementary diagrams or visual explanations.*
+
+### Example Implementations
+*Code snippets or examples that illustrate key concepts.*
+
+```typescript
+// Example implementation code
+function exampleFunction(param: string): boolean {
+  // Implementation details
+  return true;
+}
+```
+{{/if}}
+
+## Approval
+
+{{#if approval}}
+{{approval}}
+{{else}}
+| Role | Name | Approval Date | Comments |
+|------|------|--------------|----------|
+| *Technical Lead* | | | |
+| *Product Manager* | | | |
+| *Security Review* | | | |
+| *Architecture Review* | | | |
+{{/if}}
+
+---
+*This technical specification is subject to change as implementation progresses. Updates will be communicated to all stakeholders.*
+
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 

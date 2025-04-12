@@ -1,0 +1,14 @@
+{
+  "version": "0.1.0",
+  "aiProviders": {
+    "claude": {
+      "model": "claude-3-sonnet-20240229"
+    },
+    "openai": {
+      "model": "gpt-4o"
+    }
+  },
+  "editor": "code",
+  "logFormat": "markdown",
+  "defaultProjectTemplate": "next"
+}

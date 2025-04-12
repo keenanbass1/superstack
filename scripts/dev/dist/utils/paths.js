@@ -1,12 +1,35 @@
 import path from 'path';
 import os from 'os';
 import fs from 'fs-extra';
+import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+/**
+ * Setup environment variables for the CLI
+ */
+export function setupEnvironment() {
+    // Try to load from .env file if it exists
+    dotenv.config();
+    // Get the directory where this file is located
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    // Set default environment variables if not already set
+    if (!process.env.DEV_ROOT) {
+        // Calculate the dev root directory based on the location of this file
+        // This file is in scripts/dev/dist/utils, so we need to go up several levels
+        process.env.DEV_ROOT = path.resolve(path.join(__dirname, '../../../../../'));
+    }
+    if (!process.env.PROJECTS_DIR) {
+        process.env.PROJECTS_DIR = path.join(process.env.DEV_ROOT, 'projects');
+    }
+}
 /**
  * Get system paths
  */
 export function getPaths() {
     const homeDir = os.homedir();
-    const devDir = path.join(homeDir, 'Desktop', 'dev'); // Adjusted for actual path structure
+    // Use environment variables if available, otherwise use default paths
+    const devDir = process.env.DEV_ROOT || path.join(homeDir, 'dev');
+    const projectsDir = process.env.PROJECTS_DIR || path.join(devDir, 'projects');
     const superstackDir = path.join(devDir, 'superstack');
     const currentDir = process.cwd();
     return {
@@ -15,7 +38,7 @@ export function getPaths() {
         superstackDir,
         configDir: path.join(superstackDir, 'config'),
         templatesDir: path.join(superstackDir, 'templates'),
-        projectsDir: path.join(devDir, 'projects'),
+        projectsDir,
         logsDir: path.join(superstackDir, 'logs'),
         scriptsDir: path.join(superstackDir, 'scripts'),
         llmDir: path.join(superstackDir, 'llm'),

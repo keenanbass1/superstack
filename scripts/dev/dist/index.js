@@ -5,9 +5,13 @@ import figlet from 'figlet';
 import contextCommand from './commands/context.js';
 import aiCommand from './commands/ai.js';
 import logCommand from './commands/log.js';
+import newCommand from './commands/new.js';
+import projectCommand from './commands/project.js';
 import { getVersion } from './utils/config.js';
 import { log } from './utils/logger.js';
-import { ensureSystemPaths } from './utils/paths.js';
+import { ensureSystemPaths, setupEnvironment } from './utils/paths.js';
+// Setup environment variables
+setupEnvironment();
 // Ensure all system paths exist
 ensureSystemPaths();
 const program = new Command();
@@ -23,14 +27,9 @@ program
 contextCommand(program);
 aiCommand(program);
 logCommand(program);
+newCommand(program);
+projectCommand(program);
 // Add placeholder commands for features to be implemented
-program
-    .command('new')
-    .description('[Coming Soon] Create a new project')
-    .action(() => {
-    log('The "new" command is coming soon!', 'info');
-    log('Check the documentation for updates.', 'info');
-});
 program
     .command('config')
     .description('[Coming Soon] Manage configuration')
