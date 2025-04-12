@@ -48,6 +48,37 @@
 | *T-458* | *Performance optimization* | *Improve load time for dashboard* | *Z* | *Team Member* | *None* | *Not Started* |
 {{/if}}
 
+## Spikes and Research
+
+{{#if spikes}}
+{{spikes}}
+{{else}}
+*List any research or investigation tasks needed to reduce uncertainty:*
+
+| ID | Topic | Questions to Answer | Time Box | Assigned To | Deliverable |
+|----|-------|---------------------|----------|-------------|-------------|
+| *S-789* | *New authentication method* | *Is JWT more suitable than session-based auth for our use case?* | *4 hours* | *Team Member* | *Recommendation document* |
+| *S-790* | *Performance testing tools* | *Which tool is best for our specific performance testing needs?* | *2 hours* | *Team Member* | *Tool selection and setup plan* |
+{{/if}}
+
+## Acceptance Criteria
+
+{{#if acceptanceCriteria}}
+{{acceptanceCriteria}}
+{{else}}
+*Define clear, testable conditions that must be met for each user story to be considered complete:*
+
+### US-123: *User story title*
+- *Criterion 1*
+- *Criterion 2*
+- *Criterion 3*
+
+### US-124: *User story title*
+- *Criterion 1*
+- *Criterion 2*
+- *Criterion 3*
+{{/if}}
+
 ## Dependencies and Blockers
 
 {{#if dependencies}}
@@ -93,6 +124,17 @@
 - Product Owner has accepted the implementation
 {{/if}}
 
+## Sprint Ceremonies
+
+{{#if ceremonies}}
+{{ceremonies}}
+{{else}}
+- **Daily Standup**: *Time, location, format*
+- **Backlog Refinement**: *Day, time, location*
+- **Sprint Review**: *Date, time, location, participants*
+- **Sprint Retrospective**: *Date, time, location*
+{{/if}}
+
 ## Risk Assessment
 
 {{#if risks}}
@@ -121,6 +163,19 @@
 - **Performance**: Key metrics remain within SLA thresholds
 {{/if}}
 
+## Notes and Discussion Points
+
+{{#if notes}}
+{{notes}}
+{{else}}
+*Capture any important discussions, decisions, or concerns raised during sprint planning:*
+
+- *Team raised concerns about the complexity of the authentication story*
+- *Decision to use test-driven development for core features*
+- *Agreement to focus on quality over quantity this sprint due to previous technical issues*
+- *Special consideration for onboarding new team member during this sprint*
+{{/if}}
+
 ## Team Commitments
 
 {{#if commitments}}
@@ -133,3 +188,20 @@
 3. *Maintain test coverage above 80%*
 4. *Complete performance optimization for dashboard page*
 {{/if}}
+
+## Post-Sprint Planning Actions
+
+{{#if postPlanningActions}}
+{{postPlanningActions}}
+{{else}}
+| Action Item | Description | Owner | Due Date | Status |
+|-------------|-------------|-------|----------|--------|
+| *Update sprint board* | *Add all stories and tasks to the board* | *Scrum Master* | *YYYY-MM-DD* | *Not Started* |
+| *Clarify acceptance criteria* | *Review and refine criteria for US-125* | *Product Owner* | *YYYY-MM-DD* | *Not Started* |
+| *Schedule design review* | *Set up meeting for UI component approval* | *UX Designer* | *YYYY-MM-DD* | *Not Started* |
+{{/if}}
+
+---
+*This sprint planning document serves as the team's agreement and commitment for the sprint.*
+
+Generated with Superstack Insights on {{date 'YYYY-MM-DD HH:mm'}} 
