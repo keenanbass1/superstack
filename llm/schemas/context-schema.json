@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Project Context Schema",
+  "description": "Schema for project context documents used with AI assistants",
+  "type": "object",
+  "required": ["Project Information"],
+  "properties": {
+    "Project Information": {
+      "type": "object",
+      "description": "Basic information about the project",
+      "required": ["items"],
+      "properties": {
+        "items": {
+          "type": "object",
+          "required": ["Name"],
+          "properties": {
+            "Name": {
+              "type": "string",
+              "description": "Name of the project"
+            },
+            "Description": {
+              "type": "string",
+              "description": "Brief description of the project"
+            },
+            "Creation Date": {
+              "type": "string",
+              "description": "Date when the project was created",
+              "format": "date"
+            }
+          }
+        },
+        "content": {
+          "type": "string",
+          "description": "Additional project information"
+        }
+      }
+    },
+    "Technical Specification": {
+      "type": "object",
+      "description": "Technical details about the project",
+      "properties": {
+        "items": {
+          "type": "object",
+          "properties": {
+            "Stack": {
+              "type": "string",
+              "description": "The tech stack used in the project"
+            },
+            "Architecture": {
+              "type": "string",
+              "description": "Description of the project's architecture"
+            },
+            "Dependencies": {
+              "type": "string",
+              "description": "List of key dependencies"
+            }
+          }
+        },
+        "content": {
+          "type": "string",
+          "description": "Detailed technical information"
+        }
+      }
+    },
+    "Current Work": {
+      "type": "object",
+      "description": "Information about current development",
+      "properties": {
+        "items": {
+          "type": "object",
+          "properties": {
+            "Current Branch": {
+              "type": "string",
+              "description": "Git branch being worked on"
+            },
+            "Current Task": {
+              "type": "string",
+              "description": "Task being worked on"
+            },
+            "Blockers": {
+              "type": "string",
+              "description": "Current issues blocking progress"
+            }
+          }
+        },
+        "content": {
+          "type": "string",
+          "description": "More details about the current work"
+        }
+      }
+    },
+    "Domain Knowledge": {
+      "type": "object",
+      "description": "Business or domain-specific information",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "Domain-specific information relevant to the project"
+        }
+      }
+    },
+    "Additional Information": {
+      "type": "object",
+      "description": "Any other relevant information",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "Additional information not covered in other sections"
+        }
+      }
+    }
+  }
+}

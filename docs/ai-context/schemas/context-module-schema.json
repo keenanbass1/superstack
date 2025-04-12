@@ -1,0 +1,195 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AI Context Knowledge Module",
+  "description": "Schema for AI-optimized knowledge modules in the context system",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "The name of the knowledge concept"
+    },
+    "domain": {
+      "type": "string",
+      "description": "The knowledge domain this belongs to",
+      "enum": ["design", "development", "system", "project"]
+    },
+    "category": {
+      "type": "string",
+      "description": "Subcategory within the domain",
+      "examples": ["principles", "ui-patterns", "practices"]
+    },
+    "conceptualDefinition": {
+      "type": "string",
+      "description": "Clear explanation of the concept and its purpose"
+    },
+    "corePrinciples": {
+      "type": "array",
+      "description": "Fundamental rules and guidelines for this concept",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "examples": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["name", "description"]
+      }
+    },
+    "implementationPatterns": {
+      "type": "array",
+      "description": "Practical application examples",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "context": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "description"]
+      }
+    },
+    "decisionLogic": {
+      "type": "object",
+      "description": "Guidelines for making decisions related to this concept",
+      "properties": {
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "factors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "scenario": {
+                "type": "string"
+              },
+              "decision": {
+                "type": "string"
+              },
+              "rationale": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "codeTranslation": {
+      "type": "object",
+      "description": "How the concept maps to implementation",
+      "properties": {
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "explanation": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "patterns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "implementation": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "antiPatterns": {
+      "type": "array",
+      "description": "Common mistakes to avoid",
+      "items": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "string"
+          },
+          "problem": {
+            "type": "string"
+          },
+          "solution": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "reasoningPrinciples": {
+      "type": "array",
+      "description": "Explanations of why these guidelines exist",
+      "items": {
+        "type": "object",
+        "properties": {
+          "principle": {
+            "type": "string"
+          },
+          "explanation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "relatedConcepts": {
+      "type": "array",
+      "description": "Other knowledge modules that connect to this one",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "relationship": {
+            "type": "string",
+            "enum": ["builds-on", "complements", "contrasts-with", "implements"]
+          }
+        }
+      }
+    }
+  },
+  "required": ["title", "domain", "category", "conceptualDefinition", "corePrinciples"]
+}
