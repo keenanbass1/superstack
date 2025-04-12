@@ -38,7 +38,7 @@ export async function edit(): Promise<void> {
     // Get preferred editor from config, fallback to environment variable, then to sensible defaults
     const editor = getConfig('editor') || process.env.EDITOR || process.env.VISUAL || 'code';
     
-    await execAsync(`${editor} "${contextFilePath}"`, { stdio: 'inherit' });
+    await execAsync(`${editor} "${contextFilePath}"`, { stdio: 'inherit' } as any);
     log('Context file opened in editor.', 'success');
     log('After editing, use "dev context push" to update your AI assistants.', 'info');
   } catch (error) {

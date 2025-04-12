@@ -36,4 +36,30 @@ export function spinner(text) {
 export function section(title) {
     console.log('\n' + chalk.bold.cyan(`■ ${title}`));
 }
+/**
+ * Display a command suggestion
+ */
+export function command(cmd, description) {
+    if (description) {
+        console.log(`${chalk.gray('$')} ${chalk.green(cmd)}  ${chalk.gray('- ' + description)}`);
+    }
+    else {
+        console.log(`${chalk.gray('$')} ${chalk.green(cmd)}`);
+    }
+}
+// Export a logger object that simulates the standard logger interface
+export const logger = {
+    log: log,
+    info: (message) => log(message, 'info'),
+    success: (message) => log(message, 'success'),
+    warn: (message) => log(message, 'warning'),
+    error: (message, err) => {
+        log(message, 'error');
+        if (err && process.env.DEBUG) {
+            console.error(err);
+        }
+    },
+    debug: (message) => log(message, 'debug'),
+    command: command
+};
 //# sourceMappingURL=logger.js.map

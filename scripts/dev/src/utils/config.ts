@@ -53,7 +53,7 @@ export function loadConfig(): SuperstackConfig {
   
   if (!fs.existsSync(configPath)) {
     // Initialize with default config
-    saveConfig(defaultConfig);
+    saveConfigFile(defaultConfig);
     return defaultConfig;
   }
   
@@ -67,14 +67,40 @@ export function loadConfig(): SuperstackConfig {
 }
 
 /**
+ * Helper function to write config directly to file without loading existing config
+ */
+function saveConfigFile(config: SuperstackConfig): void {
+  const configPath = getConfigPath();
+  try {
+    fs.ensureFileSync(configPath);
+    fs.writeJSONSync(configPath, config, { spaces: 2 });
+  } catch (error) {
+    console.error('Error saving config file:', error);
+  }
+}
+
+/**
  * Save the Superstack configuration
  */
 export function saveConfig(config: Partial<SuperstackConfig>): void {
   const configPath = getConfigPath();
-  const currentConfig = loadConfig();
-  const updatedConfig = { ...currentConfig, ...config };
   
+  // If the config file doesn't exist yet, just write the provided config
+  if (!fs.existsSync(configPath)) {
+    saveConfigFile({ ...defaultConfig, ...config });
+    return;
+  }
+  
+  // Otherwise, merge with existing config
   try {
+    let currentConfig = defaultConfig;
+    try {
+      currentConfig = { ...defaultConfig, ...fs.readJSONSync(configPath) };
+    } catch (e) {
+      // If reading fails, use default config
+    }
+    
+    const updatedConfig = { ...currentConfig, ...config };
     fs.ensureFileSync(configPath);
     fs.writeJSONSync(configPath, updatedConfig, { spaces: 2 });
   } catch (error) {

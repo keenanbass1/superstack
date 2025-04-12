@@ -2,8 +2,9 @@
 import { Command } from 'commander';
 import chalk from 'chalk';
 import figlet from 'figlet';
-import { contextCommand } from './commands/context/index.js';
-import { aiCommand } from './commands/ai/index.js';
+import contextCommand from './commands/context.js';
+import aiCommand from './commands/ai.js';
+import logCommand from './commands/log.js';
 import { getVersion } from './utils/config.js';
 import { log } from './utils/logger.js';
 import { ensureSystemPaths } from './utils/paths.js';
@@ -21,19 +22,13 @@ program
 // Register command modules
 contextCommand(program);
 aiCommand(program);
+logCommand(program);
 // Add placeholder commands for features to be implemented
 program
     .command('new')
     .description('[Coming Soon] Create a new project')
     .action(() => {
     log('The "new" command is coming soon!', 'info');
-    log('Check the documentation for updates.', 'info');
-});
-program
-    .command('log')
-    .description('[Coming Soon] Manage development logs')
-    .action(() => {
-    log('The "log" command is coming soon!', 'info');
     log('Check the documentation for updates.', 'info');
 });
 program

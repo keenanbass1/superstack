@@ -1,85 +1,47 @@
-import fs from 'fs-extra';
-import path from 'path';
-import { log, spinner, section } from '../../utils/logger.js';
-import { isSuperstackProject, getProjectRoot } from '../../utils/paths.js';
+import { Command } from 'commander';
+import ora from 'ora';
+import chalk from 'chalk';
 import clipboardy from 'clipboardy';
-export async function push(options) {
-    // Check if current directory is a Superstack project
-    if (!isSuperstackProject()) {
-        log('Current directory is not a Superstack project.', 'error');
-        log('Run this command from a Superstack project directory or create a new project with "dev new".', 'info');
+import { getActiveContext, getFormattedActiveContext } from '../../utils/contextModules.js';
+import { logger } from '../../utils/logger.js';
+export const pushCommand = new Command('push')
+    .description('Push active context to clipboard or AI tool')
+    .option('-t, --target <target>', 'Target destination (clipboard, claude, gpt)', 'clipboard')
+    .action(async (options) => {
+    // Check if we have active context
+    const activeContext = await getActiveContext();
+    if (activeContext.modules.length === 0) {
+        logger.error('No active context modules');
+        logger.command('dev context add <module>', 'Add modules to context first');
         return;
     }
-    section('Pushing Project Context');
-    const projectRoot = getProjectRoot();
-    if (!projectRoot) {
-        log('Unable to find project root.', 'error');
-        return;
-    }
-    // Check if context exists
-    const contextFilePath = path.join(projectRoot, '.superstack', 'context', 'project-context.md');
-    if (!fs.existsSync(contextFilePath)) {
-        log('Project context not found.', 'error');
-        log('Initialize project context first with "dev context init".', 'info');
-        return;
-    }
-    // Read context
-    const contextContent = fs.readFileSync(contextFilePath, 'utf8');
-    // Push to Claude
-    if (options.target === 'all' || options.target === 'claude') {
-        const spin = spinner('Preparing context for Claude...');
-        try {
-            // Create Claude-specific context directory
-            fs.ensureDirSync(path.join(projectRoot, '.superstack', 'context', 'claude'));
-            fs.writeFileSync(path.join(projectRoot, '.superstack', 'context', 'claude', 'project-context.md'), contextContent, 'utf8');
-            // Copy to clipboard
-            clipboardy.writeSync(contextContent);
-            spin.succeed('Context prepared for Claude');
-            log('Context copied to clipboard ready to paste into Claude.', 'info');
+    const spinner = ora('Preparing context...').start();
+    try {
+        // Format the context
+        const formattedContext = await getFormattedActiveContext();
+        // Push to destination
+        if (options.target === 'clipboard') {
+            await clipboardy.write(formattedContext);
+            spinner.succeed('Context copied to clipboard');
+            console.log(chalk.cyan(`\nPushed ${activeContext.modules.length} context modules to clipboard`));
+            console.log('Paste this context into your AI tool of choice');
         }
-        catch (error) {
-            spin.fail('Failed to prepare context for Claude');
-            console.error(error);
+        else if (options.target === 'claude' || options.target === 'gpt') {
+            // For now, just copy to clipboard with a note about the target
+            await clipboardy.write(formattedContext);
+            spinner.succeed(`Context copied to clipboard for ${options.target}`);
+            spinner.info(`Direct ${options.target} API integration not yet implemented`);
+            console.log(chalk.cyan(`\nPushed ${activeContext.modules.length} context modules`));
+            console.log(`Paste this context into ${options.target}`);
+        }
+        else {
+            spinner.fail(`Unknown target: ${options.target}`);
+            logger.error('Supported targets: clipboard, claude, gpt');
         }
     }
-    // Push to GPT
-    if (options.target === 'all' || options.target === 'gpt') {
-        const spin = spinner('Preparing context for GPT...');
-        try {
-            // Create GPT-specific context directory
-            fs.ensureDirSync(path.join(projectRoot, '.superstack', 'context', 'gpt'));
-            fs.writeFileSync(path.join(projectRoot, '.superstack', 'context', 'gpt', 'project-context.md'), contextContent, 'utf8');
-            spin.succeed('Context prepared for GPT');
-            log('Context is ready to be pasted into ChatGPT.', 'info');
-            if (options.target === 'gpt') {
-                // Only copy to clipboard if GPT is specifically targeted
-                // Otherwise Claude's copy takes precedence
-                clipboardy.writeSync(contextContent);
-                log('Context copied to clipboard ready to paste into ChatGPT.', 'info');
-            }
-        }
-        catch (error) {
-            spin.fail('Failed to prepare context for GPT');
-            console.error(error);
-        }
+    catch (error) {
+        spinner.fail('Failed to push context');
+        logger.error('Error pushing context', error);
     }
-    // Push to Cursor
-    if (options.target === 'all' || options.target === 'cursor') {
-        const spin = spinner('Preparing context for Cursor...');
-        try {
-            // Create Cursor-specific context directory
-            fs.ensureDirSync(path.join(projectRoot, '.superstack', 'context', 'cursor'));
-            fs.writeFileSync(path.join(projectRoot, '.superstack', 'context', 'cursor', 'project-context.md'), contextContent, 'utf8');
-            spin.succeed('Context prepared for Cursor');
-            log('Context is ready to be used in Cursor AI.', 'info');
-            log('In Cursor, press Ctrl+L to start a new conversation and paste the context.', 'info');
-        }
-        catch (error) {
-            spin.fail('Failed to prepare context for Cursor');
-            console.error(error);
-        }
-    }
-    log('Context push completed.', 'success');
-    log('Your AI assistants now have the latest project context.', 'info');
-}
+});
 //# sourceMappingURL=push.js.map

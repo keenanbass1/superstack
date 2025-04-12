@@ -1,6 +1,10 @@
 import fs from 'fs-extra';
 import path from 'path';
-import { CONTEXT_SCHEMA_PATH, PROJECT_CONTEXT_TEMPLATE_PATH } from './paths';
+import { getPaths } from './paths.js';
+
+// Define path constants since they're not exported from paths.js
+const CONTEXT_SCHEMA_PATH = path.join(getPaths().schemasDir, 'context-schema.json');
+const PROJECT_CONTEXT_TEMPLATE_PATH = path.join(getPaths().templatesDir, 'context', 'project-context-template.md');
 
 /**
  * Utility functions for managing project context

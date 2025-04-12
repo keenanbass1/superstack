@@ -39,7 +39,7 @@ export async function validate() {
         // This is a simplified conversion process
         const contextJson = convertMarkdownToJson(contextContent);
         // Validate JSON against schema
-        const ajv = new Ajv();
+        const ajv = new Ajv.default(); // Use default export instead of constructor
         const validate = ajv.compile(schema);
         const valid = validate(contextJson);
         if (valid) {
@@ -79,7 +79,7 @@ function convertMarkdownToJson(markdown) {
             // Handle list items
             const content = line.substring(2).trim();
             const parts = content.split(':');
-            if (parts.length >= 2) {
+            if (parts.length >= 2 && currentSection in sections) {
                 const key = parts[0].trim();
                 const value = parts.slice(1).join(':').trim();
                 if (!sections[currentSection].items) {
@@ -88,7 +88,7 @@ function convertMarkdownToJson(markdown) {
                 sections[currentSection].items[key] = value;
             }
         }
-        else if (line.trim() && currentSection) {
+        else if (line.trim() && currentSection && currentSection in sections) {
             // Add content to current section
             if (!sections[currentSection].content) {
                 sections[currentSection].content = '';

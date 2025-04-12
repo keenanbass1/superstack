@@ -49,7 +49,7 @@ export async function validate(): Promise<void> {
     const contextJson = convertMarkdownToJson(contextContent);
     
     // Validate JSON against schema
-    const ajv = new Ajv();
+    const ajv = new Ajv.default();  // Use default export instead of constructor
     const validate = ajv.compile(schema);
     const valid = validate(contextJson);
     
@@ -65,11 +65,22 @@ export async function validate(): Promise<void> {
   }
 }
 
+// Define interface for section structure
+interface SectionContent {
+  content?: string;
+  items?: Record<string, string>;
+  [key: string]: any; // Allow additional properties/subsections
+}
+
+interface SectionsData {
+  [sectionName: string]: SectionContent;
+}
+
 /**
  * Simple conversion of markdown to JSON structure
  */
-function convertMarkdownToJson(markdown: string): any {
-  const sections = {};
+function convertMarkdownToJson(markdown: string): SectionsData {
+  const sections: SectionsData = {};
   let currentSection = '';
   
   const lines = markdown.split('\n');
@@ -89,7 +100,7 @@ function convertMarkdownToJson(markdown: string): any {
       const content = line.substring(2).trim();
       const parts = content.split(':');
       
-      if (parts.length >= 2) {
+      if (parts.length >= 2 && currentSection in sections) {
         const key = parts[0].trim();
         const value = parts.slice(1).join(':').trim();
         
@@ -97,15 +108,15 @@ function convertMarkdownToJson(markdown: string): any {
           sections[currentSection].items = {};
         }
         
-        sections[currentSection].items[key] = value;
+        sections[currentSection].items![key] = value;
       }
-    } else if (line.trim() && currentSection) {
+    } else if (line.trim() && currentSection && currentSection in sections) {
       // Add content to current section
       if (!sections[currentSection].content) {
         sections[currentSection].content = '';
       }
       
-      sections[currentSection].content += line + '\n';
+      sections[currentSection].content! += line + '\n';
     }
   }
   

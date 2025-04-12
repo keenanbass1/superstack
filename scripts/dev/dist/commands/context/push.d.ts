@@ -1,5 +1,2 @@
-interface PushOptions {
-    target: string;
-}
-export declare function push(options: PushOptions): Promise<void>;
-export {};
+import { Command } from 'commander';
+export declare const pushCommand: Command;

@@ -76,7 +76,7 @@ Please generate a ${type} based on the description above. Consider:
   
   // Prepare prompt
   const prompt = promptTemplate
-    .replace(/\{\{DESCRIPTION\}\}/g, description)
+    .replace(/\{\{DESCRIPTION\}\}/g, description || "")
     .replace(/\{\{CONTEXT\}\}/g, contextContent || 'No context provided')
     .replace(/\{\{TYPE\}\}/g, type);
   

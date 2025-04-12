@@ -39,7 +39,7 @@ const AI_MODELS = {
 async function queryAI(query: string, options: { model?: string, context?: boolean, prompt?: string }) {
   // Default to claude if no model specified
   const modelId = options.model || 'claude';
-  const model = AI_MODELS[modelId];
+  const model = AI_MODELS[modelId as keyof typeof AI_MODELS];
   
   if (!model) {
     console.error(chalk.red(`Unknown model: ${modelId}`));

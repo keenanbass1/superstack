@@ -208,7 +208,10 @@ async function addLogEntry(content: string, options: { tags?: string, type?: str
  * Add a specific type of log entry
  */
 async function addTypedLogEntry(content: string, type: LogEntryType, options: { tags?: string }) {
-  return addLogEntry(content, { ...options, type: LogEntryType[type].toLowerCase() });
+  return addLogEntry(content, { 
+    ...options, 
+    type: type.toString().toLowerCase() 
+  });
 }
 
 /**

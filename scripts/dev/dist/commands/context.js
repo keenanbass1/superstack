@@ -2,8 +2,19 @@ import chalk from 'chalk';
 import inquirer from 'inquirer';
 import path from 'path';
 import ora from 'ora';
-import { contextUtils } from '../utils/context';
-import { logger } from '../utils/logger';
+import { contextUtils } from '../utils/context.js';
+import { logger } from '../utils/logger.js';
+// Import our new commands
+import { listCommand } from './context/list.js';
+import { addCommand } from './context/add.js';
+import { removeCommand } from './context/remove.js';
+import { clearCommand } from './context/clear.js';
+import { showCommand } from './context/show.js';
+import { pushCommand } from './context/push.js';
+import { groupListCommand } from './context/group-list.js';
+import { groupCreateCommand } from './context/group-create.js';
+import { groupAddCommand } from './context/group-add.js';
+import { groupDeleteCommand } from './context/group-delete.js';
 /**
  * Initialize a new project context
  */
@@ -42,61 +53,6 @@ async function initContext() {
     catch (error) {
         spinner.fail('Failed to initialize context');
         logger.error('Error initializing context', error);
-    }
-}
-/**
- * Push context to AI assistants
- */
-async function pushContext() {
-    const spinner = ora('Pushing context to AI assistants').start();
-    try {
-        // Check if context exists
-        if (!await contextUtils.contextExists()) {
-            spinner.fail('No context file found in current directory');
-            logger.command('dev context init', 'Create a context file first');
-            return;
-        }
-        // Read context file
-        const contextContent = await contextUtils.readContext();
-        // Validate context before pushing
-        spinner.text = 'Validating context...';
-        const placeholders = await contextUtils.validateContext(contextContent);
-        if (placeholders.length > 0) {
-            spinner.warn('Context contains unfilled placeholders');
-            logger.info('\nThe following placeholders need to be filled:');
-            placeholders.slice(0, 10).forEach(p => logger.info(`- ${p}`));
-            if (placeholders.length > 10) {
-                logger.info(`... and ${placeholders.length - 10} more`);
-            }
-            const { proceed } = await inquirer.prompt([{
-                    type: 'confirm',
-                    name: 'proceed',
-                    message: 'Push context anyway?',
-                    default: false
-                }]);
-            if (!proceed) {
-                logger.info('Context push canceled');
-                return;
-            }
-            spinner.start('Pushing context...');
-        }
-        // Push context to AI assistants
-        spinner.text = 'Updating AI assistants...';
-        const results = await contextUtils.pushContext(contextContent);
-        spinner.succeed('Context successfully pushed to AI assistants');
-        // Log results for each assistant
-        Object.entries(results).forEach(([assistant, success]) => {
-            if (success) {
-                logger.success(`${assistant.charAt(0).toUpperCase() + assistant.slice(1)} context updated`);
-            }
-            else {
-                logger.error(`Failed to update ${assistant} context`);
-            }
-        });
-    }
-    catch (error) {
-        spinner.fail('Failed to push context');
-        logger.error('Error pushing context', error);
     }
 }
 /**
@@ -140,18 +96,27 @@ export default function (program) {
     const contextCommand = program
         .command('context')
         .description('Manage project context for AI assistants');
+    // Add the original commands
     contextCommand
         .command('init')
         .description('Initialize a new project context file')
         .action(initContext);
     contextCommand
-        .command('push')
-        .description('Push current context to AI assistants')
-        .action(pushContext);
-    contextCommand
         .command('validate')
         .description('Validate context against schema')
         .action(validateContext);
+    // Add our new commands
+    contextCommand.addCommand(listCommand);
+    contextCommand.addCommand(addCommand);
+    contextCommand.addCommand(removeCommand);
+    contextCommand.addCommand(clearCommand);
+    contextCommand.addCommand(showCommand);
+    contextCommand.addCommand(pushCommand);
+    // Add group commands
+    contextCommand.addCommand(groupListCommand);
+    contextCommand.addCommand(groupCreateCommand);
+    contextCommand.addCommand(groupAddCommand);
+    contextCommand.addCommand(groupDeleteCommand);
     return contextCommand;
 }
 //# sourceMappingURL=context.js.map

@@ -29,7 +29,7 @@ export const groupCreateCommand = new Command('group-create')
       const allModules = await getAllContextModules();
       const allPaths = allModules.map(m => m.path);
       
-      const invalidModules = modulePaths.filter(path => !allPaths.includes(path));
+      const invalidModules = modulePaths.filter((path: string) => !allPaths.includes(path));
       if (invalidModules.length > 0) {
         spinner.fail(`Invalid module paths: ${invalidModules.join(', ')}`);
         logger.info('Available modules:');

@@ -18,7 +18,7 @@ export const removeCommand = new Command('remove')
       const activeContext = await getActiveContext();
       
       // Check if modules are in active context
-      const modulesToRemove = modulePaths.filter(path => 
+      const modulesToRemove = modulePaths.filter((path: string) => 
         activeContext.modules.includes(path)
       );
       

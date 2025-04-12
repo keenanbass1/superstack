@@ -86,17 +86,22 @@ async function createProject(name: string, options: { template?: string, path?: 
     }
     
     // Validate template
-    if (!PROJECT_TEMPLATES[template]) {
+    if (!template || !PROJECT_TEMPLATES[template as keyof typeof PROJECT_TEMPLATES]) {
       spinner.fail(`Unknown template: ${template}`);
       console.log(`Available templates: ${Object.keys(PROJECT_TEMPLATES).join(', ')}`);
       return;
     }
     
-    const templateConfig = PROJECT_TEMPLATES[template];
+    const templateConfig = PROJECT_TEMPLATES[template as keyof typeof PROJECT_TEMPLATES];
     
     // Create the project
     if (templateConfig.generator === 'custom') {
       // Copy from template directory
+      if (!('source' in templateConfig)) {
+        spinner.fail('Template configuration is missing source property');
+        return;
+      }
+      
       const sourcePath = path.join(TEMPLATES_DIR, templateConfig.source);
       
       if (!await fs.pathExists(sourcePath)) {
@@ -127,6 +132,11 @@ async function createProject(name: string, options: { template?: string, path?: 
     } else {
       // Use external generator
       spinner.text = `Running ${templateConfig.generator}...`;
+      
+      if (!('options' in templateConfig)) {
+        spinner.fail('Template configuration is missing options property');
+        return;
+      }
       
       const command = `npx ${templateConfig.generator} ${name} ${templateConfig.options.join(' ')}`;
       
