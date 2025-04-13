@@ -18,6 +18,7 @@ import { groupListCommand } from './context/group-list.js';
 import { groupCreateCommand } from './context/group-create.js';
 import { groupAddCommand } from './context/group-add.js';
 import { groupDeleteCommand } from './context/group-delete.js';
+import { testCommand } from './context/test.js';
 
 /**
  * Initialize a new project context
@@ -137,6 +138,9 @@ export default function(program: Command) {
   contextCommand.addCommand(groupCreateCommand);
   contextCommand.addCommand(groupAddCommand);
   contextCommand.addCommand(groupDeleteCommand);
+  
+  // Add test command
+  contextCommand.addCommand(testCommand);
   
   return contextCommand;
 }

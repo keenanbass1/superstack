@@ -1,0 +1,84 @@
+# PromptFoo configuration for testing Superstack context modules
+# This is the global configuration used by default when testing modules
+
+description: "Superstack Context Module Testing"
+
+# Default prompt templates - will be overridden by module content when testing
+prompts:
+  - name: module_content
+    text: "{context}"
+
+# AI model providers for testing modules
+providers:
+  - openai:gpt-4
+  - anthropic:claude-3-sonnet-20240229
+
+# Default vars used for testing
+vars:
+  # Path to the module being tested
+  contextFile: ""
+  
+  # Use multiple test prompts to verify quality and understanding
+  queries:
+    - "Explain the core concepts in this module"
+    - "What are the best practices described in this module?"
+    - "Give me an example of how to implement this concept"
+    - "What are common mistakes to avoid?"
+
+# Default test cases for evaluating modules
+tests:
+  - vars:
+      query: "Explain the core concepts in this module"
+    assert:
+      - type: "llm-rubric"
+        value:
+          "Is the explanation accurate and comprehensive?": "The explanation should accurately reflect the core concepts as described in the module without adding incorrect information."
+          "Is the explanation concise?": "The explanation should be clear and to the point, avoiding unnecessary complexity."
+          "Does it include all key components?": "All major aspects of the concept should be included in the explanation."
+        provider: "anthropic:claude-3-sonnet-20240229"
+        threshold: 0.8
+  
+  - vars:
+      query: "What are the best practices described in this module?"
+    assert:
+      - type: "llm-rubric"
+        value:
+          "Are all best practices included?": "The response should list all major best practices mentioned in the module."
+          "Is the explanation accurate?": "The explanation of each best practice should be accurate and consistent with the module."
+        provider: "anthropic:claude-3-sonnet-20240229"
+        threshold: 0.8
+  
+  - vars:
+      query: "Give me an example of how to implement this concept"
+    assert:
+      - type: "llm-rubric"
+        value:
+          "Is the example correct?": "The implementation example should correctly demonstrate the concept."
+          "Is the example practical?": "The example should be realistic and applicable in a real development scenario."
+          "Is the example easy to understand?": "The example should be clear and well-explained for developers."
+        provider: "anthropic:claude-3-sonnet-20240229"
+        threshold: 0.8
+  
+  - vars:
+      query: "What are common mistakes to avoid?"
+    assert:
+      - type: "llm-rubric"
+        value:
+          "Are major anti-patterns identified?": "The response should identify the key anti-patterns and common mistakes mentioned in the module."
+          "Are explanations helpful?": "The explanation should help developers understand why these are mistakes and how to avoid them."
+        provider: "anthropic:claude-3-sonnet-20240229"
+        threshold: 0.8
+
+# Output configuration
+output:
+  include-prompt-templates: true
+  include-prompts: true
+  include-scores: true
+
+sharing:
+  enabled: false
+
+# Environment variables
+env:
+  OPENAI_API_KEY: "${OPENAI_API_KEY}"
+  ANTHROPIC_API_KEY: "${ANTHROPIC_API_KEY}" 

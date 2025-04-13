@@ -19,6 +19,10 @@ This document provides step-by-step instructions for testing each component of t
   - [Listing Groups](#listing-groups)
   - [Adding Groups to Active Context](#adding-groups-to-active-context)
   - [Deleting Groups](#deleting-groups)
+- [Context Module Testing](#context-module-testing)
+  - [Running Tests on Context Modules](#running-tests-on-context-modules)
+  - [Creating Test Configurations](#creating-test-configurations)
+  - [Debugging Failed Tests](#debugging-failed-tests)
 - [Project Context Management](#project-context-management)
   - [Initializing Project Context](#initializing-project-context)
   - [Validating Project Context](#validating-project-context)
@@ -250,38 +254,105 @@ dev context clear
 # Add a group to active context
 dev context group-add ui-basics
 
-# Check active modules
-dev context list --active
+# Add multiple groups
+dev context group-add ui-basics components
 
 # Try adding an invalid group
-dev context group-add non-existent-group
+dev context group-add invalid-group
 ```
 
 **Success criteria**:
 - All modules in the group are added to active context
+- Multiple groups can be added at once
+- Error is shown for invalid groups
 - Current active context is displayed after adding
-- Error is shown for invalid group names
 
 ### Deleting Groups
 
 Test deleting context groups:
 
 ```bash
-# Delete a group
-dev context group-delete components
+# Delete a single group
+dev context group-delete ui-basics
 
 # Try deleting a non-existent group
-dev context group-delete non-existent-group
+dev context group-delete invalid-group
 
-# Force delete without confirmation
-dev context group-delete ui-basics --force
+# Delete multiple groups
+dev context group-delete components
 ```
 
 **Success criteria**:
-- Group is successfully deleted
-- Confirmation is requested before deletion
-- Error is shown for non-existent group names
-- Force option skips confirmation
+- Groups are successfully deleted
+- Error is shown for non-existent groups
+- Group is no longer shown in group list after deletion
+
+## Context Module Testing
+
+### Running Tests on Context Modules
+
+Test the ability to run PromptFoo tests on context modules:
+
+```bash
+# Test a specific module
+dev context test design/principles/typography
+
+# Test a module with a custom configuration
+dev context test design/ui-patterns/cards
+
+# Try testing a non-existent module
+dev context test invalid/module
+
+# Test all modules
+dev context test
+```
+
+**Success criteria**:
+- Tests run successfully for valid modules
+- Module-specific configurations are used when available
+- Error is shown for non-existent modules
+- Summary of test results is displayed
+- Detailed results show passed and failed assertions
+
+### Creating Test Configurations
+
+Test creating new module test configurations:
+
+```bash
+# Check if a configuration template exists
+ls tests/context/modules/template
+
+# Create a test directory for a module
+mkdir -p tests/context/modules/design/principles/typography
+
+# Create a configuration file
+cp tests/context/modules/template/config.yaml tests/context/modules/design/principles/typography/
+```
+
+**Success criteria**:
+- Test configurations can be created manually
+- Tests run with the new configuration
+- Results reflect the assertions in the configuration
+
+### Debugging Failed Tests
+
+Test debugging capabilities for failed tests:
+
+```bash
+# Run tests with verbose output
+dev context test design/principles/typography --verbose
+
+# Run tests and export results
+dev context test design/principles/typography --output results.json
+
+# Examine the results file
+cat results.json
+```
+
+**Success criteria**:
+- Verbose output provides detailed information on failures
+- Results can be exported to a file for analysis
+- Output format is consistent and easy to understand
 
 ## Project Context Management
 

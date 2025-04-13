@@ -1,0 +1,181 @@
+name: Context Module Optimization
+
+on:
+  workflow_dispatch:
+    inputs:
+      module:
+        description: 'Specific module to optimize (leave empty for batch optimization)'
+        required: false
+      auto_apply:
+        description: 'Automatically apply optimizations that meet improvement threshold'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+        default: 'false'
+      improvement_threshold:
+        description: 'Minimum improvement percentage to auto-apply (1-100)'
+        default: '10'
+        required: false
+  schedule:
+    # Run weekly on Monday at 3 AM UTC
+    - cron: '0 3 * * 1'
+
+jobs:
+  optimize-modules:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install dspy-ai promptfoo pyyaml
+      
+      - name: Set environment variables
+        run: |
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+          echo "ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}" >> $GITHUB_ENV
+        
+      - name: Run module optimization
+        id: optimize
+        run: |
+          mkdir -p logs
+          
+          if [ -n "${{ github.event.inputs.module }}" ]; then
+            # Single module optimization
+            python scripts/optimize_context.py optimize \
+              --module "${{ github.event.inputs.module }}" \
+              --verbose \
+              --output "optimization_results.json"
+            
+            echo "OPTIMIZATION_TYPE=single" >> $GITHUB_ENV
+            echo "MODULE_NAME=${{ github.event.inputs.module }}" >> $GITHUB_ENV
+          else
+            # Batch optimization
+            python scripts/optimize_context.py batch-optimize \
+              --max-modules 10 \
+              --verbose \
+              --output "optimization_results.json"
+            
+            echo "OPTIMIZATION_TYPE=batch" >> $GITHUB_ENV
+          fi
+      
+      - name: Evaluate optimized modules
+        id: evaluate
+        run: |
+          if [ "$OPTIMIZATION_TYPE" == "single" ]; then
+            # Single module evaluation
+            python scripts/optimize_context.py evaluate \
+              --module "$MODULE_NAME" \
+              --verbose \
+              --output "evaluation_results.json"
+          else
+            # Batch evaluation
+            python scripts/optimize_context.py batch-evaluate \
+              --verbose \
+              --output "evaluation_results.json"
+          fi
+          
+          # Extract improvement percentage for the optimized modules
+          if [ -f "evaluation_results.json" ]; then
+            IMPROVED_COUNT=$(jq '.improved_count' evaluation_results.json)
+            TOTAL_COUNT=$(jq '.total_evaluations' evaluation_results.json)
+            AVG_IMPROVEMENT=$(jq '.average_improvement' evaluation_results.json)
+            
+            echo "IMPROVED_COUNT=$IMPROVED_COUNT" >> $GITHUB_ENV
+            echo "TOTAL_COUNT=$TOTAL_COUNT" >> $GITHUB_ENV
+            echo "AVG_IMPROVEMENT=$AVG_IMPROVEMENT" >> $GITHUB_ENV
+            
+            echo "::set-output name=improved_count::$IMPROVED_COUNT"
+            echo "::set-output name=total_count::$TOTAL_COUNT"
+            echo "::set-output name=avg_improvement::$AVG_IMPROVEMENT"
+          fi
+      
+      - name: Apply optimizations if threshold met
+        if: ${{ github.event.inputs.auto_apply == 'true' }}
+        run: |
+          THRESHOLD="${{ github.event.inputs.improvement_threshold }}"
+          
+          if (( $(echo "$AVG_IMPROVEMENT >= $THRESHOLD" | bc -l) )); then
+            if [ "$OPTIMIZATION_TYPE" == "single" ]; then
+              python scripts/apply_optimizations.py \
+                --module "$MODULE_NAME" \
+                --output "apply_results.json"
+            else
+              python scripts/apply_optimizations.py \
+                --output "apply_results.json"
+            fi
+            
+            echo "OPTIMIZATIONS_APPLIED=true" >> $GITHUB_ENV
+          else
+            echo "Improvement threshold not met. Optimizations not applied."
+            echo "OPTIMIZATIONS_APPLIED=false" >> $GITHUB_ENV
+          fi
+      
+      - name: Create optimization report
+        run: |
+          echo "# Context Module Optimization Report" > optimization_report.md
+          echo "" >> optimization_report.md
+          
+          if [ "$OPTIMIZATION_TYPE" == "single" ]; then
+            echo "## Module: $MODULE_NAME" >> optimization_report.md
+          else
+            echo "## Batch Optimization Results" >> optimization_report.md
+          fi
+          
+          echo "" >> optimization_report.md
+          echo "### Evaluation Summary" >> optimization_report.md
+          echo "- Total modules evaluated: $TOTAL_COUNT" >> optimization_report.md
+          echo "- Modules with improvement: $IMPROVED_COUNT" >> optimization_report.md
+          echo "- Average improvement: $AVG_IMPROVEMENT%" >> optimization_report.md
+          echo "" >> optimization_report.md
+          
+          if [ -f "evaluation_results.json" ]; then
+            echo "### Improved Modules" >> optimization_report.md
+            jq -r '.improved_modules[] | "- " + .module_name + ": " + (.improvement|tostring) + "% improvement"' evaluation_results.json >> optimization_report.md
+            
+            echo "" >> optimization_report.md
+            echo "### Regressed Modules" >> optimization_report.md
+            jq -r '.regressed_modules[] | "- " + .module_name + ": " + (.improvement|tostring) + "% change"' evaluation_results.json >> optimization_report.md
+          fi
+          
+          if [ "${OPTIMIZATIONS_APPLIED:-false}" == "true" ] && [ -f "apply_results.json" ]; then
+            echo "" >> optimization_report.md
+            echo "### Applied Optimizations" >> optimization_report.md
+            echo "- Total applied: $(jq '.successful' apply_results.json)" >> optimization_report.md
+            echo "- Failed: $(jq '.failed' apply_results.json)" >> optimization_report.md
+          fi
+      
+      - name: Upload optimization results
+        uses: actions/upload-artifact@v3
+        with:
+          name: optimization-results
+          path: |
+            optimization_results.json
+            evaluation_results.json
+            apply_results.json
+            optimization_report.md
+            logs/
+      
+      - name: Create Pull Request for optimizations
+        if: ${{ github.event.inputs.auto_apply != 'true' && env.IMPROVED_COUNT > 0 }}
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "feat: Context module optimizations"
+          title: "Context Module Optimizations"
+          body-path: optimization_report.md
+          branch: context-module-optimizations
+          base: main 

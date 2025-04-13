@@ -1,0 +1,134 @@
+# DSP Context Optimization Configuration
+
+# Path settings for module locations
+paths:
+  original_modules_dir: "context/ai-context/modules"
+  optimized_modules_dir: "context/ai-context/optimized"
+  backup_modules_dir: "context/ai-context/backups"
+  evaluation_dir: "context/ai-context/evaluation"
+  logs_dir: "logs"
+  database_path: "data/context_feedback.db"
+
+# AI model configurations
+models:
+  default: "gpt-4-turbo"
+  options:
+    - name: "gpt-4-turbo"
+      provider: "openai"
+      temperature: 0.2
+      max_tokens: 4096
+    - name: "gpt-4o"
+      provider: "openai"
+      temperature: 0.2
+      max_tokens: 4096
+    - name: "claude-3-opus"
+      provider: "anthropic"
+      temperature: 0.2
+      max_tokens: 4096
+    - name: "claude-3-sonnet"
+      provider: "anthropic"
+      temperature: 0.2
+      max_tokens: 4096
+
+# DSP optimization settings
+dsp:
+  compiler_options:
+    max_retries: 3
+    verbose: true
+    trace: false
+  module_settings:
+    context_separator: "---"
+    priority_pattern: "#priority: (high|medium|low)"
+    context_pattern: "## Context: (.*?)(?=##|$)"
+  lm_config:
+    modules_per_batch: 10
+    max_attempts: 3
+    retry_delay: 2
+  strategies:
+    - name: "token_reduction"
+      description: "Optimize modules for token reduction while preserving information"
+      params:
+        max_tokens: 8192
+        temperature: 0.2
+    - name: "clarity_improvement"
+      description: "Improve clarity and structure of modules"
+      params:
+        max_tokens: 8192
+        temperature: 0.3
+  default_strategy: "token_reduction"
+
+# Evaluation settings
+evaluation:
+  threshold_improvement: 10  # % improvement to consider successful
+  min_score: 0.6             # Minimum score to consider acceptable
+  temp_dir: "temp/evaluations"
+  test_cases_per_module: 5
+  weights:
+    correctness: 0.4
+    completeness: 0.3
+    conciseness: 0.2
+    clarity: 0.1
+  promptfoo:
+    timeout: 60              # Seconds to wait for evaluation to complete
+    vars:
+      max_test_cases: 10     # Maximum number of test cases to generate per module
+      assertions:
+        - type: "contains-json"
+        - type: "similar"
+          threshold: 0.7     # Similarity threshold for comparing responses
+  test_prompts:
+    - "Summarize the key points about {subject} based on the context."
+    - "Explain how {subject} works in simple terms."
+    - "What are the main benefits of {subject}?"
+    - "How would you implement {subject} in a real-world scenario?"
+    - "Compare and contrast {subject} with alternative approaches."
+  eval_models:
+    - "gpt-4-turbo"
+    - "claude-3-opus"
+
+# Feedback collection settings
+feedback:
+  min_feedback_count: 5          # Minimum number of feedback entries to trigger optimization
+  effectiveness_threshold: 0.7    # Score threshold for identifying modules needing improvement
+  negative_threshold: 0.3         # Threshold of negative feedback ratio to prioritize optimization
+  score_weights:
+    accuracy: 0.4
+    completeness: 0.3
+    relevance: 0.3
+
+# GitHub integration settings
+github:
+  create_pull_requests: true
+  auto_apply_threshold: 15        # % improvement to automatically apply in CI
+  branch_name: "context-module-optimizations"
+  commit_message: "feat: Optimize context modules with DSP"
+  base_branch: "main"
+  pr_title_template: "Optimize context module: {module_name}"
+
+# General configuration
+general:
+  logging:
+    level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+    file: "logs/dsp_optimization.log"
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Priority configuration for module optimization
+priority:
+  factors:
+    error_feedback_weight: 2.0
+    low_effectiveness_weight: 1.5
+    usage_frequency_weight: 1.0
+    last_optimization_weight: 0.5
+
+# API configuration
+api_keys:
+  openai: ${OPENAI_API_KEY}
+  anthropic: ${ANTHROPIC_API_KEY}
+
+# Optimization settings
+optimization:
+  create_backup: true
+  auto_apply_threshold: 10.0
+  max_token_reduction: 30.0
+  preserve_formatting: true
+  preserve_structure: true 

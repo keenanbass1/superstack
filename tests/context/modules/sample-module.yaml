@@ -1,0 +1,27 @@
+# Module-specific test configuration for sample module
+# This overrides the global config with module-specific test cases
+
+# Inherit from global config
+extends: "../promptfoo-config.yaml"
+
+# Additional test cases specific to this module
+tests:
+  - vars:
+      query: "How does this concept interact with state management?"
+    assert:
+      - type: "llm-rubric"
+        value:
+          "Is the relationship with state management explained?": "The response should accurately describe how this concept relates to state management principles."
+          "Are there practical examples?": "The response should include practical examples of how this concept works with state management."
+        provider: "anthropic:claude-3-sonnet-20240229"
+        threshold: 0.8
+  
+  - vars:
+      query: "What are the performance implications of this approach?"
+    assert:
+      - type: "llm-rubric"
+        value:
+          "Are performance considerations addressed?": "The response should discuss performance implications as mentioned in the module."
+          "Are there optimization suggestions?": "The response should include any optimization strategies mentioned in the module."
+        provider: "anthropic:claude-3-sonnet-20240229"
+        threshold: 0.8 

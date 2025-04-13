@@ -1,0 +1,92 @@
+name: Context Module Tests
+
+on:
+  push:
+    paths:
+      - 'docs/ai-context/**'
+      - 'tests/context/**'
+  pull_request:
+    paths:
+      - 'docs/ai-context/**'
+      - 'tests/context/**'
+  workflow_dispatch:
+    inputs:
+      module:
+        description: 'Specific module to test (leave empty to test all)'
+        required: false
+        type: string
+
+jobs:
+  test-modules:
+    name: Test AI Context Modules
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: |
+          npm install -g promptfoo
+          npm ci
+          cd scripts/dev && npm ci
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      
+      - name: Install Python dependencies
+        run: |
+          pip install -r requirements-dsp.txt
+      
+      - name: Create test directories
+        run: |
+          mkdir -p tests/context/modules
+      
+      - name: Verify configuration
+        run: |
+          if [ ! -f "tests/context/promptfoo-config.yaml" ]; then
+            echo "Error: PromptFoo configuration missing"
+            exit 1
+          fi
+      
+      - name: Run specific module test
+        if: ${{ github.event.inputs.module != '' }}
+        run: |
+          echo "Testing module: ${{ github.event.inputs.module }}"
+          cd scripts/dev && node dist/index.js context test "${{ github.event.inputs.module }}"
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      
+      - name: Run all module tests
+        if: ${{ github.event.inputs.module == '' }}
+        run: |
+          echo "Testing all modules"
+          cd scripts/dev && node dist/index.js context test --all
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      
+      - name: Generate test report
+        run: |
+          echo "Test Results Summary" > test-report.md
+          echo "====================" >> test-report.md
+          echo "" >> test-report.md
+          echo "Modules tested: $(find docs/ai-context -name "*.md" | wc -l)" >> test-report.md
+          echo "" >> test-report.md
+          echo "See test logs for detailed results." >> test-report.md
+      
+      - name: Upload test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: test-report.md 

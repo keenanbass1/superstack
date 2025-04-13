@@ -1,0 +1,217 @@
+name: Context Module Optimization
+
+on:
+  schedule:
+    # Run weekly on Monday at 2:00 AM UTC
+    - cron: '0 2 * * 1'
+  
+  # Allow manual triggering
+  workflow_dispatch:
+    inputs:
+      module_path:
+        description: 'Specific module to optimize (leave empty for batch processing)'
+        required: false
+      target_model:
+        description: 'Target model to use for optimization'
+        required: false
+        default: 'claude-3-haiku-20240307'
+      auto_apply:
+        description: 'Automatically apply optimizations that meet criteria'
+        type: boolean
+        default: false
+
+jobs:
+  optimize:
+    name: Optimize Context Modules
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          # Install extra dependencies needed for optimization
+          pip install dspy-ai textblob promptfoo termcolor
+      
+      - name: Prepare environment
+        run: |
+          # Create necessary directories
+          mkdir -p data reports optimized
+          
+          # Set up environment variables
+          echo "ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}" >> $GITHUB_ENV
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+      
+      - name: Run optimization
+        id: optimize
+        run: |
+          if [ -n "${{ github.event.inputs.module_path }}" ]; then
+            # Single module optimization
+            echo "Optimizing single module: ${{ github.event.inputs.module_path }}"
+            python dsp-implementation-plan.py optimize \
+              --module "${{ github.event.inputs.module_path }}" \
+              --model "${{ github.event.inputs.target_model || 'claude-3-haiku-20240307' }}" \
+              --output-dir "optimized" \
+              > optimization_log.txt
+          else
+            # Batch optimization (use priority modules from feedback system)
+            echo "Running batch optimization for priority modules"
+            python dsp-implementation-plan.py batch auto-optimize \
+              --model "${{ github.event.inputs.target_model || 'claude-3-haiku-20240307' }}" \
+              --limit 5 \
+              --output "reports/batch_optimization_$(date +%Y%m%d).json" \
+              > optimization_log.txt
+          fi
+          
+          # Save log as artifact
+          cat optimization_log.txt
+          
+          # Extract optimized module count
+          OPTIMIZED_COUNT=$(grep -c "Successfully optimized" optimization_log.txt || echo "0")
+          echo "optimized_count=$OPTIMIZED_COUNT" >> $GITHUB_OUTPUT
+      
+      - name: Evaluate optimizations
+        id: evaluate
+        if: steps.optimize.outputs.optimized_count != '0'
+        run: |
+          if [ -n "${{ github.event.inputs.module_path }}" ]; then
+            # Evaluate single module
+            MODULE_NAME=$(basename "${{ github.event.inputs.module_path }}" .md)
+            echo "Evaluating optimization for module: $MODULE_NAME"
+            
+            python dsp-implementation-plan.py evaluate \
+              --module "$MODULE_NAME" \
+              --output "reports/evaluation_${MODULE_NAME}.json" \
+              > evaluation_log.txt
+          else
+            # Batch evaluation
+            echo "Evaluating batch optimizations"
+            python dsp-implementation-plan.py evaluate-batch \
+              --output "reports/batch_evaluation_$(date +%Y%m%d).json" \
+              > evaluation_log.txt
+          fi
+          
+          # Save log as artifact
+          cat evaluation_log.txt
+          
+          # Extract improvement info
+          IMPROVED_COUNT=$(grep -c "Improved" evaluation_log.txt || echo "0")
+          echo "improved_count=$IMPROVED_COUNT" >> $GITHUB_OUTPUT
+          
+          # Extract average improvement percentage
+          AVG_IMPROVEMENT=$(grep "Average improvement:" evaluation_log.txt | sed -E 's/.*: ([0-9.-]+)%/\1/' || echo "0")
+          echo "avg_improvement=$AVG_IMPROVEMENT" >> $GITHUB_OUTPUT
+      
+      - name: Apply optimizations
+        if: |
+          (github.event.inputs.auto_apply == 'true' || 
+           (steps.evaluate.outputs.improved_count != '0' && 
+            steps.evaluate.outputs.avg_improvement > 5))
+        run: |
+          echo "Applying optimizations that meet criteria"
+          
+          if [ -n "${{ github.event.inputs.module_path }}" ]; then
+            # Apply single module optimization
+            MODULE_NAME=$(basename "${{ github.event.inputs.module_path }}" .md)
+            IMPROVEMENT=$(grep "Improvement:" "reports/evaluation_${MODULE_NAME}.json" | sed -E 's/.*: ([0-9.-]+)%/\1/' || echo "0")
+            
+            if (( $(echo "$IMPROVEMENT > 5" | bc -l) )); then
+              python dsp-implementation-plan.py apply \
+                --module "$MODULE_NAME" \
+                --model "${{ github.event.inputs.target_model || 'claude-3-haiku-20240307' }}" \
+                > apply_log.txt
+              
+              # Record in feedback system
+              python feedback_system.py mark-applied "$MODULE_NAME" "${{ github.event.inputs.target_model || 'claude-3-haiku-20240307' }}"
+            else
+              echo "Improvement of ${IMPROVEMENT}% doesn't meet threshold (>5%). Not applying."
+            fi
+          else
+            # Apply batch optimizations
+            python dsp-implementation-plan.py apply-batch \
+              --min-improvement 5 \
+              --model "${{ github.event.inputs.target_model || 'claude-3-haiku-20240307' }}" \
+              > apply_log.txt
+          fi
+          
+          cat apply_log.txt
+      
+      - name: Create optimization report
+        run: |
+          {
+            echo "# Context Module Optimization Report"
+            echo ""
+            echo "## Summary"
+            echo ""
+            echo "- Date: $(date)"
+            echo "- Target Model: ${{ github.event.inputs.target_model || 'claude-3-haiku-20240307' }}"
+            echo "- Modules Optimized: ${steps.optimize.outputs.optimized_count}"
+            echo "- Modules Improved: ${steps.evaluate.outputs.improved_count}"
+            echo "- Average Improvement: ${steps.evaluate.outputs.avg_improvement}%"
+            echo ""
+            echo "## Detailed Results"
+            echo ""
+            echo "### Optimization Log"
+            echo "```"
+            cat optimization_log.txt
+            echo "```"
+            echo ""
+            echo "### Evaluation Log"
+            echo "```"
+            cat evaluation_log.txt
+            echo "```"
+            
+            if [ -f apply_log.txt ]; then
+              echo ""
+              echo "### Applied Optimizations"
+              echo "```"
+              cat apply_log.txt
+              echo "```"
+            fi
+          } > optimization_report.md
+      
+      - name: Upload optimization results
+        uses: actions/upload-artifact@v3
+        with:
+          name: optimization-results
+          path: |
+            reports/*.json
+            optimization_log.txt
+            evaluation_log.txt
+            apply_log.txt
+            optimization_report.md
+      
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v5
+        if: |
+          github.event.inputs.auto_apply == 'true' || 
+          (steps.evaluate.outputs.improved_count != '0' && 
+           steps.evaluate.outputs.avg_improvement > 5)
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Optimize context modules using DSPy"
+          title: "Context Module Optimization: ${{ steps.evaluate.outputs.improved_count }} modules improved"
+          body: |
+            This PR includes DSPy-optimized context modules that have shown an average improvement of ${{ steps.evaluate.outputs.avg_improvement }}%.
+            
+            **Summary:**
+            - Target Model: ${{ github.event.inputs.target_model || 'claude-3-haiku-20240307' }}
+            - Modules Optimized: ${{ steps.optimize.outputs.optimized_count }}
+            - Modules Improved: ${{ steps.evaluate.outputs.improved_count }}
+            - Average Improvement: ${{ steps.evaluate.outputs.avg_improvement }}%
+            
+            See attached optimization report for full details.
+          branch: optimize-context-modules
+          delete-branch: true
+          add-paths: |
+            docs/ai-context/modules/*.md
+            reports/*.json
+            optimization_report.md 
